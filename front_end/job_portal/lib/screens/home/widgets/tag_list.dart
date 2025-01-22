@@ -9,29 +9,38 @@ class TagLiss extends StatefulWidget {
 }
 
 class _TagListState extends State<TagLiss> {
-  final List<String> tagList = ['All', '⚡Popular', '🌟Featured'];
-  // final taglist = <String> ['xin','chao'];
+  final List<String> tagList = [
+    '💡Recommened',
+    'All',
+    '⚡Popular',
+    '🌟Featured',
+    '🔝 Top Company',
+  ];
   int selected = 0;
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Container(
-      // padding: ,
-      height: 50,
-      decoration: BoxDecoration(
-        // color: Colors.lightBlue,
-        borderRadius: BorderRadius.circular(20),
-        // border: Border.all(color: Color(prima))
-      ),
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      height: 45,
       child: ListView.separated(
           scrollDirection: Axis.horizontal,
-          itemBuilder: (context, index) => GestureDetector(
+          itemBuilder: (_, index) => GestureDetector(
                 child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+                  decoration: BoxDecoration(
+                      color: selected == index
+                          ? Color.fromRGBO(67, 177, 183, .3)
+                          : Colors.white,
+                      borderRadius: BorderRadius.circular(18),
+                      border: Border.all(
+                        color: selected == index
+                            ? Color.fromRGBO(67, 177, 183, 1)
+                            : Color.fromRGBO(67, 177, 183, .3),
+                      )),
                   child: Text(
                     tagList[index],
-                    style: TextStyle(
-                        fontSize: 18, backgroundColor: Colors.lightBlue),
+                    style: TextStyle(fontSize: 18),
                   ),
                 ),
                 onTap: () {
