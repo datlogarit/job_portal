@@ -21,7 +21,7 @@ class HomePage extends StatelessWidget {
               Expanded(
                   flex: 1,
                   child: Container(
-                    color: const Color.fromRGBO(158, 158, 158, 0.1),
+                    color: const Color.fromRGBO(158, 158, 158, .1),
                   )),
             ],
           ),
@@ -32,6 +32,40 @@ class HomePage extends StatelessWidget {
           )
         ],
       ),
+      bottomNavigationBar: BottomNavigationBar(
+          // backgroundColor: const Color.fromRGBO(158, 158, 158, .001)/,
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          selectedItemColor: Theme.of(context).primaryColor,
+          type: BottomNavigationBarType.fixed,
+          items: [
+            BottomNavigationBarItem(
+                label: 'Home',
+                icon: Icon(
+                  Icons.house,
+                  size: 25,
+                )),
+            BottomNavigationBarItem(
+                label: 'Company',
+                icon: Icon(
+                  Icons.cases_outlined,
+                  size: 25,
+                )),
+            BottomNavigationBarItem(
+                label: 'Contact', icon: Icon(Icons.contact_mail_outlined)),
+            BottomNavigationBarItem(
+                label: 'Chat',
+                icon: Icon(
+                  Icons.chat_outlined,
+                  size: 25,
+                )),
+            BottomNavigationBarItem(
+                label: 'Person',
+                icon: Icon(
+                  Icons.person_outline,
+                  size: 25,
+                ))
+          ]),
     );
   }
 }

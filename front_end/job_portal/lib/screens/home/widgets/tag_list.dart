@@ -22,7 +22,7 @@ class _TagListState extends State<TagLiss> {
     // TODO: implement build
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20),
-      height: 45,
+      height: 43,
       child: ListView.separated(
           scrollDirection: Axis.horizontal,
           itemBuilder: (_, index) => GestureDetector(
@@ -40,7 +40,7 @@ class _TagListState extends State<TagLiss> {
                       )),
                   child: Text(
                     tagList[index],
-                    style: TextStyle(fontSize: 18),
+                    style: TextStyle(fontSize: 17),
                   ),
                 ),
                 onTap: () {
