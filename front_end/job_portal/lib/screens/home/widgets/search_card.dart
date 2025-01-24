@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:job_portal/screens/search/search.dart';
 
-class SearchAppBar extends StatelessWidget {
+class SearchCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -33,26 +34,32 @@ class SearchAppBar extends StatelessWidget {
           SizedBox(
             height: 30,
           ),
-          Container(
-            decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(20)),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.search,
-                    color: Colors.grey,
-                    size: 30,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 15),
-                    child: Text(
-                      "Search",
-                      style: TextStyle(fontSize: 18, color: Colors.grey),
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => SearchPage()));
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                  color: Colors.white, borderRadius: BorderRadius.circular(20)),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.search,
+                      color: Colors.grey,
+                      size: 30,
                     ),
-                  )
-                ],
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15),
+                      child: Text(
+                        "Search",
+                        style: TextStyle(fontSize: 18, color: Colors.grey),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           )

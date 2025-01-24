@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:job_portal/screens/home/widgets/home_app_bar.dart';
 import 'package:job_portal/screens/home/widgets/job_list.dart';
-import 'package:job_portal/screens/home/widgets/search_app_bar.dart';
+import 'package:job_portal/screens/home/widgets/search_card.dart';
 import 'package:job_portal/screens/home/widgets/tag_list.dart';
 
 class HomePage extends StatelessWidget {
@@ -27,7 +27,7 @@ class HomePage extends StatelessWidget {
           ),
           SafeArea(
             child: Column(
-              children: [HomeAppBar(), SearchAppBar(), TagLiss(), JobList()],
+              children: [HomeAppBar(), SearchCard(), TagLiss(), JobList()],
             ),
           )
         ],
