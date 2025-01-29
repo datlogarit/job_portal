@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:job_portal/models/job.dart';
+import 'package:job_portal/screens/search/widgets/catagory_list_search.dart';
+import 'package:job_portal/screens/search/widgets/list_search.dart';
 
 import 'package:job_portal/screens/search/widgets/search_app_bar.dart';
+import 'package:job_portal/screens/search/widgets/search_input.dart';
 
 class SearchPage extends StatelessWidget {
   @override
@@ -28,6 +32,18 @@ class SearchPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           SearchAppBar(),
+          SizedBox(
+            height: 5,
+          ),
+          SearchInput(),
+          SizedBox(
+            height: 15,
+          ),
+          CatagoryListSearch(),
+          SizedBox(
+            height: 25,
+          ),
+          ListSearch()
         ],
       ))
     ]));

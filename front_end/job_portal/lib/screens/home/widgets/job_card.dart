@@ -68,6 +68,9 @@ class JobCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               TextIcons(Icons.location_on_sharp, job.location),
+              // SizedBox(
+              //   width: 10,
+              // ),
               timeJob ? TextIcons(Icons.timelapse, job.typeWork) : Container(),
             ],
           )

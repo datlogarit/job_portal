@@ -17,7 +17,7 @@ class TextIcons extends StatelessWidget {
           size: 20,
         ),
         SizedBox(
-          width: 10,
+          width: 4,
         ),
         Text(
           text,
