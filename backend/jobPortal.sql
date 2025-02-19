@@ -25,7 +25,7 @@ CREATE TABLE applicants(
     FOREIGN KEY (id) REFERENCES users(id)
 );
 
-CREATE TABLE companys(
+CREATE TABLE companies(
     id BIGINT PRIMARY KEY AUTO_INCREMENT ,
     company_name VARCHAR(50) NOT NULL,
     company_location VARCHAR(100) NOT NULL,
@@ -48,6 +48,34 @@ CREATE TABLE recruiters(
 CREATE TABLE categories(
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(50) NOT NULL UNIQUE
+);
+
+CREATE TABLE jobs(
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(255) NOT NULL,
+    salary_range VARCHAR(255) NOT NULL,
+    experience VARCHAR(255) NOT NULL,
+    working_time VARCHAR(255) NOT NULL,
+    number_recruitment INT NOT NULL,
+    gender VARCHAR(30) NOT NULL,
+    position VARCHAR(255) NOT NULL,
+    exp_date DATE NOT NULL,
+    requirement TEXT NOT NULL,
+    description TEXT NOT NULL,
+    benefit TEXT NOT NULL,
+    work_location VARCHAR(255) NOT NULL,
+    posted_by BIGINT,
+    company_id BIGINT,
+    category_id BIGINT,
+    status ENUM('open', 'close') DEFAULT 'open',
+    is_edit TINYINT DEFAULT 0 COMMENT 'xem đã chỉnh sửa chưa',
+    is_lock TINYINT DEFAULT 0 COMMENT 'KHÓA TỪ PHÍA NGƯỜI TUYỂN DỤNG',
+    is_active TINYINT DEFAULT 1 COMMENT 'kHÓA TỪ PHÍA ADMIN',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (company_id) REFERENCES companies(id),
+    FOREIGN KEY (category_id) REFERENCES categories(id),
+    FOREIGN KEY (posted_by) REFERENCES recruiters(id)
 );
 
 

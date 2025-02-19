@@ -11,18 +11,18 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController// dung de danh dau class java nhu mot REST API Controller
-@RequestMapping("api/v1/category")//danh dau duong dan chung cho tat ca cac API trong class
-@Data//thay the getter, setter, requireArgumentConstructor, toString
+@RestController // dung de danh dau class java nhu mot REST API Controller
+@RequestMapping("api/v1/category") // danh dau duong dan chung cho tat ca cac API trong class
+@Data // thay the getter, setter, requireArgumentConstructor, toString
 public class CategoryController {
     private final CategoryService categoryService;
 
-
     @PostMapping("")
-    //Nếu tham số truyền vào là 1 object thì sao ? => Data Transfer Object = Request Object
+    // Nếu tham số truyền vào là 1 object thì sao ? => Data Transfer Object =
+    // Request Object
     public ResponseEntity<?> createCategory(
             @RequestBody @Valid CategoryDTO categoryDTO, BindingResult result) {
-        //if expression have bug, it will store error instead of through exception
+        // if expression have bug, it will store error instead of through exception
         if (result.hasErrors()) {
             List<String> listErr = result.getFieldErrors()
                     .stream()
@@ -42,13 +42,13 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    //danh dau duong dan API getAllCatatory
+    // danh dau duong dan API getAllCatatory
     public ResponseEntity<?> getCategoryById(@PathVariable long id) {
-        return ResponseEntity.ok(categoryService.getCategoryByID(id));
+        return ResponseEntity.ok(categoryService.getCategoryById(id));
     }
 
     @GetMapping("")
-    //danh dau duong dan API getAllCatatory
+    // danh dau duong dan API getAllCatatory
     public ResponseEntity<?> getAllCategory() {
         return ResponseEntity.ok(categoryService.getAllCategory());
     }

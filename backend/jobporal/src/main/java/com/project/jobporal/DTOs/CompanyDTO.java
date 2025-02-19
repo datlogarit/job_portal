@@ -1,6 +1,8 @@
 package com.project.jobporal.DTOs;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
@@ -19,9 +21,11 @@ public class CompanyDTO {
     @NotEmpty(message = "name can't is empty")
     private String avtUrl;
 
-    @NotEmpty(message = "name can't is empty")
+    @NotEmpty(message = "phone number can't is empty")
+    @Min(value = 10, message = "the minimum length of phone number is 10 characters")
+    @Max(value = 11, message = "the maximum length of phone number is 11 characters")
     private String hotline;
 
-    private boolean isActive ;
+    private boolean isActive;
 
 }

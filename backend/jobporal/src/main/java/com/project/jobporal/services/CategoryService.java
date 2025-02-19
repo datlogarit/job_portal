@@ -1,6 +1,5 @@
 package com.project.jobporal.services;
 
-
 import com.project.jobporal.DTOs.CategoryDTO;
 import com.project.jobporal.models.Categories;
 import com.project.jobporal.repositories.ICategoryRepository;
@@ -28,17 +27,16 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public void updateCategory(long id, CategoryDTO categoryDTO) {
-        Categories existCategory = getCategoryByID(id);
+        Categories existCategory = getCategoryById(id);
         existCategory.setName(categoryDTO.getName());
         ICategoryRepository.save(existCategory);
     }
 
     @Override
-    public Categories getCategoryByID(long id) {
+    public Categories getCategoryById(long id) {
         return ICategoryRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Category not found"));
     }
-
 
     @Override
     public List<Categories> getAllCategory() {
