@@ -14,7 +14,7 @@ CREATE TABLE users(
     is_active TINYINT DEFAULT 1
 );
 CREATE TABLE applicants(
-    id BIGINT PRIMARY KEY,
+    user_id BIGINT PRIMARY KEY,
     resume VARCHAR(255) DEFAULT '',
     gender VARCHAR(30) DEFAULT '',
     working_time VARCHAR(255) DEFAULT '',
@@ -36,7 +36,7 @@ CREATE TABLE companies(
 );
 
 CREATE TABLE recruiters(
-    id BIGINT PRIMARY KEY,
+    user_id BIGINT PRIMARY KEY,
     company_id BIGINT,
     is_verify TINYINT DEFAULT 0,
     number_of_post INT DEFAULT 0,
@@ -78,4 +78,14 @@ CREATE TABLE jobs(
     FOREIGN KEY (posted_by) REFERENCES recruiters(id)
 );
 
-
+CREATE TABLE reports(
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    reported_job BIGINT,
+    reporter BIGINT,
+    reason TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'ngày admin xử lý',
+    is_solve TINYINT DEFAULT 0,
+    FOREIGN KEY (reported_job) REFERENCES jobs(id),
+    FOREIGN KEY (reporter) REFERENCES applicants(user_id)
+);

@@ -5,7 +5,7 @@ import com.project.jobporal.models.Jobs;
 
 import java.util.List;
 
-import org.springframework.boot.autoconfigure.batch.BatchProperties.Job;
+import org.springframework.data.domain.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,20 +13,27 @@ import org.springframework.data.repository.query.Param;
 //tìm kiếm theo title
 public interface IJobRepository extends JpaRepository<Jobs, Long> {
 
-        @Query("SELECT j FROM Jobs j WHERE LOWER(j.title) LIKE LOWER(CONCAT('%', :title, '%'))")
-        List<Jobs> searchJob(@Param("title") String title);
+        @Override
+        Page<Jobs> findAll(Pageable pageable);// ghi đè phương thức để lấy job theo trang
 
-        List<Jobs> findByCategoryId(Categories categoryId);/*
-                                                            * trường cateory_id trong bảng jobs là 1 entity
-                                                            * nhưng ở đây lại nhận vào 1 Long
-                                                            */
+        // truy vấn theo từ khóa tìm kiếm
+        @Query("SELECT j FROM Jobs j WHERE LOWER(j.title) LIKE LOWER(CONCAT('%', :title, '%'))")
+        Page<Jobs> searchJob(@Param("title") String title, Pageable pageable);
 
         /*
+         * truy vấn theo category
+         * phương thức bên dưới đã được JPA hỗ trợ, nhưng phải
+         * chú ý truyền đúng tham số cho categoryId (có type là categories)
+         */
+        Page<Jobs> findByCategoryId(Categories categoryId, Pageable pageable);
+
+        /*
+         * truy vấn theo companyid
          * từ job truy vấn đến recruiter (postedBy), từ recruiter truy vấn đến company,
          * từ company truy vấn đến id
          */
         @Query("SELECT j FROM Jobs j WHERE j.postedBy.company_id.id = :companyId")
-        List<Jobs> findJobsByCompanyId(@Param("companyId") long companyId);
+        Page<Jobs> findJobsByCompanyId(@Param("companyId") long companyId, Pageable pageable);
 
         /* lọc job theo khu vực, kinh nghiệm, mức lương, ngành nghề */
         @Query("SELECT j FROM Jobs j WHERE " +
@@ -35,10 +42,11 @@ public interface IJobRepository extends JpaRepository<Jobs, Long> {
                         "(:experience IS NULL OR j.experience = :experience) AND " +
                         "(:minSalary IS NULL OR j.minSalary >= :minSalary) AND " +
                         "(:maxSalary IS NULL OR j.maxSalary <= :maxSalary)")
-        List<Jobs> filterJobs(@Param("category") String category,
+        Page<Jobs> filterJobs(@Param("category") String category,
                         @Param("position") String position,
                         @Param("experience") String experience,
                         @Param("minSalary") Integer minSalary,
-                        @Param("maxSalary") Integer maxSalary);
+                        @Param("maxSalary") Integer maxSalary,
+                        Pageable pageable);
 
 }

@@ -7,6 +7,9 @@ import com.project.jobporal.services.JobService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -59,27 +62,36 @@ public class JobController {
             @RequestParam(value = "search_keyword", required = false) String SearchKeyword,
             @RequestParam(value = "category_id", required = false) Long categoryId,
             @RequestParam(value = "company_id", required = false) Long companyId) {
-        List<Jobs> jobs;
-        if (SearchKeyword != null && !SearchKeyword.isEmpty()) {// nếu có keyword -> trả về tất job contain keyword
-            jobs = jobService.searchJob(SearchKeyword);
+        Page<Jobs> jobsPage;
+        if (SearchKeyword != null && !SearchKeyword.isEmpty()) {
+            PageRequest pageRequest = PageRequest.of(page, limit, Sort.by("minSalary").descending());
+            jobsPage = jobService.searchJob(SearchKeyword, pageRequest);
         } else if (categoryId != null) {
-            jobs = jobService.searchJobByCategory(categoryId);
+            PageRequest pageRequest = PageRequest.of(page, limit, Sort.by("minSalary").descending());
+            jobsPage = jobService.searchJobByCategory(categoryId, pageRequest);
         } else if (companyId != null) {
-            jobs = jobService.searchJobByCompany(companyId);
+            PageRequest pageRequest = PageRequest.of(page, limit, Sort.by("minSalary").descending());
+            jobsPage = jobService.searchJobByCompany(companyId, pageRequest);
         } else {
-            jobs = jobService.getAllJob();
+            PageRequest pageRequest = PageRequest.of(page, limit, Sort.by("id").descending());
+            jobsPage = jobService.getAllJob(pageRequest);
         }
-        return ResponseEntity.ok(jobs);
+        int totalPage = jobsPage.getTotalPages();// lấy ra số trang để bắn cho frontend
+        return ResponseEntity.ok(jobsPage.getContent());
     }
 
     @GetMapping("filter")
     public ResponseEntity<?> getJobsByFilter(
+            @RequestParam("page") int page,
+            @RequestParam("limit") int limit,
             @RequestParam(name = "category", required = false) String category,
             @RequestParam(name = "position", required = false) String position,
             @RequestParam(name = "experience", required = false) String experience,
             @RequestParam(name = "minSalary", required = false) Integer minSalary,
             @RequestParam(name = "maxSalary", required = false) Integer maxSalary) {
-        List<Jobs> jobsFilter = jobService.searchJobByFilter(category, position, experience, minSalary, maxSalary);
+        PageRequest pageRequest = PageRequest.of(page, limit, Sort.by("minSalary").descending());
+        List<Jobs> jobsFilter = jobService
+                .searchJobByFilter(category, position, experience, minSalary, maxSalary, pageRequest).getContent();
         return ResponseEntity.ok(jobsFilter);
     }
 

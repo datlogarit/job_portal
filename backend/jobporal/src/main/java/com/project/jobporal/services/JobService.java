@@ -11,6 +11,9 @@ import com.project.jobporal.repositories.IRecruiterRepository;
 
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -87,34 +90,34 @@ public class JobService implements IJobService {
     }
 
     @Override
-    public List<Jobs> getAllJob() {
-        return iJobReposiroty.findAll();
+    public Page<Jobs> getAllJob(PageRequest pageRequest) {
+        return iJobReposiroty.findAll(pageRequest);
     }
 
     @Override
-    public List<Jobs> searchJob(String SearchKeyword) {
-        return iJobReposiroty.searchJob(SearchKeyword);
+    public Page<Jobs> searchJob(String SearchKeyword, PageRequest pageRequest) {
+        return iJobReposiroty.searchJob(SearchKeyword, pageRequest);
     }
 
     @Override
-    public List<Jobs> searchJobByCategory(Long categoryId) {
+    public Page<Jobs> searchJobByCategory(Long categoryId, PageRequest pageRequest) {
         Categories newCategory = new Categories();
         newCategory.setId(categoryId);
 
-        return iJobReposiroty.findByCategoryId(newCategory);
+        return iJobReposiroty.findByCategoryId(newCategory, pageRequest);
     }
 
     @Override
-    public List<Jobs> searchJobByCompany(long companyId) {
+    public Page<Jobs> searchJobByCompany(long companyId, PageRequest pageRequest) {
         // Companies newCompany = new Companies();
         // newCompany.setId(companyId);//truyền vào company chỉ có ID
-        return iJobReposiroty.findJobsByCompanyId(companyId);
+        return iJobReposiroty.findJobsByCompanyId(companyId, pageRequest);
     }
 
     @Override
-    public List<Jobs> searchJobByFilter(String category, String position, String experience, Integer minSalary,
-            Integer maxSalary) {
-        List<Jobs> jobs = iJobReposiroty.filterJobs(category, position, experience, minSalary, maxSalary);
+    public Page<Jobs> searchJobByFilter(String category, String position, String experience, Integer minSalary,
+            Integer maxSalary, PageRequest pageRequest) {
+        Page<Jobs> jobs = iJobReposiroty.filterJobs(category, position, experience, minSalary, maxSalary, pageRequest);
         return jobs;
     }
 }

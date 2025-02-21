@@ -4,7 +4,9 @@ import com.project.jobporal.DTOs.JobDTO;
 import com.project.jobporal.models.Jobs;
 
 import java.util.List;
-import java.util.Optional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 public interface IJobService {
     void createJob(JobDTO jobDTO);
@@ -13,14 +15,14 @@ public interface IJobService {
 
     Jobs getJobById(long id);
 
-    List<Jobs> getAllJob();
+    Page<Jobs> getAllJob(PageRequest pageRequest);
 
-    List<Jobs> searchJob(String search_title);
+    Page<Jobs> searchJob(String search_title, PageRequest pageRequest);
 
-    List<Jobs> searchJobByCategory(Long categoryId);
+    Page<Jobs> searchJobByCategory(Long categoryId, PageRequest pageRequest);
 
-    List<Jobs> searchJobByCompany(long companyId);
+    Page<Jobs> searchJobByCompany(long companyId, PageRequest pageRequest);
 
-    List<Jobs> searchJobByFilter(String catgoryName, String positon, String experience, Integer minSalary,
-            Integer maxSalary);
+    Page<Jobs> searchJobByFilter(String catgoryName, String positon, String experience, Integer minSalary,
+            Integer maxSalary, PageRequest pageRequest);
 }
