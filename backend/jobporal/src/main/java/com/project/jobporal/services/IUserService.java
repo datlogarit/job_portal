@@ -15,4 +15,6 @@ public interface IUserService {
 
     List<User> getAllUser();
 
+    List<User> filterJobs(String title, String position, Integer experience, Integer minSalary, Integer maxSalary);
+
 }

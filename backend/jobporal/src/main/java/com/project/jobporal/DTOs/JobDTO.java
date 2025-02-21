@@ -12,8 +12,12 @@ public class JobDTO {
     private String title;
 
     @NotNull(message = "Salary range is required")
-    @JsonProperty("salary_range")
-    private String salaryRange;
+    @JsonProperty("min_salary")
+    private int minSalary;
+
+    @NotNull(message = "Salary range is required")
+    @JsonProperty("max_salary")
+    private int maxSalary;
 
     @NotNull(message = "Experience is required")
     private String experience;
@@ -52,10 +56,6 @@ public class JobDTO {
     @NotNull(message = " reporter is required")
     @JsonProperty("posted_by")
     private long postedBy;
-
-    @JsonProperty("company_id")
-    @NotNull(message = "company is required")
-    private long companyId;
 
     @NotNull(message = "category is required")
     @JsonProperty("category_id")

@@ -51,18 +51,36 @@ public class JobController {
         return ResponseEntity.ok(jobService.getJobById(id));
     }
 
+    // ứng với chức năng tìm kiếm, chia job theo category, hiển thị job theo company
     @GetMapping("") // http:localhost:8088/api/v1/job?page=1&limit=10&keyword=frontend
-    public ResponseEntity<?> getAllJob(@RequestParam("page") int page,
+    public ResponseEntity<?> getJobs(
+            @RequestParam("page") int page,
             @RequestParam("limit") int limit,
-            @RequestParam(value = "keyword", required = false) String keyword) {
+            @RequestParam(value = "search_keyword", required = false) String SearchKeyword,
+            @RequestParam(value = "category_id", required = false) Long categoryId,
+            @RequestParam(value = "company_id", required = false) Long companyId) {
         List<Jobs> jobs;
-        if (keyword != null && !keyword.isEmpty()) {// nếu có keyword -> trả về tất job contain keyword
-            jobs = jobService.searchJob(keyword);
+        if (SearchKeyword != null && !SearchKeyword.isEmpty()) {// nếu có keyword -> trả về tất job contain keyword
+            jobs = jobService.searchJob(SearchKeyword);
+        } else if (categoryId != null) {
+            jobs = jobService.searchJobByCategory(categoryId);
+        } else if (companyId != null) {
+            jobs = jobService.searchJobByCompany(companyId);
         } else {
             jobs = jobService.getAllJob();
         }
-
         return ResponseEntity.ok(jobs);
+    }
+
+    @GetMapping("filter")
+    public ResponseEntity<?> getJobsByFilter(
+            @RequestParam(name = "category", required = false) String category,
+            @RequestParam(name = "position", required = false) String position,
+            @RequestParam(name = "experience", required = false) String experience,
+            @RequestParam(name = "minSalary", required = false) Integer minSalary,
+            @RequestParam(name = "maxSalary", required = false) Integer maxSalary) {
+        List<Jobs> jobsFilter = jobService.searchJobByFilter(category, position, experience, minSalary, maxSalary);
+        return ResponseEntity.ok(jobsFilter);
     }
 
     @DeleteMapping("/{id}")

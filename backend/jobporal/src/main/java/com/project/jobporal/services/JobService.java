@@ -4,21 +4,20 @@ import java.util.List;
 
 import com.project.jobporal.DTOs.JobDTO;
 import com.project.jobporal.models.Categories;
-import com.project.jobporal.models.Companies;
 import com.project.jobporal.models.Jobs;
 import com.project.jobporal.models.Recruiters;
-import com.project.jobporal.repositories.IJobReposiroty;
+import com.project.jobporal.repositories.IJobRepository;
 import com.project.jobporal.repositories.IRecruiterRepository;
 
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class JobService implements IJobService {
-    private final IJobReposiroty iJobReposiroty;
+    private final IJobRepository iJobReposiroty;
     private final IRecruiterRepository iRecruiterRepository;
-    private final ICompanyService iCompanyService;
     private final ICategoryService iCategoryService;
 
     @Override
@@ -28,11 +27,6 @@ public class JobService implements IJobService {
             throw new RuntimeException("Recruiter not found");
         }
 
-        Companies existCompany = iCompanyService.getCompanyById(jobDTO.getCompanyId());
-        if (existCompany == null) {
-            throw new RuntimeException("Company not found");
-        }
-
         Categories existCategory = iCategoryService.getCategoryById(jobDTO.getCategoryId());
         if (existCategory == null) {
             throw new RuntimeException("Category not found");
@@ -40,7 +34,8 @@ public class JobService implements IJobService {
 
         Jobs jobs = Jobs.builder()
                 .title(jobDTO.getTitle())
-                .salaryRange(jobDTO.getSalaryRange())
+                .minSalary(jobDTO.getMinSalary())
+                .maxSalary(jobDTO.getMaxSalary())
                 .experience(jobDTO.getExperience())
                 .workingTime(jobDTO.getWorkingTime())
                 .numberRecruitment(jobDTO.getNumberRecruitment())
@@ -52,7 +47,6 @@ public class JobService implements IJobService {
                 .benefit(jobDTO.getBenefit())
                 .workLocation(jobDTO.getWorkLocation())
                 .postedBy(existRecruiter)
-                .companyId(existCompany)
                 .categoryId(existCategory)
                 .status(jobDTO.getStatus())
                 .isEdit(jobDTO.getIsEdit())
@@ -66,7 +60,8 @@ public class JobService implements IJobService {
     public void updateJob(long id, JobDTO jobDTO) {
         Jobs existJob = iJobReposiroty.findById(id).orElseThrow(() -> new RuntimeException("Job not found"));
         existJob.setTitle(jobDTO.getTitle());
-        existJob.setSalaryRange(jobDTO.getSalaryRange());
+        existJob.setMinSalary(jobDTO.getMinSalary());
+        existJob.setMaxSalary(jobDTO.getMaxSalary());
         existJob.setExperience(jobDTO.getExperience());
         existJob.setWorkingTime(jobDTO.getWorkingTime());
         existJob.setNumberRecruitment(jobDTO.getNumberRecruitment());
@@ -78,7 +73,6 @@ public class JobService implements IJobService {
         existJob.setBenefit(jobDTO.getBenefit());
         existJob.setWorkLocation(jobDTO.getWorkLocation());
         existJob.setPostedBy(iRecruiterRepository.findById(jobDTO.getPostedBy()).get());
-        existJob.setCompanyId(iCompanyService.getCompanyById(jobDTO.getCompanyId()));
         existJob.setCategoryId(iCategoryService.getCategoryById(jobDTO.getCategoryId()));
         existJob.setStatus(jobDTO.getStatus());
         existJob.setIsEdit(jobDTO.getIsEdit());
@@ -98,7 +92,29 @@ public class JobService implements IJobService {
     }
 
     @Override
-    public List<Jobs> searchJob(String title) {
-        return iJobReposiroty.searchJob(title);
+    public List<Jobs> searchJob(String SearchKeyword) {
+        return iJobReposiroty.searchJob(SearchKeyword);
+    }
+
+    @Override
+    public List<Jobs> searchJobByCategory(Long categoryId) {
+        Categories newCategory = new Categories();
+        newCategory.setId(categoryId);
+
+        return iJobReposiroty.findByCategoryId(newCategory);
+    }
+
+    @Override
+    public List<Jobs> searchJobByCompany(long companyId) {
+        // Companies newCompany = new Companies();
+        // newCompany.setId(companyId);//truyền vào company chỉ có ID
+        return iJobReposiroty.findJobsByCompanyId(companyId);
+    }
+
+    @Override
+    public List<Jobs> searchJobByFilter(String category, String position, String experience, Integer minSalary,
+            Integer maxSalary) {
+        List<Jobs> jobs = iJobReposiroty.filterJobs(category, position, experience, minSalary, maxSalary);
+        return jobs;
     }
 }

@@ -20,8 +20,11 @@ public class Jobs extends BaseEntity {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "salary_range")
-    private String salaryRange;
+    @Column(name = "min_salary")
+    private int minSalary;
+
+    @Column(name = "max_salary")
+    private int maxSalary;
 
     @Column(name = "experience")
     private String experience;
@@ -57,9 +60,9 @@ public class Jobs extends BaseEntity {
     @JoinColumn(name = "posted_by")
     private Recruiters postedBy;
 
-    @ManyToOne
-    @JoinColumn(name = "company_id")
-    private Companies companyId;
+    // @ManyToOne
+    // @JoinColumn(name = "company_id")
+    // private Companies companyId;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
