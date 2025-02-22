@@ -5,7 +5,11 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.project.jobporal.DTOs.ReportDTO;
+import com.project.jobporal.models.Applicants;
+import com.project.jobporal.models.Jobs;
+import com.project.jobporal.models.Recruiters;
 import com.project.jobporal.models.Reports;
+import com.project.jobporal.repositories.IApplicantRepository;
 import com.project.jobporal.repositories.IJobRepository;
 import com.project.jobporal.repositories.IRecruiterRepository;
 import com.project.jobporal.repositories.IReportRepository;
@@ -16,17 +20,17 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class ReportService implements IReportService {
     private final IReportRepository iReportRepository;
-    private final IRecruiterRepository iRecruiterRepository;
+    private final IApplicantRepository iApplicantRepository;
     private final JobService jobService;
 
     @Override
     public void createReport(ReportDTO reportDTO) {
-        jobService.getJobById(reportDTO.getReportedJob());
-        iRecruiterRepository.findById(reportDTO.getReporter())
+        Jobs existJob = jobService.getJobById(reportDTO.getReportedJob());
+        Applicants existApplicants = iApplicantRepository.findById(reportDTO.getReporter())
                 .orElseThrow(() -> new RuntimeException("reporter not found"));
         Reports reports = Reports.builder()
-                .reportedJob(reportDTO.getReportedJob())
-                .reporter(reportDTO.getReporter())
+                .reportedJob(existJob)
+                .reporter(existApplicants)
                 .reason(reportDTO.getReason())
                 .isSolve(reportDTO.getIsSolved())
                 .build();
@@ -35,19 +39,25 @@ public class ReportService implements IReportService {
 
     @Override
     public void updateReport(long id, ReportDTO reportDTO) {
-        // TODO Auto-generated method stub
+        Reports existReport = getReportById(id);
+        if (existReport == null) {
+            throw new RuntimeException("Report not found");
+        }
+        // chỉ cho phép sửa trạng thái giải quyết - quyền của admin
+        existReport.setIsSolve(reportDTO.getIsSolved());
+        iReportRepository.save(existReport);
     }
 
     @Override
     public List<Reports> getAllReport() {
-        // TODO Auto-generated method stub
-        return null;
+        return iReportRepository.findAll();
     }
 
     @Override
     public Reports getReportById(long id) {
-        // TODO Auto-generated method stub
-        return null;
+        Reports existReport = iReportRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Report not found"));
+        return existReport;
     }
 
 }
