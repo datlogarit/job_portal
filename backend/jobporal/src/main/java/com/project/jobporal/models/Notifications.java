@@ -1,19 +1,15 @@
 package com.project.jobporal.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 
-@Data
+@Entity
+@Builder
 @Table(name = "notifications")
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
+
 public class Notifications extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,10 +22,10 @@ public class Notifications extends BaseEntity {
     private String content;
 
     @ManyToOne
-    @Column(name = "job_related")
+    @JoinColumn(name = "job_related")
     private Jobs jobRelated;
 
     @ManyToOne
-    @Column(name = "application_id")
+    @JoinColumn(name = "application_id")
     private Applications applicationId;
 }

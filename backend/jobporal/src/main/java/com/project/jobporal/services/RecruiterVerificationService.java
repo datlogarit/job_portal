@@ -14,7 +14,8 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class RecruiterVerificationService implements IRecruiterVerificationsService {
+public class RecruiterVerificationService implements
+        IRecruiterVerificationsService {
     private final IRecruiterVerificationRepository recruiterVerificationRepository;
     private final IRecruiterRepository recruiterRepository;
 

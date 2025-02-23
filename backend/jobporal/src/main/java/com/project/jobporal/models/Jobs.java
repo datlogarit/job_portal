@@ -1,16 +1,15 @@
 package com.project.jobporal.models;
 
+// import java.io.Serializable;
+
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Date;
-
 @Entity
 @Table(name = "jobs")
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 @Builder
 public class Jobs extends BaseEntity {
     @Id
@@ -42,7 +41,7 @@ public class Jobs extends BaseEntity {
     private String position;
 
     @Column(name = "exp_date")
-    private Date expDate;
+    private String expDate;
 
     @Column(name = "requirement")
     private String requirement;
@@ -59,10 +58,6 @@ public class Jobs extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "posted_by")
     private Recruiters postedBy;
-
-    // @ManyToOne
-    // @JoinColumn(name = "company_id")
-    // private Companies companyId;
 
     @ManyToOne
     @JoinColumn(name = "category_id")

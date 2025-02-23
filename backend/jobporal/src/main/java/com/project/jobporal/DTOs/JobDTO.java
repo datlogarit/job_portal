@@ -38,7 +38,7 @@ public class JobDTO {
 
     @NotNull(message = "date is required")
     @JsonProperty("exp_date")
-    private Date expDate;
+    private String expDate;
 
     @NotNull(message = "requirement is required")
     private String requirement;

@@ -1,31 +1,25 @@
 package com.project.jobporal.models;
 
-import jakarta.annotation.Generated;
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 
+@Entity
 @Table(name = "applications")
+@Data // toString, equals, hashCode, getter, setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Builder
 public class Applications extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @ManyToOne
-    @Column(name = "applicant_id", nullable = false)
+    @JoinColumn(name = "applicant_id")
     private Applicants applicantId;
 
     @ManyToOne
-    @Column(name = "job_id", nullable = false)
+    @JoinColumn(name = "job_id")
     private Jobs jobId;
 
     @Column(name = "status_apply")

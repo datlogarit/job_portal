@@ -1,11 +1,13 @@
 package com.project.jobporal.models;
 
+// import java.io.Serializable;
+
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
 @Table(name = "applicants")
-@Data//toString
+@Data // toString
 @Getter
 @Setter
 @AllArgsConstructor
