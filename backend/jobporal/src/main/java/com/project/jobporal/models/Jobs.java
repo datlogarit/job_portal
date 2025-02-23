@@ -1,6 +1,7 @@
 package com.project.jobporal.models;
 
-// import java.io.Serializable;
+import java.io.Serializable;
+import java.util.Date;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -11,7 +12,7 @@ import lombok.*;
 @NoArgsConstructor
 @Data
 @Builder
-public class Jobs extends BaseEntity {
+public class Jobs extends BaseEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -41,7 +42,7 @@ public class Jobs extends BaseEntity {
     private String position;
 
     @Column(name = "exp_date")
-    private String expDate;
+    private Date expDate;
 
     @Column(name = "requirement")
     private String requirement;

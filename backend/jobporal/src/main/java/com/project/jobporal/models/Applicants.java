@@ -1,6 +1,6 @@
 package com.project.jobporal.models;
 
-// import java.io.Serializable;
+import java.io.Serializable;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -13,7 +13,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Applicants {
+public class Applicants implements Serializable {
     @Id
     private long id;
 
