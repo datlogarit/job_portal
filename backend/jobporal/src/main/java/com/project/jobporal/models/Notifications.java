@@ -1,36 +1,35 @@
 package com.project.jobporal.models;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
-@AllArgsConstructor
+@Table(name = "notifications")
 @NoArgsConstructor
-@Table(name = "reports")
-@Entity
-public class Reports extends BaseEntity {
+@AllArgsConstructor
+public class Notifications extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "reported_job")
-    private Jobs reportedJob;
+    @Column(name = "title")
+    private String title;
 
-    @Column(name = "reporter")
-    private Applicants reporter;
+    @Column(name = "content")
+    private String content;
 
-    @Column(name = "reason")
-    private String reason;
+    @ManyToOne
+    @Column(name = "job_related")
+    private Jobs jobRelated;
 
-    @Column(name = "is_solve")
-    private long isSolve;
+    @ManyToOne
+    @Column(name = "application_id")
+    private Applications applicationId;
 }

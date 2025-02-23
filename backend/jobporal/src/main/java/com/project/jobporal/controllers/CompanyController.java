@@ -3,13 +3,14 @@ package com.project.jobporal.controllers;
 import com.project.jobporal.DTOs.CompanyDTO;
 import com.project.jobporal.models.Companies;
 import com.project.jobporal.services.CompanyService;
+
+import jakarta.validation.Valid;
 import lombok.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -19,7 +20,7 @@ public class CompanyController {
     private final CompanyService companyService;
 
     @PostMapping("")
-    public ResponseEntity<?> createCompany(@RequestBody CompanyDTO companyDTO, BindingResult result) {
+    public ResponseEntity<?> createCompany(@RequestBody @Valid CompanyDTO companyDTO, BindingResult result) {
         if (result.hasErrors()) {
             List<String> errList = result.getFieldErrors()
                     .stream()
@@ -32,10 +33,9 @@ public class CompanyController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateCompany(@RequestBody CompanyDTO companyDTO,
-                                           @PathVariable long id,
-                                           BindingResult result
-    ) {
+    public ResponseEntity<?> updateCompany(@RequestBody @Valid CompanyDTO companyDTO,
+            @PathVariable long id,
+            BindingResult result) {
         if (result.hasErrors()) {
             List<String> errList = result.getFieldErrors()
                     .stream()

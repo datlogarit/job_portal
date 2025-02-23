@@ -89,3 +89,50 @@ CREATE TABLE reports(
     FOREIGN KEY (reported_job) REFERENCES jobs(id),
     FOREIGN KEY (reporter) REFERENCES applicants(user_id)
 );
+
+CREATE TABLE notifications(
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(255) NOT NULL,
+    content TEXT NOT NULL,
+    job_related BIGINT,
+    application_id BIGINT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (job_related) REFERENCES jobs(id),
+    FOREIGN KEY (application_id) REFERENCES applications(id)
+);
+
+CREATE TABLE recruiter_verifycation(
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    recruiter_id BIGINT,
+    authorization_letter_url VARCHAR(255),
+    business_license_url VARCHAR(255),
+    status TINYINT DEFAULT 0 COMMENT '0: chưa xác thực, 1: đang xem xét, 2: bị từ chối, 3: được xác thực', 
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    reject_reason TEXT,
+    FOREIGN KEY (recruiter_id) REFERENCES recruiters(user_id)
+);
+
+CREATE TABLE applications(
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    applicant_id BIGINT,
+    job_id BIGINT,
+    
+    status_apply ENUM('not yet', 'applied', 'approved', 'rejected') DEFAULT 'not yet',
+    is_save TINYINT DEFAULT 0 COMMENT 'lưu công việc',
+    is_read TINYINT DEFAULT 0 COMMENT 'đã xem post',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (job_id) REFERENCES jobs(id),
+    FOREIGN KEY (applicant_id) REFERENCES applicants(user_id)
+);
+
+CREATE TABLE noti_user(
+    id_noti BIGINT,
+    id_user BIGINT,
+    PRIMARY KEY (id_noti, id_user),
+    FOREIGN KEY (id_noti) REFERENCES notifications(id),
+    FOREIGN KEY (id_user) REFERENCES users(id),
+    is_read TINYINT DEFAULT 0
+);

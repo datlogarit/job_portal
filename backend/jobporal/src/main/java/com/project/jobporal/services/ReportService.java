@@ -7,11 +7,8 @@ import org.springframework.stereotype.Service;
 import com.project.jobporal.DTOs.ReportDTO;
 import com.project.jobporal.models.Applicants;
 import com.project.jobporal.models.Jobs;
-import com.project.jobporal.models.Recruiters;
 import com.project.jobporal.models.Reports;
 import com.project.jobporal.repositories.IApplicantRepository;
-import com.project.jobporal.repositories.IJobRepository;
-import com.project.jobporal.repositories.IRecruiterRepository;
 import com.project.jobporal.repositories.IReportRepository;
 
 import lombok.RequiredArgsConstructor;

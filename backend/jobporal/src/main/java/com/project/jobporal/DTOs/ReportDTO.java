@@ -1,12 +1,21 @@
 package com.project.jobporal.DTOs;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import jakarta.validation.constraints.Min;
 import lombok.Data;
 
 @Data
 public class ReportDTO {
-    private long reported_job;
+    @Min(value = 1, message = "id of reported job must be greater than 0")
+    @JsonProperty("reported_job")
+    private long reportedJob;
 
-    private long reported_by;
+    @Min(value = 1, message = "id of reporter must be greater than 0")
+    private long reporter;
 
     private String reason;
+
+    @JsonProperty("is_solved")
+    private int isSolved;
 }

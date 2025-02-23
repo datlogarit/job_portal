@@ -29,7 +29,4 @@ public class Companies {
 
     @Column(name = "hotline", nullable = false, length = 50)
     private String hotline;
-
-    @Column(name = "is_active")
-    private int is_active;
 }
