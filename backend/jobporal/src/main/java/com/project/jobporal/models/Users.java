@@ -2,6 +2,8 @@ package com.project.jobporal.models;
 
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.Date;
 //import org.springframework.security.core.GrantedAuthority;
 //import org.springframework.security.core.userdetails.UserDetails;
 
@@ -30,7 +32,7 @@ public class Users extends BaseEntity {
     private String phoneNumber;
 
     @Column(name = "dob")
-    private String dob;
+    private Date dob;
 
     @Column(name = "role")
     private String role;

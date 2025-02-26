@@ -7,10 +7,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 @RequiredArgsConstructor
-public class CompanyService implements ICompanyService{
+public class CompanyService implements ICompanyService {
     private final ICompanyRepository iCompanyRepository;
+
     @Override
     public void crateCompany(CompanyDTO companyDTO) {
         Companies newCompanies = Companies.builder()
@@ -26,7 +28,7 @@ public class CompanyService implements ICompanyService{
     @Override
     public Companies getCompanyById(long id) {
         return iCompanyRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Category not found"));
+                .orElseThrow(() -> new RuntimeException("Company not found"));
     }
 
     @Override
@@ -39,7 +41,6 @@ public class CompanyService implements ICompanyService{
         existCompany.setHotline(existCompany.getHotline());
         iCompanyRepository.save(existCompany);
     }
-
 
 
     @Override

@@ -22,8 +22,8 @@ public class CompanyDTO {
     private String avtUrl;
 
     @NotEmpty(message = "phone number can't is empty")
-    @Min(value = 10, message = "the minimum length of phone number is 10 characters")
-    @Max(value = 11, message = "the maximum length of phone number is 11 characters")
+//    @Min(value = 5, message = "the minimum length of phone number is 10 characters")
+//    @Max(value = 11, message = "the maximum length of phone number is 11 characters")
     private String hotline;
 
     private boolean isActive;

@@ -1,6 +1,6 @@
 package com.project.jobporal.controllers;
 
-import com.project.jobporal.DTOs.UserDTO;
+import com.project.jobporal.DTOs.User_RecruiterDTO;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     //quyen cua tat ca user
     @PostMapping("")
-    public ResponseEntity<?> register(@RequestBody @Valid UserDTO userDTO, BindingResult result) {
+    public ResponseEntity<?> register(@RequestBody @Valid User_RecruiterDTO userDTO, BindingResult result) {
 
         return null;
     }
