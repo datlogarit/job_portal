@@ -2,6 +2,7 @@ package com.project.jobporal.models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,10 +11,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Recruiters {
     @Id
     private long id;
-    
+
     @MapsId
     @OneToOne
     @JoinColumn(name = "user_id")
