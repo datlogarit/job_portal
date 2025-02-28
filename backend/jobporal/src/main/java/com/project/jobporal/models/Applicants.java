@@ -13,7 +13,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Applicants implements Serializable {
+public class Applicants {
     @Id
     private long id;
 

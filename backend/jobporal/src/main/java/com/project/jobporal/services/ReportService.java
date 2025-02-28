@@ -29,7 +29,7 @@ public class ReportService implements IReportService {
                 .reportedJob(existJob)
                 .reporter(existApplicants)
                 .reason(reportDTO.getReason())
-                .isSolve(reportDTO.getIsSolved())
+                .isSolve(0)
                 .build();
         iReportRepository.save(reports);
     }
@@ -41,7 +41,7 @@ public class ReportService implements IReportService {
             throw new RuntimeException("Report not found");
         }
         // chỉ cho phép sửa trạng thái giải quyết - quyền của admin
-        existReport.setIsSolve(reportDTO.getIsSolved());
+        existReport.setIsSolve(reportDTO.getIsSolve());
         iReportRepository.save(existReport);
     }
 

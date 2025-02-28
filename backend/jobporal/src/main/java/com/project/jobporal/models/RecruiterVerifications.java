@@ -3,8 +3,10 @@ package com.project.jobporal.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
+
 @Entity
-@Table(name = "recruiter_verifications")
+@Table(name = "recruiter_verifycations")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder

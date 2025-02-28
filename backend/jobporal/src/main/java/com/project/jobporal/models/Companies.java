@@ -3,6 +3,8 @@ package com.project.jobporal.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
+
 @Entity
 @Table(name = "companies")
 @Getter

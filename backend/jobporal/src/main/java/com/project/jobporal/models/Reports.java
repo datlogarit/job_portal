@@ -3,6 +3,8 @@ package com.project.jobporal.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
+
 @Entity
 @Data
 @Builder
@@ -15,10 +17,12 @@ public class Reports extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "reported_job")
+    @ManyToOne
+    @JoinColumn(name = "reported_job")
     private Jobs reportedJob;
 
-    @Column(name = "reporter")
+    @ManyToOne
+    @JoinColumn(name = "reporter")
     private Applicants reporter;
 
     @Column(name = "reason")

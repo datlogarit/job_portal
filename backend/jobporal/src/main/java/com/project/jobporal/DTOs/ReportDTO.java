@@ -16,6 +16,6 @@ public class ReportDTO {
 
     private String reason;
 
-    @JsonProperty("is_solved")
-    private int isSolved;
+    @JsonProperty("is_solve")
+    private int isSolve;
 }

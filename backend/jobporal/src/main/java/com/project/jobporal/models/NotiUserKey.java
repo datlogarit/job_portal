@@ -11,7 +11,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Embeddable
-public class NotiUserKey implements Serializable {
+public class NotiUserKey {
     private Long IdNoti;
     private Long IdUser;
 }

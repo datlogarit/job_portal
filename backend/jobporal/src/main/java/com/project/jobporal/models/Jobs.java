@@ -12,7 +12,7 @@ import lombok.*;
 @NoArgsConstructor
 @Data
 @Builder
-public class Jobs extends BaseEntity implements Serializable {
+public class Jobs extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

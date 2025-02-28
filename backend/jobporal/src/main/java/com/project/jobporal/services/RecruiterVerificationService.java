@@ -17,19 +17,18 @@ import lombok.RequiredArgsConstructor;
 public class RecruiterVerificationService implements
         IRecruiterVerificationsService {
     private final IRecruiterVerificationRepository recruiterVerificationRepository;
-    private final IRecruiterRepository recruiterRepository;
+    //    private final IRecruiterRepository recruiterRepository;
+    private final RecruiterService recruiterService;
 
     @Override
     public void createRecruiterVerification(RecruiterVerificationDTO recruiterVerificationDTO) {
-        // TODO Auto-generated method stub
-        Recruiters existRecruiter = recruiterRepository.findById(recruiterVerificationDTO.getRecruiterId())
-                .orElseThrow(() -> new RuntimeException("recruiter not found"));
+        Recruiters existRecruiter = recruiterService.getRecruiter(recruiterVerificationDTO.getRecruiterId());
         RecruiterVerifications recruiterVerifications = RecruiterVerifications.builder()
                 .recruiterId(existRecruiter)
                 .authorizationLetterUrl(recruiterVerificationDTO.getAuthorizationLetterUrl())
                 .businessLicenseUrl(recruiterVerificationDTO.getBusinessLicenseUrl())
-                .status(recruiterVerificationDTO.getStatus())
-                .rejectReason(recruiterVerificationDTO.getRejectReason())
+                .status(0)
+                .rejectReason("")
                 .build();
         recruiterVerificationRepository.save(recruiterVerifications);
     }
@@ -41,12 +40,9 @@ public class RecruiterVerificationService implements
         if (existRecruiterVerification == null) {
             throw new RuntimeException("Recruiter Verification not found");
         }
-        // tìm nhà tuyển dụng theo id mới
-        Recruiters newRecruiter = recruiterRepository.findById(recruiterVerificationDTO.getRecruiterId())
-                .orElseThrow(() -> new RuntimeException("recruiter not found"));
-        existRecruiterVerification.setRecruiterId(newRecruiter);
         existRecruiterVerification.setAuthorizationLetterUrl(recruiterVerificationDTO.getAuthorizationLetterUrl());
         existRecruiterVerification.setBusinessLicenseUrl(recruiterVerificationDTO.getBusinessLicenseUrl());
+        existRecruiterVerification.setStatus(recruiterVerificationDTO.getStatus());
         existRecruiterVerification.setStatus(recruiterVerificationDTO.getStatus());
         existRecruiterVerification.setRejectReason(recruiterVerificationDTO.getRejectReason());
         recruiterVerificationRepository.save(existRecruiterVerification);
