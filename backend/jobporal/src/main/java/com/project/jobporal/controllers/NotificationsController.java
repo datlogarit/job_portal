@@ -1,21 +1,25 @@
 package com.project.jobporal.controllers;
 
+import com.project.jobporal.DTOs.NotificationDTO;
+import com.project.jobporal.services.NotificationService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("api/v1/notification")
 @RestController
+@RequiredArgsConstructor
 public class NotificationsController {
+    private final NotificationService notificationService;
+
     @PostMapping("")
-    public ResponseEntity<?> createNotification() {
-        return null;
+    public ResponseEntity<?> createNotification(@RequestBody NotificationDTO notificationDTO) {
+        notificationService.crateNotification(notificationDTO);
+        return ResponseEntity.ok("create notification successfully");
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> updateNotification() {
-        return null;
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getNotificationById(@PathVariable long id) {
+        return ResponseEntity.ok(notificationService.getNotificationById(id));
     }
 }

@@ -8,11 +8,11 @@ import lombok.Data;
 @Data
 public class NotiUserDTO {
     @Min(value = 1, message = "Id notification must be greater than 0")
-    @JsonProperty("id_noti")
+    @JsonProperty("id_user")
     private long idUser;
 
     @Min(value = 1, message = "Id user must be greater than 0")
-    @JsonProperty("id_user")
+    @JsonProperty("id_noti")
     private long idNoti;
 
     @JsonProperty("is_read")
