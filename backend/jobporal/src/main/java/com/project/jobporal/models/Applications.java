@@ -25,7 +25,7 @@ public class Applications extends BaseEntity {
     @Column(name = "status_apply")
     private String statusApply;
 
-    @Column(name = "is_saved")
+    @Column(name = "is_save")
     private int isSaved;
 
     @Column(name = "is_read")
