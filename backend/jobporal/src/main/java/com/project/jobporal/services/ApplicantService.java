@@ -12,9 +12,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class ApplicantService implements IApplicantService{
-    private  final IApplicantRepository iApplicantRepository;
-    private  final IUserRepository iUserRepository;
+public class ApplicantService implements IApplicantService {
+    private final IApplicantRepository iApplicantRepository;
+    private final IUserRepository iUserRepository;
+
     @Override
     public void crateApplicant(User_ApplicantDTO userApplicantDTO) {
         Users newUser = Users.builder()
@@ -24,7 +25,7 @@ public class ApplicantService implements IApplicantService{
                 .phoneNumber(userApplicantDTO.getPhoneNumber())
                 .dob(userApplicantDTO.getDob())
                 .role("applicant")
-                .urlAvatar(userApplicantDTO.getUrlAvatar())
+                .urlAvatar("5726568_avtUser.png")
                 .isActive(userApplicantDTO.getIsActive())
                 .build();
         Applicants newApplicant = Applicants.builder()
@@ -42,7 +43,7 @@ public class ApplicantService implements IApplicantService{
 
     @Override
     public void updateApplicant(long id, User_ApplicantDTO applicantDTO) {
-        Users existUser = iUserRepository.findById(id).orElseThrow(()-> new RuntimeException("user not found"));
+        Users existUser = iUserRepository.findById(id).orElseThrow(() -> new RuntimeException("user not found"));
         existUser.setPassword(applicantDTO.getPassword());
         existUser.setName(applicantDTO.getName());
         existUser.setPhoneNumber(applicantDTO.getPhoneNumber());
@@ -62,7 +63,7 @@ public class ApplicantService implements IApplicantService{
 
     @Override
     public Applicants getApplicantById(long id) {
-        return iApplicantRepository.findById(id).orElseThrow(()->new RuntimeException("applicant not found"));
+        return iApplicantRepository.findById(id).orElseThrow(() -> new RuntimeException("applicant not found"));
     }
 
     @Override

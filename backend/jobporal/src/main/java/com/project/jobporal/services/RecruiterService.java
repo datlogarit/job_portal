@@ -31,7 +31,7 @@ public class RecruiterService implements IRecruiterService {
                 .phoneNumber(userRecruiter.getPhoneNumber())
                 .dob(userRecruiter.getDob())
                 .role("recruiter")
-                .urlAvatar(userRecruiter.getUrlAvatar())
+                .urlAvatar("11651387_recruiter_avt.png")
                 .isActive(userRecruiter.getIsActive())
                 .build();
 
