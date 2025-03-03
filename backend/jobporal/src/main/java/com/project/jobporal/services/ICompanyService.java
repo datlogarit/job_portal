@@ -6,8 +6,11 @@ import com.project.jobporal.models.Companies;
 import java.util.List;
 
 public interface ICompanyService {
-    void crateCompany(CompanyDTO companyDTO);
+    void crateCompany(CompanyDTO companyDTO, String file);
+
     void updateCompany(long id, CompanyDTO companyDTO);
+
     Companies getCompanyById(long id);
+
     List<Companies> getAllCompany();
 }

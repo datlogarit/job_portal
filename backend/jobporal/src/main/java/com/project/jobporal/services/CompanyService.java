@@ -14,12 +14,12 @@ public class CompanyService implements ICompanyService {
     private final ICompanyRepository iCompanyRepository;
 
     @Override
-    public void crateCompany(CompanyDTO companyDTO) {
+    public void crateCompany(CompanyDTO companyDTO, String fileName) {
         Companies newCompanies = Companies.builder()
                 .name(companyDTO.getName())
                 .location(companyDTO.getLocation())
                 .introduction(companyDTO.getIntroduction())
-                .url_avt(companyDTO.getAvtUrl())
+                .url_avt(fileName)
                 .hotline(companyDTO.getHotline())
                 .build();
         iCompanyRepository.save(newCompanies);

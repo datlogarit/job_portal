@@ -80,6 +80,7 @@ public class JobController {
         return ResponseEntity.ok(jobsPage.getContent());
     }
 
+
     @GetMapping("filter")
     public ResponseEntity<?> getJobsByFilter(
             @RequestParam("page") int page,

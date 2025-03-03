@@ -61,6 +61,13 @@ public class ApplicantService implements IApplicantService {
         iApplicantRepository.save(existApplicant);
     }
 
+    public void uploadResume(long applicantId, String fileName) {
+        Applicants existApplicant = getApplicantById(applicantId);
+        existApplicant.setResume(fileName);
+        iApplicantRepository.save(existApplicant);
+
+    }
+
     @Override
     public Applicants getApplicantById(long id) {
         return iApplicantRepository.findById(id).orElseThrow(() -> new RuntimeException("applicant not found"));
