@@ -3,6 +3,7 @@ package com.project.jobporal.controllers;
 import com.project.jobporal.DTOs.User_ApplicantDTO;
 import com.project.jobporal.models.Applicants;
 import com.project.jobporal.services.ApplicantService;
+import com.project.jobporal.utilities.HandleFile;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.UrlResource;
@@ -33,6 +34,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ApplicantController {
     private final ApplicantService applicantService;
+    private final HandleFile handleFile;
 
     @PostMapping("")
     public ResponseEntity<?> createInfoApplicant(@Valid @RequestBody User_ApplicantDTO userApplicantDTO, BindingResult result) {
@@ -66,12 +68,7 @@ public class ApplicantController {
     public ResponseEntity<?> updateResume(@PathVariable long applicantId,
                                           @RequestParam("file") MultipartFile file) {
         try {
-            if (file.isEmpty() || file.getOriginalFilename() == null) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("file is null");
-            }
-            if (file.getSize() > 2 * 1022 * 1024) {
-                return ResponseEntity.status(HttpStatus.PAYLOAD_TOO_LARGE).body("file is too large");
-            }
+            handleFile.validateFile(file);
             String fileName = file.getOriginalFilename();
 
             //chi can file ket thuc la pdf hoac docx
@@ -79,12 +76,10 @@ public class ApplicantController {
             if (!fileName.endsWith(".pdf") && !fileName.endsWith(".docx")) {
                 return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE).body("only accept pdf and docx file");
             }
-            String newFileName = storeFile(file);
+            String newFileName = handleFile.storeFile(file, "resumeApplicant");
 
             applicantService.uploadResume(applicantId, newFileName);
             return ResponseEntity.ok("update info applicant successfully with id = " + applicantId);
-
-
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -123,18 +118,5 @@ public class ApplicantController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getApplicantById(@PathVariable long id) {
         return ResponseEntity.ok(applicantService.getApplicantById(id));
-    }
-
-    private String storeFile(MultipartFile file) throws IOException {
-        String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
-        String uniqueName = UUID.randomUUID().toString() + "_" + fileName;
-        java.nio.file.Path uploadDir = Paths.get("resumeApplicant");//tao duong dan den folder
-        if (!Files.exists(uploadDir)) {
-            Files.createDirectories(uploadDir);
-        }
-        //tao duong dan den file
-        java.nio.file.Path pathOfFile = Paths.get(uploadDir.toString(), uniqueName);
-        Files.copy(file.getInputStream(), pathOfFile, StandardCopyOption.REPLACE_EXISTING);
-        return uniqueName;
     }
 }

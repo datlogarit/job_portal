@@ -1,5 +1,6 @@
 package com.project.jobporal.services;
 
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -21,12 +22,14 @@ public class RecruiterVerificationService implements
     private final RecruiterService recruiterService;
 
     @Override
-    public void createRecruiterVerification(RecruiterVerificationDTO recruiterVerificationDTO) {
+    public void createRecruiterVerification(RecruiterVerificationDTO recruiterVerificationDTO,
+                                            String businessLicense,
+                                            String authorizationLetter) {
         Recruiters existRecruiter = recruiterService.getRecruiter(recruiterVerificationDTO.getRecruiterId());
         RecruiterVerifications recruiterVerifications = RecruiterVerifications.builder()
                 .recruiterId(existRecruiter)
-                .authorizationLetterUrl(recruiterVerificationDTO.getAuthorizationLetterUrl())
-                .businessLicenseUrl(recruiterVerificationDTO.getBusinessLicenseUrl())
+                .authorizationLetterUrl(businessLicense)
+                .businessLicenseUrl(authorizationLetter)
                 .status(0)
                 .rejectReason("")
                 .build();

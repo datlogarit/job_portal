@@ -4,6 +4,7 @@ import com.project.jobporal.models.Users;
 import org.apache.catalina.User;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface IUserService {
@@ -18,5 +19,5 @@ public interface IUserService {
 
     List<User> filterJobs(String title, String position, Integer experience, Integer minSalary, Integer maxSalary);
 
-    void uploadAvt(long userId, String fileName);
+    void uploadAvt(long userId, String fileName) throws IOException;
 }

@@ -2,14 +2,18 @@ package com.project.jobporal.DTOs;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class RecruiterVerificationDTO {
     @JsonProperty("recruiter_id")
-    private long recruiterId;
+    private long RecruiterId;
 
     @JsonProperty("authorization_letter_url")
     private String authorizationLetterUrl;

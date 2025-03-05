@@ -6,6 +6,7 @@ import com.project.jobporal.DTOs.CompanyDTO;
 import com.project.jobporal.models.Companies;
 import com.project.jobporal.services.CompanyService;
 
+import com.project.jobporal.utilities.HandleFile;
 import jakarta.validation.Valid;
 import lombok.*;
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CompanyController {
     private final CompanyService companyService;
+    private final HandleFile handleFile;
 
     @PostMapping(value = "", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> createCompany(@RequestPart("company") String CompanyJson,//data nhận là String, hài thật chứ
@@ -44,21 +46,14 @@ public class CompanyController {
                     .toList();
             return ResponseEntity.badRequest().body(errList);
         }
-        if (file.getSize() == 0) {//lay ra kich thuoc file
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("file is empty");
-        }
-        if (file.getSize() > 2 * 1024 * 1024) { // Kích thước > 2MB
-            return ResponseEntity.status(HttpStatus.PAYLOAD_TOO_LARGE)
-                    .body("file is too large");
-        }
+        handleFile.validateFile(file);
         String contentType = file.getContentType();
         if (contentType == null || !contentType.startsWith("image/")) {
             return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
                     .body("file isn't image");
         }
         try {
-            String fileName = storeFile(file);
+            String fileName = handleFile.storeFile(file, "avtCompany_uploads");
             companyService.crateCompany(companyDTO, fileName);
             return ResponseEntity.ok("create company successfully");
         } catch (Exception e) {

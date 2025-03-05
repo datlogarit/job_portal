@@ -2,6 +2,7 @@ package com.project.jobporal.controllers;
 
 import com.project.jobporal.DTOs.User_RecruiterDTO;
 import com.project.jobporal.services.UserService;
+import com.project.jobporal.utilities.HandleFile;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.UrlResource;
@@ -25,6 +26,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final HandleFile handleFile;
 
     //quyen cua tat ca user
     @PostMapping("")
@@ -50,21 +52,23 @@ public class UserController {
     public ResponseEntity<?> updateImgUser(@PathVariable long userId,
                                            @RequestParam("file") MultipartFile file) {
 
-        if (file.getSize() == 0) {//lay ra kich thuoc file
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("file is empty");
-        }
-        if (file.getSize() > 2 * 1024 * 1024) { // Kích thước > 2MB
-            return ResponseEntity.status(HttpStatus.PAYLOAD_TOO_LARGE)
-                    .body("file is too large");
-        }
+//        if (file.getSize() == 0) {//lay ra kich thuoc file
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+//                    .body("file is empty");
+//        }
+//        if (file.getSize() > 2 * 1024 * 1024) { // Kích thước > 2MB
+//            return ResponseEntity.status(HttpStatus.PAYLOAD_TOO_LARGE)
+//                    .body("file is too large");
+//        }
+
+        handleFile.validateFile(file);
         String contentType = file.getContentType();
         if (contentType == null || !contentType.startsWith("image/")) {
             return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
                     .body("file isn't image");
         }
         try {
-            String fileName = storeFile(file);
+            String fileName = handleFile.storeFile(file, "avtUser_uploads");
             userService.uploadAvt(userId, fileName);
             return ResponseEntity.ok("upload file successfully");
         } catch (Exception e) {
@@ -109,33 +113,6 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getUserById(@PathVariable long id) {
         return null;
-    }
-
-
-    private String storeFile(MultipartFile file) throws IOException {
-        if (!isImageFile(file) || file.getOriginalFilename() == null) {
-            throw new IOException("Invalid image format");
-        }
-        //lấy tên file, xử lý các ký tự không hợp lệ
-        String filename = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
-        // Thêm UUID vào trước tên file để đảm bảo tên file là duy nhất
-        String uniqueFilename = UUID.randomUUID().toString() + "_" + filename;
-        // Đường dẫn đến thư mục mà bạn muốn lưu file
-        java.nio.file.Path uploadDir = Paths.get("avtUser_uploads");
-        // Kiểm tra và tạo thư mục nếu nó không tồn tại
-        if (!Files.exists(uploadDir)) {
-            Files.createDirectories(uploadDir);
-        }
-        // Đường dẫn đầy đủ đến file
-        java.nio.file.Path patOfFile = Paths.get(uploadDir.toString(), uniqueFilename);
-        // Ghi đè khi có file trùng lặp
-        Files.copy(file.getInputStream(), patOfFile, StandardCopyOption.REPLACE_EXISTING);
-        return uniqueFilename;
-    }
-
-    private boolean isImageFile(MultipartFile file) {
-        String contentType = file.getContentType();
-        return contentType != null && contentType.startsWith("image/");
     }
 }
 

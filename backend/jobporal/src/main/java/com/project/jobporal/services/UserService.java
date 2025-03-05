@@ -7,6 +7,9 @@ import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @Service
@@ -40,9 +43,11 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public void uploadAvt(long userId, String fileName) {
+    public void uploadAvt(long userId, String fileName) throws IOException {
         Users user = iUserRepository.findById(userId).orElseThrow(() -> new RuntimeException("use not found"));
+        Path oldPath = Paths.get("avtUser_uploads", user.getUrlAvatar());
         user.setUrlAvatar(fileName);
+        Files.delete(oldPath);
         iUserRepository.save(user);
     }
 

@@ -10,6 +10,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 @Service
 @RequiredArgsConstructor
 public class ApplicantService implements IApplicantService {
@@ -61,9 +67,15 @@ public class ApplicantService implements IApplicantService {
         iApplicantRepository.save(existApplicant);
     }
 
-    public void uploadResume(long applicantId, String fileName) {
+    public void uploadResume(long applicantId, String fileName) throws IOException {
         Applicants existApplicant = getApplicantById(applicantId);
+
+        String oldFile = existApplicant.getResume();
+        //duong dan tuong doi den file (relative path of file)
+        Path oldPath = Paths.get("resumeApplicant", oldFile);
+
         existApplicant.setResume(fileName);
+        Files.delete(oldPath);
         iApplicantRepository.save(existApplicant);
 
     }
