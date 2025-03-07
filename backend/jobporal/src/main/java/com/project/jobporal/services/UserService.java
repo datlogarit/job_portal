@@ -23,11 +23,6 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public void crateUser() {
-
-    }
-
-    @Override
     public Users getUserById(long id) {
         return null;
     }
@@ -35,6 +30,15 @@ public class UserService implements IUserService {
     @Override
     public List<User> getAllUser() {
         return List.of();
+    }
+
+    @Override
+    public Users login(String email, String password) {
+        Users users = iUserRepository.findByEmailAndPassword(email, password);
+        if (users == null) {
+            throw new RuntimeException("data not found");
+        }
+        return users;
     }
 
     @Override
