@@ -11,11 +11,11 @@ public interface IUserService {
 
     void updateStatusUser();
 
-    void crateUser();
-
     Users getUserById(long id);
 
     List<User> getAllUser();
+
+    Users login(String email, String password);
 
     List<User> filterJobs(String title, String position, Integer experience, Integer minSalary, Integer maxSalary);
 

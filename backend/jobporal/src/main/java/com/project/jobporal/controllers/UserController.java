@@ -1,6 +1,7 @@
 package com.project.jobporal.controllers;
 
-import com.project.jobporal.DTOs.User_RecruiterDTO;
+
+import com.project.jobporal.DTOs.UserDTO;
 import com.project.jobporal.services.UserService;
 import com.project.jobporal.utilities.HandleFile;
 import jakarta.validation.Valid;
@@ -9,8 +10,7 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
-import org.springframework.validation.BindingResult;
+
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,16 +28,11 @@ public class UserController {
     private final UserService userService;
     private final HandleFile handleFile;
 
-    //quyen cua tat ca user
-    @PostMapping("")
-    public ResponseEntity<?> register(@RequestBody @Valid User_RecruiterDTO userDTO, BindingResult result) {
 
-        return null;
-    }
-
+    //truyen du lieu qua dau
     @GetMapping("login")
-    public ResponseEntity<?> login(String token) {
-        return null;
+    public ResponseEntity<?> login(@RequestBody UserDTO userDTO) {
+        return ResponseEntity.ok(userService.login(userDTO.getEmail(), userDTO.getPassword()));
     }
 
     //cac quyen cua admin

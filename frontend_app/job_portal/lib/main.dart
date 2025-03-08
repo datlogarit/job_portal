@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:job_portal/screens/home/home.dart';
+import 'package:job_portal/screens/start/login/login.dart';
+import 'package:job_portal/screens/search/search.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,7 +23,7 @@ class MyApp extends StatelessWidget {
           primaryColor: Color(0xFF43B1B7),
           colorScheme:
               ColorScheme.fromSwatch().copyWith(secondary: Color(0xFFFED408))),
-      home: HomePage(),
+      home: SearchPage(),
       debugShowCheckedModeBanner: false,
     );
   }

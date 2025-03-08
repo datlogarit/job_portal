@@ -11,41 +11,42 @@ class SearchPage extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Stack(children: [
-      Row(
-        children: [
-          Expanded(
-              flex: 2,
-              child: Container(
-                color: Colors.white,
-              )),
-          Expanded(
-              flex: 1,
-              child: Container(
-                color: const Color.fromRGBO(158, 158, 158, .1),
-              )),
-        ],
-      ),
-      SafeArea(
-          child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          SearchAppBar(),
-          SizedBox(
-            height: 5,
+          Row(
+            children: [
+              Expanded(
+                  flex: 2,
+                  child: Container(
+                    color: Colors.white,
+                  )),
+              Expanded(
+                  flex: 1,
+                  child: Container(
+                    color: const Color.fromRGBO(158, 158, 158, .1),
+                  )),
+            ],
           ),
-          SearchInput(),
-          SizedBox(
-            height: 15,
-          ),
-          CatagoryListSearch(),
-          SizedBox(
-            height: 25,
-          ),
-          ListSearch()
-        ],
-      ))
-    ]));
+          SafeArea(
+              child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SearchAppBar(),
+              SizedBox(
+                height: 5,
+              ),
+              SearchInput(),
+              SizedBox(
+                height: 15,
+              ),
+              CatagoryListSearch(),
+              SizedBox(
+                height: 25,
+              ),
+              ListSearch()
+            ],
+          ))
+        ]));
   }
 }
