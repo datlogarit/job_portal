@@ -1,16 +1,18 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class FormContentRegister extends StatefulWidget {
-  const FormContentRegister({Key? key}) : super(key: key);
+  FormContentRegister({Key? key}) : super(key: key);
 
   @override
   State<FormContentRegister> createState() => __FormContentRegisterState();
+  Dio dio = Dio(BaseOptions(baseUrl: "http://localhost:8088/api/v1"));
 }
 
 class __FormContentRegisterState extends State<FormContentRegister> {
   bool _isPasswordVisible = false;
   bool _isRetypePasswordVisible = false;
-  bool is_agree = true;
+  bool _isAgree = true;
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _retypePasswordController =
       TextEditingController();
@@ -182,11 +184,11 @@ class __FormContentRegisterState extends State<FormContentRegister> {
               height: 5,
             ),
             CheckboxListTile(
-              value: is_agree,
+              value: _isAgree,
               onChanged: (value) {
                 if (value == null) return;
                 setState(() {
-                  is_agree = value;
+                  _isAgree = value;
                 });
               },
               title: Text(

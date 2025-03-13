@@ -1,0 +1,64 @@
+package com.project.jobportal.services;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.project.jobportal.DTOs.RecruiterVerificationDTO;
+import com.project.jobportal.models.RecruiterVerifications;
+import com.project.jobportal.models.Recruiters;
+import com.project.jobportal.repositories.IRecruiterVerificationRepository;
+
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class RecruiterVerificationService implements
+        IRecruiterVerificationsService {
+    private final IRecruiterVerificationRepository recruiterVerificationRepository;
+    //    private final IRecruiterRepository recruiterRepository;
+    private final RecruiterService recruiterService;
+
+    @Override
+    public void createRecruiterVerification(RecruiterVerificationDTO recruiterVerificationDTO,
+                                            String businessLicense,
+                                            String authorizationLetter) {
+        Recruiters existRecruiter = recruiterService.getRecruiter(recruiterVerificationDTO.getRecruiterId());
+        RecruiterVerifications recruiterVerifications = RecruiterVerifications.builder()
+                .recruiterId(existRecruiter)
+                .authorizationLetterUrl(businessLicense)
+                .businessLicenseUrl(authorizationLetter)
+                .status(0)
+                .rejectReason("")
+                .build();
+        recruiterVerificationRepository.save(recruiterVerifications);
+    }
+
+    @Override
+    public void updateRecruiterVerification(long id, RecruiterVerificationDTO recruiterVerificationDTO) {
+        // tìm xem bản ghi này có tồn tại không
+        RecruiterVerifications existRecruiterVerification = getRecruiterVerificationById(id);
+        if (existRecruiterVerification == null) {
+            throw new RuntimeException("Recruiter Verification not found");
+        }
+        existRecruiterVerification.setAuthorizationLetterUrl(recruiterVerificationDTO.getAuthorizationLetterUrl());
+        existRecruiterVerification.setBusinessLicenseUrl(recruiterVerificationDTO.getBusinessLicenseUrl());
+        existRecruiterVerification.setStatus(recruiterVerificationDTO.getStatus());
+        existRecruiterVerification.setStatus(recruiterVerificationDTO.getStatus());
+        existRecruiterVerification.setRejectReason(recruiterVerificationDTO.getRejectReason());
+        recruiterVerificationRepository.save(existRecruiterVerification);
+    }
+
+    @Override
+    public RecruiterVerifications getRecruiterVerificationById(long id) {
+        RecruiterVerifications existRecruiterVerification = recruiterVerificationRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Recruiter Verification not found"));
+        return existRecruiterVerification;
+    }
+
+    @Override
+    public List<RecruiterVerifications> getAllRecruiterVerification() {
+        return recruiterVerificationRepository.findAll();
+    }
+
+}

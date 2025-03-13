@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-// import 'package:job_portal/screens/start/login/formContent.dart';
 import 'package:job_portal/screens/start/login/login.dart';
 import 'package:job_portal/screens/start/register/formContentRegister.dart';
 
