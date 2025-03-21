@@ -1,11 +1,23 @@
+import 'dart:math';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:job_portal/models/job.dart';
+import 'package:job_portal/models/job_model.dart';
+import 'package:job_portal/screens/report/report.dart';
 import 'package:job_portal/widgets/text_icons.dart';
 
 class JobDetail extends StatelessWidget {
   final Job job;
   final bool workTime;
-  JobDetail(this.job, {this.workTime = true});
+  // final Application application;
+  JobDetail({required this.job, this.workTime = true});
+
+  String formatRequirement(String requirement) {
+    return requirement
+        .replaceAllMapped(RegExp(r"[●\•\-]"), (match) => "\n•")
+        .trim();
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -33,38 +45,49 @@ class JobDetail extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: 35,
+                  height: 30,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      children: [
-                        Container(
-                          width: 45,
-                          height: 45,
-                          padding: EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                            color: const Color.fromRGBO(158, 158, 158, .3),
-                            borderRadius: BorderRadius.circular(8),
+                    SizedBox(
+                      height: 90,
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 45,
+                            height: 45,
+                            padding: EdgeInsets.all(3),
+                            decoration: BoxDecoration(
+                              color: const Color.fromRGBO(158, 158, 158, .3),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: CachedNetworkImage(
+                              imageUrl: "${job.postedBy!.companyId!.urlAvt}",
+                              fit: BoxFit.cover,
+                            ),
                           ),
-                          child: Image.asset(job.url),
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Text(
-                          job.companyName,
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
-                        )
-                      ],
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Container(
+                            height: double.maxFinite,
+                            child: Center(
+                              child: Text(
+                                "${job.postedBy!.companyId!.name}",
+                                style: TextStyle(
+                                    fontSize: 17, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                     Row(
                       children: [
                         Icon(
-                          job.saved ? Icons.bookmark : Icons.bookmark_outline,
-                          color: job.saved
+                          true ? Icons.bookmark : Icons.bookmark_outline,
+                          color: true
                               ? Theme.of(context).primaryColor
                               : Colors.grey,
                           size: 32,
@@ -72,20 +95,54 @@ class JobDetail extends StatelessWidget {
                         SizedBox(
                           width: 8,
                         ),
-                        Icon(
-                          Icons.more_horiz,
-                          size: 30,
-                          color: const Color.fromARGB(255, 28, 28, 28),
+                        GestureDetector(
+                          onTap: () {
+                            showModalBottomSheet(
+                              backgroundColor: Colors.white,
+                              context: context,
+                              isScrollControlled: true,
+                              builder: (context) => Container(
+                                height: 60,
+                                width: double.infinity,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {},
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      Report()));
+                                        },
+                                        child: Text(
+                                          "Report",
+                                          style: TextStyle(fontSize: 20),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                          child: Icon(
+                            Icons.more_horiz,
+                            size: 30,
+                            color: const Color.fromARGB(255, 28, 28, 28),
+                          ),
                         )
                       ],
                     ),
                   ],
                 ),
                 SizedBox(
-                  height: 25,
+                  height: 20,
                 ),
                 Text(
-                  job.titleJob,
+                  "${job.title}",
                   style: TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
                 ),
                 SizedBox(
@@ -94,9 +151,9 @@ class JobDetail extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    TextIcons(Icons.location_on_sharp, job.location),
+                    TextIcons(Icons.location_on_sharp, "${job.workLocation}"),
                     workTime
-                        ? TextIcons(Icons.timelapse, job.typeWork)
+                        ? TextIcons(Icons.timelapse, "${job.workingTime}")
                         : Container(),
                   ],
                 ),
@@ -104,53 +161,41 @@ class JobDetail extends StatelessWidget {
                   height: 25,
                 ),
                 Text(
-                  "Requerement",
+                  "Description",
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
                   height: 10,
                 ),
-                ...job.requirement.map((e) => Container(
-                      margin: EdgeInsets.symmetric(vertical: 5),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            margin: EdgeInsets.only(top: 10),
-                            height: 5,
-                            width: 5,
-                            decoration: BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.circular(5)),
-                          ),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          ConstrainedBox(
-                              constraints: BoxConstraints(maxWidth: 320),
-                              child: Text(
-                                e,
-                                style: TextStyle(
-                                  wordSpacing: 2.5,
-                                  height: 1.5,
-                                ),
-                              )),
-                        ],
-                      ),
-                    )),
+                Text(
+                  "${job.description}",
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  "Requirement",
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(formatRequirement("${job.requirement}")),
                 SizedBox(
                   height: 25,
                 ),
-                Container(
+                SizedBox(
                   height: 50,
                   width: double.maxFinite,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Theme.of(context).primaryColor,
-                        foregroundColor: Colors.white,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20))),
+                      backgroundColor: Theme.of(context).primaryColor,
+                      foregroundColor: Colors.white,
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
                     onPressed: () {},
                     child: Text(
                       "Apply now",

@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:job_portal/providers/cateory_provider.dart';
+import 'package:job_portal/providers/application_provider.dart';
+import 'package:job_portal/providers/category_provider.dart';
+import 'package:job_portal/providers/job_provider.dart';
 import 'package:job_portal/screens/home/home.dart';
+import 'package:job_portal/screens/report/report.dart';
 import 'package:job_portal/screens/start/login/login.dart';
-import 'package:job_portal/screens/search/search.dart';
+import 'package:job_portal/test_dialog.dart';
 import 'package:job_portal/test_fetch_data.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized(); // 🛠️ Khởi tạo Flutter bindings
   runApp(const MyApp());
 }
 
@@ -23,9 +27,12 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (_) => CategoryProvider()
-            ..getListCategory(), //..cascade notation (ký hiệu xếp tầng), dùng để khởi tạo nay phương thức khi class được gọi
-        )
+          //giúp wiget lắng nghe sự thay đổi của dữ liệu
+          create: (_) => JobProvider(), //tạo ra 1 instance của JobProvider
+          // ..fetchJobs(), //..cascade notation (ký hiệu xếp tầng), dùng để khởi tạo nay phương thức khi class được gọi
+        ),
+        ChangeNotifierProvider(create: (_) => CategoryProvider()),
+        ChangeNotifierProvider(create: (_) => ApplicationProvider()),
       ],
       child: MaterialApp(
         title: 'Job Portal App',

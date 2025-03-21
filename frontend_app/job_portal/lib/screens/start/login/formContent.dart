@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:job_portal/repositories/user_reposotory.dart';
+import 'package:job_portal/screens/home/home.dart';
 
 class FormContent extends StatefulWidget {
-  const FormContent({Key? key}) : super(key: key);
+  FormContent({Key? key}) : super(key: key);
 
   @override
   State<FormContent> createState() => __FormContentState();
 }
 
 class __FormContentState extends State<FormContent> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
   bool _isPasswordVisible = false;
-  bool _rememberMe = false;
+  bool _rememberMe = true;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -25,10 +31,11 @@ class __FormContentState extends State<FormContent> {
           children: [
             _gap(),
             TextFormField(
+              controller: emailController,
               validator: (value) {
                 // add email validation
                 if (value == null || value.isEmpty) {
-                  return 'Please enter some texte';
+                  return 'Please enter some text';
                 }
 
                 bool emailValid = RegExp(
@@ -44,14 +51,7 @@ class __FormContentState extends State<FormContent> {
                 labelText: 'Email',
                 hintText: 'Enter your email',
                 prefixIcon: Icon(Icons.email_outlined),
-                border: OutlineInputBorder(
-                    // borderRadius: BorderRadius.circular(25),
-                    // borderSide: BorderSide(
-                    //   color: const Color.fromARGB(
-                    //       255, 171, 37, 37), // Viền khi TextField được chọn
-                    //   width: .6,
-                    // ),
-                    ),
+                border: OutlineInputBorder(),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                     color: Color.fromRGBO(67, 177, 183, .4),
@@ -71,15 +71,16 @@ class __FormContentState extends State<FormContent> {
             ),
             _gap(),
             TextFormField(
+              controller: passwordController,
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter some text';
                 }
 
-                if (value.length < 6) {
-                  return 'Password must be at least 6 characters';
+                if (value.length < 4) {
+                  return 'Password must be at least 4 characters';
                 }
-                return null;
+                // return null;
               },
               obscureText: !_isPasswordVisible,
               decoration: InputDecoration(
@@ -152,9 +153,32 @@ class __FormContentState extends State<FormContent> {
                         fontWeight: FontWeight.bold),
                   ),
                 ),
-                onPressed: () {
+                onPressed: () async {
                   if (_formKey.currentState?.validate() ?? false) {
                     /// do something
+                    try {
+                      await UserReposotory.login(emailController.text,
+                          passwordController.text, 'applicant');
+                    } catch (e) {
+                      Fluttertoast.showToast(
+                        msg: e.toString().replaceFirst("Exception: ", ""),
+                        fontSize: 17,
+                        backgroundColor: Colors.redAccent,
+                        gravity: ToastGravity.BOTTOM,
+                      );
+                      return;
+                    }
+                    Fluttertoast.showToast(
+                        msg: "Đăng nhập thành công",
+                        fontSize: 16,
+                        backgroundColor: Theme.of(context).primaryColor,
+                        gravity: ToastGravity.CENTER,
+                        toastLength: Toast.LENGTH_SHORT);
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomePage()),
+                      (rount) => false,
+                    );
                   }
                 },
               ),

@@ -21,7 +21,7 @@ class TextIcons extends StatelessWidget {
         ),
         Text(
           text,
-          style: TextStyle(color: Colors.grey, fontSize: 15),
+          style: TextStyle(color: Colors.grey, fontSize: 13),
         )
       ],
     );

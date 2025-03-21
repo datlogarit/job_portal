@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.util.Date;
 
 @Service
 @RequiredArgsConstructor
@@ -23,25 +25,28 @@ public class ApplicantService implements IApplicantService {
 
     @Override
     public void crateApplicant(User_ApplicantDTO userApplicantDTO) {
+
+        if (iApplicantRepository.findByEmail(userApplicantDTO.getEmail()) != null) {
+            throw new RuntimeException("Email đã đã được sử dụng");
+        }
         Users newUser = Users.builder()
                 .email(userApplicantDTO.getEmail())
                 .password(userApplicantDTO.getPassword())
                 .name(userApplicantDTO.getName())
-                .phoneNumber(userApplicantDTO.getPhoneNumber())
-                .dob(userApplicantDTO.getDob())
+                .dob(LocalDate.of(1, 1, 1))
                 .role("applicant")
                 .urlAvatar("5726568_avtUser.png")
-                .isActive(userApplicantDTO.getIsActive())
+                .isActive(1)
                 .build();
         Applicants newApplicant = Applicants.builder()
                 .userId(newUser)
-                .resume(userApplicantDTO.getResume())
-                .gender(userApplicantDTO.getGender())
-                .workingTime(userApplicantDTO.getWorkingTime())
-                .profession(userApplicantDTO.getProfession())
-                .desiredLocation(userApplicantDTO.getDesiredLocation())
-                .desiredPosition(userApplicantDTO.getDesiredPosition())
-                .workExperience(userApplicantDTO.getWorkExperience())
+                .resume("")
+                .gender("")
+                .workingTime("")
+                .profession("")
+                .desiredLocation("")
+                .desiredPosition("")
+                .workExperience("")
                 .build();
         iApplicantRepository.save(newApplicant);
     }

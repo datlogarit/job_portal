@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -21,7 +22,7 @@ public class User_RecruiterDTO {
     @JsonProperty("phone_number")
     private String phoneNumber;
 
-    private Date dob;
+    private LocalDate dob;
 
     private String role;
 

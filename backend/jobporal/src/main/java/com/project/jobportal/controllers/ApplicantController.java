@@ -1,5 +1,6 @@
 package com.project.jobportal.controllers;
 
+import com.project.jobportal.DTOs.UserDTO;
 import com.project.jobportal.DTOs.User_ApplicantDTO;
 import com.project.jobportal.models.Applicants;
 import com.project.jobportal.services.ApplicantService;
@@ -28,6 +29,7 @@ import java.util.List;
 public class ApplicantController {
     private final ApplicantService applicantService;
     private final HandleFile handleFile;
+
 
     @PostMapping("")
     public ResponseEntity<?> createInfoApplicant(@Valid @RequestBody User_ApplicantDTO userApplicantDTO, BindingResult result) {

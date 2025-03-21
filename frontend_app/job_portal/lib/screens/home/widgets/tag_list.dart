@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class TagLiss extends StatefulWidget {
+class TagList extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -8,7 +8,7 @@ class TagLiss extends StatefulWidget {
   }
 }
 
-class _TagListState extends State<TagLiss> {
+class _TagListState extends State<TagList> {
   final List<String> tagList = [
     '💡Recommened',
     'All',
@@ -26,6 +26,7 @@ class _TagListState extends State<TagLiss> {
       child: ListView.separated(
           scrollDirection: Axis.horizontal,
           itemBuilder: (_, index) => GestureDetector(
+                //gesture: điệu bộ, cử chỉ
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: 8, horizontal: 20),
                   decoration: BoxDecoration(

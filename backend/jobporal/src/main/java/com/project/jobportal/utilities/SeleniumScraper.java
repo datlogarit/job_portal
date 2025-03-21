@@ -69,13 +69,14 @@ public class SeleniumScraper {
 
         WebDriverManager.chromedriver().setup();
         WebDriver driver = setupDriver();
-        try {//xong trang 27
-            for (int i = 27; i <= 27; i++) { // Crawl 1 trang
+        try {//xong job 50 cua trang 50
+            //xong phần job về IT
+            for (int i = 8; i <= 17; i++) { // Crawl 1 trang
 
 
-                driver.get("https://www.vietnamworks.com/viec-lam?page=" + i);
+                driver.get(String.format("https://www.vietnamworks.com/viec-lam?q=it-support-help-desk&page=%d&sorting=relevant", i));
 
-                WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
+                WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(20));
                 wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".view_job_item.search_list")));
                 JavascriptExecutor js = (JavascriptExecutor) driver;
                 int scrolls = 2; // Số lần cuộn xuống (điều chỉnh theo trang web)
@@ -95,6 +96,7 @@ public class SeleniumScraper {
                 for (String jobUrl : jobUrls) {
 
                     driver.get(jobUrl); // Mở trang chi tiết của job
+//                    WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
                     wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".sc-ab270149-0.hAejeW")));
                     String jobTitle = driver.findElement(By.cssSelector(".sc-ab270149-0.hAejeW")).getText();
                     String workLocation = driver.findElement(By.cssSelector(".sc-2557ebc-1.ebdjLi")).getText();

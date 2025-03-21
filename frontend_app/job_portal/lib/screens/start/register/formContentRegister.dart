@@ -1,23 +1,27 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:job_portal/repositories/application_repository.dart';
+import 'package:job_portal/repositories/user_reposotory.dart';
+import 'package:job_portal/screens/start/login/login.dart';
 
 class FormContentRegister extends StatefulWidget {
   FormContentRegister({Key? key}) : super(key: key);
 
   @override
   State<FormContentRegister> createState() => __FormContentRegisterState();
-  Dio dio = Dio(BaseOptions(baseUrl: "http://localhost:8088/api/v1"));
 }
 
 class __FormContentRegisterState extends State<FormContentRegister> {
   bool _isPasswordVisible = false;
   bool _isRetypePasswordVisible = false;
   bool _isAgree = true;
+  // bool _autoValidate = true;
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _retypePasswordController =
       TextEditingController();
-
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +34,8 @@ class __FormContentRegisterState extends State<FormContentRegister> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextFormField(
+              autocorrect: false,
+              controller: _nameController,
               validator: (value) {
                 // add email validation
                 if (value == null || value.isEmpty) {
@@ -41,6 +47,8 @@ class __FormContentRegisterState extends State<FormContentRegister> {
               decoration: InputDecoration(
                 labelText: 'Full Name',
                 hintText: 'Enter your name',
+                hintStyle: TextStyle(color: Colors.grey),
+                // labelStyle: TextStyle(color: Colors.grey),
                 prefixIcon: Icon(Icons.person_outline),
                 border: OutlineInputBorder(),
                 enabledBorder: OutlineInputBorder(
@@ -59,6 +67,7 @@ class __FormContentRegisterState extends State<FormContentRegister> {
             ),
             _gap(),
             TextFormField(
+              controller: _emailController,
               validator: (value) {
                 // add email validation
                 if (value == null || value.isEmpty) {
@@ -77,6 +86,7 @@ class __FormContentRegisterState extends State<FormContentRegister> {
               decoration: InputDecoration(
                 labelText: 'Email',
                 hintText: 'Enter your email',
+                hintStyle: TextStyle(color: Colors.grey),
                 prefixIcon: Icon(Icons.email_outlined),
                 border: OutlineInputBorder(),
                 enabledBorder: OutlineInputBorder(
@@ -110,6 +120,7 @@ class __FormContentRegisterState extends State<FormContentRegister> {
               decoration: InputDecoration(
                   labelText: 'Password',
                   hintText: 'Enter your password',
+                  hintStyle: TextStyle(color: Colors.grey),
                   prefixIcon: const Icon(Icons.lock_outline_rounded),
                   border: OutlineInputBorder(),
                   enabledBorder: OutlineInputBorder(
@@ -154,7 +165,8 @@ class __FormContentRegisterState extends State<FormContentRegister> {
               obscureText: !_isRetypePasswordVisible,
               decoration: InputDecoration(
                   labelText: 'Retype Password',
-                  hintText: 'Retype password',
+                  hintText: 'Retype Password',
+                  hintStyle: TextStyle(color: Colors.grey),
                   prefixIcon: const Icon(Icons.lock_outline_rounded),
                   border: OutlineInputBorder(),
                   enabledBorder: OutlineInputBorder(
@@ -221,9 +233,32 @@ class __FormContentRegisterState extends State<FormContentRegister> {
                         fontWeight: FontWeight.bold),
                   ),
                 ),
-                onPressed: () {
+                onPressed: () async {
                   if (_formKey.currentState?.validate() ?? false) {
                     /// do something
+                    try {
+                      await UserReposotory.registerApplicant(
+                          _nameController.text,
+                          _emailController.text,
+                          _passwordController.text);
+                    } catch (e) {
+                      Fluttertoast.showToast(
+                        msg: e.toString().replaceFirst("Exception: ", ""),
+                        backgroundColor: Colors.redAccent,
+                        fontSize: 17,
+                        gravity: ToastGravity.BOTTOM,
+                      );
+                      return;
+                    }
+                    Fluttertoast.showToast(
+                        msg: "Đăng ký thành công !",
+                        gravity: ToastGravity.CENTER,
+                        toastLength: Toast.LENGTH_LONG,
+                        backgroundColor: Theme.of(context).primaryColor,
+                        fontSize: 16);
+                    await Future.delayed(Duration(milliseconds: 1500));
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => Login()));
                   }
                 },
               ),

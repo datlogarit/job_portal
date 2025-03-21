@@ -4,5 +4,5 @@ import com.project.jobportal.models.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IUserRepository extends JpaRepository<Users, Long> {
-    Users findByEmailAndPassword(String email, String password);
+    Users findByEmailAndPasswordAndRole(String email, String password, String role);
 }

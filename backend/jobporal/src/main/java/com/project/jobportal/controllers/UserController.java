@@ -24,9 +24,9 @@ public class UserController {
 
 
     //truyen du lieu qua dau
-    @GetMapping("login")
-    public ResponseEntity<?> login(@RequestBody UserDTO userDTO) {
-        return ResponseEntity.ok(userService.login(userDTO.getEmail(), userDTO.getPassword()));
+    @PostMapping("login/{role}")
+    public ResponseEntity<?> login(@RequestBody UserDTO userDTO, @PathVariable("role") String role) {
+        return ResponseEntity.ok(userService.login(userDTO.getEmail(), userDTO.getPassword(), role));
     }
 
     //cac quyen cua admin

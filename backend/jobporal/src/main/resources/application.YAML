@@ -7,8 +7,8 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
-#    thay vi viet cac cau lenh vi du select * from name_table thi ta se thao tac voi cac doi tuong duoc
-#    anh xa tu csdl
+    #    thay vi viet cac cau lenh vi du select * from name_table thi ta se thao tac voi cac doi tuong duoc
+    #    anh xa tu csdl
     database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
       ddl-auto: none #cac cau lenh thay doi cau truc(tao bang, them cot) database se khong duoc dung

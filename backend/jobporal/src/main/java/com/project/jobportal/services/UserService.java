@@ -33,10 +33,10 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public Users login(String email, String password) {
-        Users users = iUserRepository.findByEmailAndPassword(email, password);
+    public Users login(String email, String password, String role) {
+        Users users = iUserRepository.findByEmailAndPasswordAndRole(email, password, role);
         if (users == null) {
-            throw new RuntimeException("data not found");
+            throw new RuntimeException("Tài khoản hoặc mật khẩu không đúng");
         }
         return users;
     }

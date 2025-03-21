@@ -28,7 +28,7 @@ class SearchInput extends StatelessWidget {
                   borderRadius: BorderRadius.circular(30.0),
                   borderSide: BorderSide(
                     color: const Color.fromRGBO(158, 158, 158,
-                        .4), // Viền khi TextField không được chọn
+                        .8), // Viền khi TextField không được chọn
                     width: .3,
                   ),
                 ),

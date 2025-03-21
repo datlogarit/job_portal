@@ -4,6 +4,7 @@ import com.project.jobportal.services.JobService;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 
@@ -33,7 +34,7 @@ public class Users extends BaseEntity {
     private String phoneNumber;
 
     @Column(name = "dob")
-    private Date dob;
+    private LocalDate dob;
 
     @Column(name = "role")
     private String role;

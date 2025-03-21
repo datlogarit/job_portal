@@ -14,7 +14,7 @@ public interface IUserService {
 
     List<User> getAllUser();
 
-    Users login(String email, String password);
+    Users login(String email, String password, String role);
 
     List<User> filterJobs(String title, String position, Integer experience, Integer minSalary, Integer maxSalary);
 
