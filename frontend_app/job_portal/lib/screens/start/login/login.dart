@@ -78,7 +78,7 @@ class Login extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "Don't hava account  ",
+                            "Don't have account  ",
                             style: TextStyle(fontSize: 15),
                           ),
                           GestureDetector(

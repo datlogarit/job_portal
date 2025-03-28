@@ -71,7 +71,7 @@ public class SeleniumScraper {
         WebDriver driver = setupDriver();
         try {//xong job 50 cua trang 50
             //xong phần job về IT
-            for (int i = 8; i <= 17; i++) { // Crawl 1 trang
+            for (int i = 51; i <= 60; i++) { // Crawl 1 trang
 
 
                 driver.get(String.format("https://www.vietnamworks.com/viec-lam?q=it-support-help-desk&page=%d&sorting=relevant", i));

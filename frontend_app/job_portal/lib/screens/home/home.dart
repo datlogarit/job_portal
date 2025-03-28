@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:job_portal/models/user_model.dart';
+import 'package:job_portal/providers/user_provider.dart';
 import 'package:job_portal/screens/home/widgets/home_app_bar.dart';
 import 'package:job_portal/screens/home/widgets/job_list.dart';
 import 'package:job_portal/screens/home/widgets/search_card.dart';
 import 'package:job_portal/screens/home/widgets/tag_list.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
+  User user = User();
+  HomePage({required this.user});
   @override
   Widget build(BuildContext context) {
+    final userProvider = context.watch<UserProvider>();
     // TODO: implement build
     return Scaffold(
       body: Stack(
@@ -29,7 +35,13 @@ class HomePage extends StatelessWidget {
           ),
           SafeArea(
             child: Column(
-              children: [HomeAppBar(), SearchCard(), TagList(), JobList()],
+              children: [
+                // Text("${userProvider.user.email}"),
+                HomeAppBar(),
+                SearchCard(),
+                TagList(),
+                JobList(),
+              ],
             ),
           )
         ],

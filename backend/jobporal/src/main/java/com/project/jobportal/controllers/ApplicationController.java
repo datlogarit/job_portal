@@ -20,15 +20,24 @@ public class ApplicationController {
         return ResponseEntity.ok("create applicant successfully");
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> updateApplication(@PathVariable long id, @RequestBody ApplicationDTO applicationDTO) {
-        applicationService.updateApplication(id, applicationDTO);
-        return ResponseEntity.ok("update applicant successfully with id = " + id);
+    @PutMapping("/{applicantId}/{jobId}")
+    public ResponseEntity<?> updateApplication(@PathVariable long applicantId, @PathVariable long jobId,
+                                               @RequestBody ApplicationDTO applicationDTO) {
+        applicationService.updateApplication(applicantId, jobId, applicationDTO);
+        return ResponseEntity.ok(String.format("update application successfully with applicantId = %d and jobId = %d", applicantId, jobId));
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getApplicationById(@PathVariable long id) {
-        return ResponseEntity.ok(applicationService.getApplicationById(id));
+    @PutMapping("/save/{applicantId}/{jobId}")
+    public ResponseEntity<?> updateSaveApplication(@PathVariable long applicantId, @PathVariable long jobId,
+                                                   @RequestBody ApplicationDTO applicationDTO) {
+        applicationService.updateSaveApplication(applicantId, jobId, applicationDTO);
+        return ResponseEntity.ok(String.format("update save application successfully with applicantId = %d and jobId = %d", applicantId, jobId));
+    }
+
+    @GetMapping("/info")
+    public ResponseEntity<?> getApplicationById(@RequestParam("applicantId") long applicantId,
+                                                @RequestParam("jobId") long jobId) {
+        return ResponseEntity.ok(applicationService.findByApplicantIdAndJobId(applicantId, jobId));
     }
 
     @GetMapping("")

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:job_portal/providers/user_provider.dart';
 import 'package:job_portal/repositories/user_reposotory.dart';
 import 'package:job_portal/screens/home/home.dart';
+import 'package:provider/provider.dart';
 
 class FormContent extends StatefulWidget {
   FormContent({Key? key}) : super(key: key);
@@ -11,8 +13,8 @@ class FormContent extends StatefulWidget {
 }
 
 class __FormContentState extends State<FormContent> {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   bool _isPasswordVisible = false;
   bool _rememberMe = true;
@@ -21,6 +23,8 @@ class __FormContentState extends State<FormContent> {
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = context.watch<UserProvider>();
+
     return Container(
       constraints: const BoxConstraints(maxWidth: 300),
       child: Form(
@@ -31,7 +35,7 @@ class __FormContentState extends State<FormContent> {
           children: [
             _gap(),
             TextFormField(
-              controller: emailController,
+              controller: _emailController,
               validator: (value) {
                 // add email validation
                 if (value == null || value.isEmpty) {
@@ -71,7 +75,7 @@ class __FormContentState extends State<FormContent> {
             ),
             _gap(),
             TextFormField(
-              controller: passwordController,
+              controller: _passwordController,
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter some text';
@@ -157,8 +161,12 @@ class __FormContentState extends State<FormContent> {
                   if (_formKey.currentState?.validate() ?? false) {
                     /// do something
                     try {
-                      await UserReposotory.login(emailController.text,
-                          passwordController.text, 'applicant');
+                      await userProvider.getUser(
+                          _emailController.text,
+                          _passwordController.text,
+                          "applicant"); //bắt đầu ktra, fetch và gán giá trị vào cho _user
+                      // await UserReposotory.login(_emailController.text,
+                      //     _passwordController.text, 'applicant');
                     } catch (e) {
                       Fluttertoast.showToast(
                         msg: e.toString().replaceFirst("Exception: ", ""),
@@ -176,7 +184,11 @@ class __FormContentState extends State<FormContent> {
                         toastLength: Toast.LENGTH_SHORT);
                     Navigator.pushAndRemoveUntil(
                       context,
-                      MaterialPageRoute(builder: (context) => HomePage()),
+                      MaterialPageRoute(
+                          builder: (context) => HomePage(
+                                user: userProvider
+                                    .user, //truyền đối tượng user này cho home page. home page sẽ nhận được đúng user đó
+                              )),
                       (rount) => false,
                     );
                   }

@@ -3,13 +3,16 @@ import 'dart:math';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:job_portal/models/job_model.dart';
+import 'package:job_portal/providers/application_provider.dart';
 import 'package:job_portal/screens/report/report.dart';
+import 'package:job_portal/widgets/save_icon.dart';
 import 'package:job_portal/widgets/text_icons.dart';
+import 'package:provider/provider.dart';
 
 class JobDetail extends StatelessWidget {
   final Job job;
   final bool workTime;
-  // final Application application;
+
   JobDetail({required this.job, this.workTime = true});
 
   String formatRequirement(String requirement) {
@@ -20,6 +23,7 @@ class JobDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final applicationProvider = context.read<ApplicationProvider>();
     // TODO: implement build
     return Container(
         height: 580,
@@ -48,10 +52,11 @@ class JobDetail extends StatelessWidget {
                   height: 30,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //avt với company name
                   children: [
                     SizedBox(
-                      height: 90,
+                      height: 68,
+                      width: 280,
                       child: Row(
                         children: [
                           Container(
@@ -63,7 +68,7 @@ class JobDetail extends StatelessWidget {
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: CachedNetworkImage(
-                              imageUrl: "${job.postedBy!.companyId!.urlAvt}",
+                              imageUrl: job.postedBy!.companyId!.urlAvt!,
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -71,13 +76,12 @@ class JobDetail extends StatelessWidget {
                             width: 10,
                           ),
                           Container(
-                            height: double.maxFinite,
-                            child: Center(
-                              child: Text(
-                                "${job.postedBy!.companyId!.name}",
-                                style: TextStyle(
-                                    fontSize: 17, fontWeight: FontWeight.bold),
-                              ),
+                            width: 220,
+                            child: Text(
+                              Stringhelper.formatText(
+                                  job.postedBy!.companyId!.name!, 200),
+                              style: TextStyle(
+                                  fontSize: 17, fontWeight: FontWeight.bold),
                             ),
                           )
                         ],
@@ -85,13 +89,16 @@ class JobDetail extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        Icon(
-                          true ? Icons.bookmark : Icons.bookmark_outline,
-                          color: true
-                              ? Theme.of(context).primaryColor
-                              : Colors.grey,
-                          size: 32,
-                        ),
+                        // Icon(
+                        //   applicationProvider.isSave
+                        //       ? Icons.bookmark
+                        //       : Icons.bookmark_outline,
+                        //   color: applicationProvider.isSave
+                        //       ? Theme.of(context).primaryColor
+                        //       : Colors.grey,
+                        //   size: 32,
+                        // ),
+                        SaveIcon(job: job),
                         SizedBox(
                           width: 8,
                         ),
@@ -112,10 +119,11 @@ class JobDetail extends StatelessWidget {
                                       onTap: () {},
                                       child: GestureDetector(
                                         onTap: () {
-                                          Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      Report()));
+                                          Navigator.of(context)
+                                              .push(MaterialPageRoute(
+                                                  builder: (context) => Report(
+                                                        job: job,
+                                                      )));
                                         },
                                         child: Text(
                                           "Report",
@@ -142,7 +150,7 @@ class JobDetail extends StatelessWidget {
                   height: 20,
                 ),
                 Text(
-                  "${job.title}",
+                  job.title!,
                   style: TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
                 ),
                 SizedBox(
@@ -153,7 +161,8 @@ class JobDetail extends StatelessWidget {
                   children: [
                     TextIcons(Icons.location_on_sharp, "${job.workLocation}"),
                     workTime
-                        ? TextIcons(Icons.timelapse, "${job.workingTime}")
+                        ? TextIcons(Icons.timelapse,
+                            Stringhelper.formatText("${job.workingTime}", 200))
                         : Container(),
                   ],
                 ),
@@ -168,7 +177,7 @@ class JobDetail extends StatelessWidget {
                   height: 10,
                 ),
                 Text(
-                  "${job.description}",
+                  job.description!,
                 ),
                 SizedBox(
                   height: 20,
@@ -180,7 +189,7 @@ class JobDetail extends StatelessWidget {
                 SizedBox(
                   height: 10,
                 ),
-                Text(formatRequirement("${job.requirement}")),
+                Text(formatRequirement(job.requirement!)),
                 SizedBox(
                   height: 25,
                 ),
@@ -196,7 +205,11 @@ class JobDetail extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20),
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      /*nhấn vào apply thì update trạng thái thành applied và
+                      
+                      */
+                    },
                     child: Text(
                       "Apply now",
                       style:
@@ -211,5 +224,40 @@ class JobDetail extends StatelessWidget {
             ),
           ),
         ));
+  }
+}
+
+class Stringhelper {
+  static String formatText(String title, int character) {
+    // Viết hoa chữ cái đầu mỗi từ
+    String capitalizedTitle = title
+        .split(' ')
+        .map((word) => word.isNotEmpty
+            ? word[0].toUpperCase() + word.substring(1).toLowerCase()
+            : '')
+        .join(' ');
+    // Giới hạn 15 ký tự, thêm "..." nếu quá dài
+    return capitalizedTitle.length > character
+        ? "${capitalizedTitle.substring(0, character)}..."
+        : capitalizedTitle;
+  }
+
+  static String formatLocation(String location) {
+    return location.contains(',')
+        ? location
+            .split(',')[0]
+            .trim() // Lấy phần trước dấu ',' và loại bỏ khoảng trắng
+        : location.trim(); // Nếu không có dấu ',', giữ nguyên
+  }
+
+  static String formatSalary(int? salary) {
+    String salaryStr = salary.toString();
+    List<String> parts = [];
+    while (salaryStr.length > 3) {
+      parts.insert(0, salaryStr.substring(salaryStr.length - 3));
+      salaryStr = salaryStr.substring(0, salaryStr.length - 3);
+    }
+    parts.insert(0, salaryStr);
+    return parts.join('.');
   }
 }

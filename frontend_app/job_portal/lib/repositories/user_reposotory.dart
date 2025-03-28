@@ -18,7 +18,7 @@ class UserReposotory {
         },
       ),
     );
-    var formatUtf8 = utf8.decode(data.bodyBytes);
+    var formatUtf8 = utf8.decode(data.bodyBytes); //
     Map<String, dynamic> dataObj = jsonDecode(formatUtf8);
 
     if (data.statusCode == 200) {

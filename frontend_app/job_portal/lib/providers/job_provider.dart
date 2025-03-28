@@ -9,6 +9,7 @@ class JobProvider extends ChangeNotifier {
   List<Job> get jobs => _jobs; //getter để lấy giá trị của biến private
   bool get isLoading => _isLoading;
   JobProvider() {
+    //khởi tạo là tự động fetch job
     getJobs();
   }
   Future<void> getJobs() async {
@@ -24,3 +25,5 @@ class JobProvider extends ChangeNotifier {
     notifyListeners(); //🔥 Thông báo rằng _isLoading và_jobs đã thay đổi lần nữa
   }
 }
+//thực ra ở class này không có gì đặc biệt, nó chỉ hỗ trợ thông báo tới UI
+// khi có sự thay đổi dữ liệu bằng notifyListeners;

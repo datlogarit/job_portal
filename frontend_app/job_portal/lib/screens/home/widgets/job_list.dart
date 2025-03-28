@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:job_portal/providers/application_provider.dart';
 import 'package:job_portal/providers/job_provider.dart';
 import 'package:job_portal/screens/home/widgets/job_card.dart';
 import 'package:job_portal/screens/home/widgets/job_detail.dart';
@@ -7,8 +8,9 @@ import 'package:provider/provider.dart';
 class JobList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // Future.microtask(() => context.watch<JobProvider>().getJobs());
     final jobProvider = context.watch<JobProvider>();
+    final applicationProvider = context.watch<ApplicationProvider>();
+    // final applicationProvider = context.watch<ApplicationProvider>();
 
     // final jobProvider =
     // Provider.of<JobProvider>(context); //lấy dữ liệu trực tiếp
@@ -22,11 +24,8 @@ class JobList extends StatelessWidget {
       return Center(child: CircularProgressIndicator());
     }
 
-    if (jobProvider.jobs.isEmpty) {
-      return Center(child: Text("Không có công việc nào."));
-    }
     return Container(
-      height: 170,
+      height: 180,
       // height: 180,
       margin: EdgeInsets.symmetric(vertical: 28, horizontal: 28),
       child: ListView.separated(

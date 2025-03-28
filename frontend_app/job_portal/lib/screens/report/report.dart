@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:job_portal/models/job_model.dart';
 import 'package:job_portal/repositories/report_repository.dart';
 import 'package:job_portal/screens/report/widgets/radio_list.dart';
 
 class Report extends StatelessWidget {
+  Job job = Job();
   final TextEditingController reasonController = TextEditingController();
-  Report({super.key});
+  Report({super.key, required this.job});
 
   @override
   Widget build(BuildContext context) {
@@ -36,11 +38,11 @@ class Report extends StatelessWidget {
                 fontSize: 20,
               ),
             ),
-            SizedBox(width: 15)
+            SizedBox(width: 16)
           ],
         ),
         centerTitle: true,
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Color.fromRGBO(67, 177, 183, .8),
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(vertical: 20, horizontal: 12),
@@ -81,6 +83,7 @@ class Report extends StatelessWidget {
             //   height: 18,
             // ),
             Container(
+              width: double.maxFinite,
               decoration: BoxDecoration(
                 border: Border(
                   bottom: BorderSide(
@@ -102,7 +105,7 @@ class Report extends StatelessWidget {
                       height: 5,
                     ),
                     Text(
-                      "Content Marketing (Định hướng lên trưởng nhóm) - Lương cứng 13 - 16 Triệu - Hà Nội",
+                      job.title!,
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                     )

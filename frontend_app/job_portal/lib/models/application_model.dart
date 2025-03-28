@@ -1,4 +1,3 @@
-import 'package:job_portal/models/applicant_model.dart';
 import 'package:job_portal/models/job_model.dart';
 
 class Application {

@@ -73,7 +73,7 @@ public class JobController {
             PageRequest pageRequest = PageRequest.of(page, limit, Sort.by("minSalary").descending());
             jobsPage = jobService.searchJobByCompany(companyId, pageRequest);
         } else {
-            PageRequest pageRequest = PageRequest.of(page, limit, Sort.by("id").descending());
+            PageRequest pageRequest = PageRequest.of(page, limit, Sort.by("id").ascending());
             jobsPage = jobService.getAllJob(pageRequest);
         }
         int totalPage = jobsPage.getTotalPages();// lấy ra số trang để bắn cho frontend

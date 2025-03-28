@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:job_portal/providers/user_provider.dart';
+import 'package:provider/provider.dart';
 
 class RadioList extends StatefulWidget {
   final TextEditingController //dùng quản lý văn bản nhập vào, lấy nội dung
@@ -16,6 +18,7 @@ class _RadioListState extends State<RadioList> {
   bool visibleTextField = false;
   @override
   Widget build(BuildContext context) {
+    final userProvider = context.watch<UserProvider>();
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -115,7 +118,7 @@ class _RadioListState extends State<RadioList> {
                   ),
                 ),
               )
-            : Container()
+            : Container(),
       ],
     );
   }

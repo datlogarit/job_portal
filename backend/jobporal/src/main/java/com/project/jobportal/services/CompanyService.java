@@ -33,13 +33,31 @@ public class CompanyService implements ICompanyService {
 
     @Override
     public void updateCompany(long id, CompanyDTO companyDTO) {
+        boolean isUpdate = false;
         Companies existCompany = getCompanyById(id);
-        existCompany.setName(companyDTO.getName());
-        existCompany.setLocation(existCompany.getLocation());
-        existCompany.setIntroduction(existCompany.getIntroduction());
-        existCompany.setUrl_avt(existCompany.getUrl_avt());
-        existCompany.setHotline(existCompany.getHotline());
-        iCompanyRepository.save(existCompany);
+        if (companyDTO.getName() != null) {
+            existCompany.setName(companyDTO.getName());
+            isUpdate = true;
+        }
+        if (companyDTO.getLocation() != null) {
+            existCompany.setLocation(companyDTO.getLocation());
+            isUpdate = true;
+        }
+        if (companyDTO.getIntroduction() != null) {
+            existCompany.setIntroduction(companyDTO.getIntroduction());
+            isUpdate = true;
+        }
+        if (companyDTO.getAvtUrl() != null) {
+            existCompany.setUrl_avt(companyDTO.getAvtUrl());
+            isUpdate = true;
+        }
+        if (companyDTO.getHotline() != null) {
+            existCompany.setHotline(companyDTO.getHotline());
+            isUpdate = true;
+        }
+        if (isUpdate) {
+            iCompanyRepository.save(existCompany);
+        }
     }
 
 

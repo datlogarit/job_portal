@@ -3,11 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:job_portal/providers/application_provider.dart';
 import 'package:job_portal/providers/category_provider.dart';
 import 'package:job_portal/providers/job_provider.dart';
-import 'package:job_portal/screens/home/home.dart';
+import 'package:job_portal/providers/user_provider.dart';
+import 'package:job_portal/screens/notification/notification.dart';
+import 'package:job_portal/screens/notification/test_card.dart';
 import 'package:job_portal/screens/report/report.dart';
 import 'package:job_portal/screens/start/login/login.dart';
-import 'package:job_portal/test_dialog.dart';
-import 'package:job_portal/test_fetch_data.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -21,6 +21,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    //hàm trả về 1 cây widget
+    //khi state thay đổi thì sẽ gọi lại hàm build để vẽ lại giao diện
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(statusBarColor: Colors.transparent),
     );
@@ -31,8 +33,10 @@ class MyApp extends StatelessWidget {
           create: (_) => JobProvider(), //tạo ra 1 instance của JobProvider
           // ..fetchJobs(), //..cascade notation (ký hiệu xếp tầng), dùng để khởi tạo nay phương thức khi class được gọi
         ),
-        ChangeNotifierProvider(create: (_) => CategoryProvider()),
+        ChangeNotifierProvider(
+            create: (_) => CategoryProvider()), //ở đây các instance là duy nhất
         ChangeNotifierProvider(create: (_) => ApplicationProvider()),
+        ChangeNotifierProvider(create: (_) => UserProvider())
       ],
       child: MaterialApp(
         title: 'Job Portal App',
@@ -43,7 +47,7 @@ class MyApp extends StatelessWidget {
             secondary: Color(0xFFFED408),
           ),
         ),
-        home: Login(),
+        home: CustomNotification(),
         debugShowCheckedModeBanner: false,
       ),
     );
