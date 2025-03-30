@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class UserReposotory {
@@ -52,7 +50,6 @@ class UserReposotory {
       print("register successfully");
       return true;
     } else {
-      int statusCode = data.statusCode;
       String utf8Body =
           utf8.decode(data.bodyBytes); //giải mã dữ liệu từ mảng byte thành UTF8
       String content = jsonDecode(utf8Body)['message']; //chuyển từ json về map

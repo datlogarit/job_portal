@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:job_portal/models/applicant_model.dart';
-import 'package:job_portal/models/application_model.dart';
 import 'package:job_portal/models/job_model.dart';
 import 'package:job_portal/providers/application_provider.dart';
 import 'package:job_portal/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
 class SaveIcon extends StatefulWidget {
-  Job job = Job();
-  SaveIcon({super.key, required this.job});
+  final Job job;
+  const SaveIcon({super.key, required this.job});
 
   @override
   State<SaveIcon> createState() => _SaveIconState();
@@ -19,7 +17,6 @@ class _SaveIconState extends State<SaveIcon> {
   bool isSave = false;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getApplication();
   }

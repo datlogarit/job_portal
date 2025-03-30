@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:job_portal/providers/user_provider.dart';
+import 'package:job_portal/screens/notification/notification.dart';
+import 'package:provider/provider.dart';
 
 class HomeAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final userProvider = context.read<UserProvider>();
     // TODO: implement build
     return Padding(
       padding: const EdgeInsets.only(top: 10, right: 15, left: 15),
@@ -35,10 +39,16 @@ class HomeAppBar extends StatelessWidget {
                 padding: EdgeInsets.only(top: 30, right: 15),
                 child: Stack(
                   children: [
-                    Icon(
-                      Icons.notifications_none_outlined,
-                      size: 32,
-                      color: Colors.grey,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => CustomNotification()));
+                      },
+                      child: Icon(
+                        Icons.notifications_none_outlined,
+                        size: 32,
+                        color: Colors.grey,
+                      ),
                     ),
                     Positioned(
                         top: 0,

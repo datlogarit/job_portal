@@ -24,6 +24,7 @@ public class NotificationService implements INotificationService {
                 .content(notificationDTO.getContent())
                 .jobRelated(jobs)
                 .applicationId(applications)
+                .categoryNotification(notificationDTO.getCategoryNotification())
                 .build();
         iNotificationRepository.save(newNotification);
     }

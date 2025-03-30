@@ -14,4 +14,7 @@ public class NotificationDTO {
 
     @JsonProperty(value = "application_id")
     private long applicationId;
+
+    @JsonProperty("categories_notification")
+    private String categoryNotification;
 }

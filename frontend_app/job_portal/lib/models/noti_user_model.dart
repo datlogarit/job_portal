@@ -15,7 +15,7 @@ class NotiUser {
     idNoti = json['idNoti'] != null
         ? new Notification.fromJson(json['idNoti'])
         : null;
-    idUser = json['idUser'] != null ? new User.fromJson(json['idUser']) : null;
+    // idUser = json['idUser'] != null ? new User.fromJson(json['idUser']) : null;
     isRead = json['isRead'];
   }
 
@@ -27,9 +27,9 @@ class NotiUser {
     if (this.idNoti != null) {
       data['idNoti'] = this.idNoti!.toJson();
     }
-    if (this.idUser != null) {
-      data['idUser'] = this.idUser!.toJson();
-    }
+    // if (this.idUser != null) {
+    //   data['idUser'] = this.idUser!.toJson();
+    // }
     data['isRead'] = this.isRead;
     return data;
   }

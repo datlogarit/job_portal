@@ -19,4 +19,6 @@ public class ApplicationDTO {
 
     @JsonProperty("is_read")
     private int isRead;
+
+
 }

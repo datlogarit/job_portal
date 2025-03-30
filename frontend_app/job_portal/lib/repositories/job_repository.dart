@@ -14,7 +14,9 @@ class JobRepository {
           utf8.decode(response.bodyBytes); //giải mã mảng byte thành string
       List<dynamic> data = jsonDecode(
           utf8Body); //có thể chuyển về đối tượng trong dart (Map hoặc List - trong TH này là List)
+
       return data.map((job) => Job.fromJson(job)).toList();
+      // print(data[1)
     } else {
       throw Exception('Failed to load jobs');
     }

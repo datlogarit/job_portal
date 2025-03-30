@@ -9,7 +9,7 @@ class Notification {
   String? content;
   Job? jobRelated;
   Application? applicationId;
-
+  String? categoryNotification;
   Notification(
       {this.createdAt,
       this.updatedAt,
@@ -17,7 +17,8 @@ class Notification {
       this.title,
       this.content,
       this.jobRelated,
-      this.applicationId});
+      this.applicationId,
+      this.categoryNotification});
 
   Notification.fromJson(Map<String, dynamic> json) {
     createdAt = json['createdAt'];
@@ -31,6 +32,7 @@ class Notification {
     applicationId = json['applicationId'] != null
         ? new Application.fromJson(json['applicationId'])
         : null;
+    categoryNotification = json['categoryNotification'];
   }
 
   Map<String, dynamic> toJson() {
@@ -46,6 +48,7 @@ class Notification {
     if (this.applicationId != null) {
       data['applicationId'] = this.applicationId!.toJson();
     }
+    data['categoryNotification'] = this.categoryNotification;
     return data;
   }
 }
