@@ -55,7 +55,7 @@ class JobDetail extends StatelessWidget {
                   //avt với company name
                   children: [
                     SizedBox(
-                      height: 68,
+                      height: 70,
                       width: 280,
                       child: Row(
                         children: [
@@ -75,8 +75,8 @@ class JobDetail extends StatelessWidget {
                           SizedBox(
                             width: 10,
                           ),
-                          Container(
-                            width: 220,
+                          Expanded(
+                            // width: 220,
                             child: Text(
                               Stringhelper.formatText(
                                   job.postedBy!.companyId!.name!, 200),

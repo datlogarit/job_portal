@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:job_portal/models/job_model.dart';
 import 'package:job_portal/screens/search/widgets/catagory_list_search.dart';
 import 'package:job_portal/screens/search/widgets/list_search.dart';
 
 import 'package:job_portal/screens/search/widgets/search_app_bar.dart';
 import 'package:job_portal/screens/search/widgets/search_input.dart';
-import 'package:dio/dio.dart';
 
 class SearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(

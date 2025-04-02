@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:job_portal/home.dart';
 import 'package:job_portal/providers/user_provider.dart';
 import 'package:job_portal/repositories/user_reposotory.dart';
-import 'package:job_portal/screens/home/home.dart';
+import 'package:job_portal/screens/home/home_screen.dart';
 import 'package:provider/provider.dart';
 
 class FormContent extends StatefulWidget {
@@ -184,11 +185,7 @@ class __FormContentState extends State<FormContent> {
                         toastLength: Toast.LENGTH_SHORT);
                     Navigator.pushAndRemoveUntil(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => HomePage(
-                                user: userProvider
-                                    .user, //truyền đối tượng user này cho home page. home page sẽ nhận được đúng user đó
-                              )),
+                      MaterialPageRoute(builder: (context) => Home()),
                       (rount) => false,
                     );
                   }

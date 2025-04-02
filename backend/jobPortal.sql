@@ -128,6 +128,21 @@ CREATE TABLE applications(
     FOREIGN KEY (applicant_id) REFERENCES applicants(user_id)
 );
 
+create TABLE application_main(
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    applicant_id BIGINT not null,
+    job_id BIGINT not null, 
+    status_apply ENUM('not yet', 'applied', 'approved', 'rejected') DEFAULT 'not yet' not null,
+    full_name VARCHAR(255) not null,
+    email VARCHAR(255) not null,
+    phone_number VARCHAR(255) not null,
+    String cv_url not null,
+    String message not null,
+    created_at timestamp default current_timestamp,
+    updated_at timestamp default current_timestamp on update current_timestamp,
+    FOREIGN KEY (job_id) REFERENCES jobs(id),
+    FOREIGN KEY (applicant_id) REFERENCES applicants(user_id)
+)
 CREATE TABLE noti_user(
     id_noti BIGINT,
     id_user BIGINT,

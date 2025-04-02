@@ -8,16 +8,22 @@ import 'package:job_portal/widgets/text_icons.dart';
 class JobCard extends StatelessWidget {
 //những dữ liệu mà liên quan đến khi khởi tạo đối tượng mới để đây
   final Job job; //object
-
+  final companyNumChar;
+  final titleNumChar;
   final bool timeJob;
   final bool salary;
-  const JobCard({required this.job, this.timeJob = false, this.salary = false});
+  const JobCard(
+      {required this.job,
+      this.timeJob = false,
+      this.salary = false,
+      required this.companyNumChar,
+      required this.titleNumChar});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 280,
-      padding: EdgeInsets.all(14),
+      padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         color: Colors.white,
@@ -32,30 +38,35 @@ class JobCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                children: [
-                  Container(
-                    width: 45,
-                    height: 45,
-                    padding: EdgeInsets.all(3),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        color: const Color.fromRGBO(158, 158, 158, .2)),
-                    child:
-                        //  Image(image: AssetImage(job.url)),
-                        CachedNetworkImage(
-                      imageUrl: job.postedBy!.companyId!.urlAvt!,
-                      fit: BoxFit.cover,
+              Expanded(
+                child: Row(
+                  children: [
+                    Container(
+                      width: 45,
+                      height: 45,
+                      padding: EdgeInsets.all(3),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: const Color.fromRGBO(158, 158, 158, .2)),
+                      child: CachedNetworkImage(
+                        imageUrl: job.postedBy!.companyId!.urlAvt!,
+                        fit: BoxFit.cover,
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    width: 8,
-                  ),
-                  Text(
-                    Stringhelper.formatText(job.postedBy!.companyId!.name!, 14),
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
-                  )
-                ],
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Expanded(
+                      child: Text(
+                          Stringhelper.formatText(
+                              job.postedBy!.companyId!.name!, companyNumChar),
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w600),
+                          softWrap: true),
+                    )
+                  ],
+                ),
               ),
               SaveIcon(
                 job: job,
@@ -66,8 +77,8 @@ class JobCard extends StatelessWidget {
             height: 15,
           ),
           Text(
-            Stringhelper.formatText(job.title!, 50),
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            Stringhelper.formatText(job.title!, titleNumChar),
+            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
           ),
           SizedBox(
             height: 15,

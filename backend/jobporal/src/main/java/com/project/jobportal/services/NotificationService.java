@@ -1,7 +1,7 @@
 package com.project.jobportal.services;
 
 import com.project.jobportal.DTOs.NotificationDTO;
-import com.project.jobportal.models.Applications;
+import com.project.jobportal.models.Interactions;
 import com.project.jobportal.models.Jobs;
 import com.project.jobportal.models.Notifications;
 import com.project.jobportal.repositories.INotificationRepository;
@@ -13,17 +13,17 @@ import org.springframework.stereotype.Service;
 public class NotificationService implements INotificationService {
     private final INotificationRepository iNotificationRepository;
     private final JobService jobService;
-    private final ApplicationService applicationService;
+    private final InteractionService applicationService;
 
     @Override
     public void crateNotification(NotificationDTO notificationDTO) {
         Jobs jobs = jobService.getJobById(notificationDTO.getJobRelated());
-        Applications applications = applicationService.getApplicationById(notificationDTO.getApplicationId());
+        Interactions interactions = applicationService.getInteractionById(notificationDTO.getApplicationId());
         Notifications newNotification = Notifications.builder()
                 .title(notificationDTO.getTitle())
                 .content(notificationDTO.getContent())
                 .jobRelated(jobs)
-                .applicationId(applications)
+                .applicationId(interactions)
                 .categoryNotification(notificationDTO.getCategoryNotification())
                 .build();
         iNotificationRepository.save(newNotification);

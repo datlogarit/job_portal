@@ -62,6 +62,9 @@ class Job {
     gender = json['gender'];
     position = json['position'];
     expDate = json['expDate'];
+    // expDate: json['expDate'] != null
+    //       ? DateTime.parse(json['expDate'])  // Chuyển từ String sang DateTime
+    //       : null,
     requirement = json['requirement'];
     description = json['description'];
     benefit = json['benefit'];

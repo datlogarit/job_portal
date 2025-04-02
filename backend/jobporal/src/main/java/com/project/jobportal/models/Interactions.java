@@ -4,12 +4,12 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "applications")
+@Table(name = "interactions")
 @Data // toString, equals, hashCode, getter, setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Applications extends BaseEntity {
+public class Interactions extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -21,9 +21,6 @@ public class Applications extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "job_id")
     private Jobs jobId;
-
-    @Column(name = "status_apply")
-    private String statusApply;
 
     @Column(name = "is_save")
     private int isSaved;

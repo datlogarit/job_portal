@@ -3,21 +3,32 @@ import 'package:job_portal/models/job_model.dart';
 import 'package:job_portal/repositories/job_repository.dart';
 
 class JobProvider extends ChangeNotifier {
-  List<Job> _jobs = []; // "_" đây là ký hiệu của private
+  List<Job> _jobs = [];
+  List<Job> _jobsBySearch = []; // "_" đây là ký hiệu của private
   bool _isLoading = true;
 
-  List<Job> get jobs => _jobs; //getter để lấy giá trị của biến private
+  List<Job> get jobs => _jobs;
+  List<Job> get jobsBySearch =>
+      _jobsBySearch; //getter để lấy giá trị của biến private
   bool get isLoading => _isLoading;
   JobProvider() {
-    //khởi tạo là tự động fetch job
     getJobs();
   }
   Future<void> getJobs() async {
-    // _isLoading =
-    //     true; //cập nhật trạng thái để thể hiện ứng dụng đang tải dữ liệu
-    // notifyListeners(); //🔥 Thông báo rằng _isLoading đã thay đổi
     try {
       _jobs = await JobRepository.fetchJobs();
+    } catch (e) {
+      print("ERROR: $e");
+    }
+    _isLoading = false;
+    notifyListeners(); //🔥 Thông báo rằng _isLoading và_jobs đã thay đổi lần nữa
+  }
+
+  Future<void> searchJob(String keyword) async {
+    _isLoading = true;
+    notifyListeners();
+    try {
+      _jobsBySearch = await JobRepository.fetchJobs(searchKey: keyword);
     } catch (e) {
       print("ERROR: $e");
     }

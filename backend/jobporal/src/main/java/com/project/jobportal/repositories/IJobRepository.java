@@ -15,8 +15,13 @@ public interface IJobRepository extends JpaRepository<Jobs, Long> {
     Page<Jobs> findAll(Pageable pageable);// ghi đè phương thức để lấy job theo trang
 
     // truy vấn theo từ khóa tìm kiếm
-    @Query("SELECT j FROM Jobs j WHERE LOWER(j.title) LIKE LOWER(CONCAT('%', :title, '%'))")
-    Page<Jobs> searchJob(@Param("title") String title, Pageable pageable);
+//    @Query("SELECT j FROM Jobs j WHERE LOWER(j.title) LIKE LOWER(CONCAT('%', :title, '%'))")
+    @Query("SELECT j FROM Jobs j " +
+            "WHERE LOWER(j.title) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
+            "OR LOWER(j.position) LIKE LOWER(CONCAT('%', :keyword, '%'))" +
+            "OR LOWER(j.postedBy.companyId.name) LIKE LOWER(CONCAT('%', :keyword, '%'))"
+    )
+    Page<Jobs> searchJob(@Param("keyword") String keyword, Pageable pageable);
 
     /*
      * truy vấn theo category

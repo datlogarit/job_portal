@@ -27,7 +27,7 @@ public class Notifications extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "application_id")
-    private Applications applicationId;
+    private Interactions applicationId;
 
     @Column(name = "categories_notification")
     private String categoryNotification;

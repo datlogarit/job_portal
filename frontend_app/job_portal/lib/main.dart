@@ -5,9 +5,6 @@ import 'package:job_portal/providers/category_provider.dart';
 import 'package:job_portal/providers/job_provider.dart';
 import 'package:job_portal/providers/notification_provider.dart';
 import 'package:job_portal/providers/user_provider.dart';
-import 'package:job_portal/screens/home/home.dart';
-import 'package:job_portal/screens/notification/notification.dart';
-import 'package:job_portal/screens/report/report.dart';
 import 'package:job_portal/screens/start/login/login.dart';
 import 'package:provider/provider.dart';
 

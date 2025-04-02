@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 class ApplicationRepository {
   static Future<dynamic> createApplication(int applicantId, int jobId) async {
     //chuyển đổi trạng thái isSave mỗi khi nhấn
-    String url = 'http://10.0.2.2:8088/api/v1/application';
+    String url = 'http://10.0.2.2:8088/api/v1/interaction';
     var respon = await http.post(
       Uri.parse(url),
       headers: {'Content-Type': 'application/json'},
@@ -31,7 +31,7 @@ class ApplicationRepository {
   static Future<Application> fetchApplication(
       int applicantId, int jobId) async {
     String url =
-        'http://10.0.2.2:8088/api/v1/application/info?applicantId=$applicantId&jobId=$jobId';
+        'http://10.0.2.2:8088/api/v1/interaction/info?applicantId=$applicantId&jobId=$jobId';
     var respon = await http.get(Uri.parse(url));
     var utf8Body = utf8.decode(respon.bodyBytes); //có dạng json utf8
 
@@ -52,7 +52,7 @@ class ApplicationRepository {
     print("isSave in repo is $isSave");
     //chuyển đổi trạng thái isSave mỗi khi nhấn
     String url =
-        'http://10.0.2.2:8088/api/v1/application/save/$applicantId/$jobId';
+        'http://10.0.2.2:8088/api/v1/interaction/save/$applicantId/$jobId';
     var respon = await http.put(
       Uri.parse(url),
       headers: {"Content-Type": "application/Json"},
@@ -67,7 +67,7 @@ class ApplicationRepository {
       return true;
     }
     if (respon.statusCode == 500) {
-      throw Exception("in repo:application not found");
+      throw Exception("in repo:interaction not found");
     } else {
       print("lỗi ${respon.statusCode} - ${respon.body}");
       return false;

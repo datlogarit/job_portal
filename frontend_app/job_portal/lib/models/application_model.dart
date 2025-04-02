@@ -6,7 +6,6 @@ class Application {
   int? id;
   Application? applicantId;
   Job? jobId;
-  String? statusApply;
   int? isSaved;
   int? isRead;
 
@@ -16,7 +15,6 @@ class Application {
       this.id,
       this.applicantId,
       this.jobId,
-      this.statusApply,
       this.isSaved,
       this.isRead});
 
@@ -28,7 +26,6 @@ class Application {
         ? new Application.fromJson(json['applicantId'])
         : null;
     jobId = json['jobId'] != null ? new Job.fromJson(json['jobId']) : null;
-    statusApply = json['statusApply'];
     isSaved = json['isSaved'];
     isRead = json['isRead'];
   }
@@ -44,7 +41,6 @@ class Application {
     if (this.jobId != null) {
       data['jobId'] = this.jobId!.toJson();
     }
-    data['statusApply'] = this.statusApply;
     data['isSaved'] = this.isSaved;
     data['isRead'] = this.isRead;
     return data;
