@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:job_portal/repositories/application_repository.dart';
+import 'package:job_portal/repositories/interaction_repository.dart';
 import 'package:job_portal/repositories/user_reposotory.dart';
 import 'package:job_portal/screens/start/login/login.dart';
 

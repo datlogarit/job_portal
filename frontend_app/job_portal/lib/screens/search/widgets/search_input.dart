@@ -4,7 +4,7 @@ import 'package:job_portal/providers/job_provider.dart';
 import 'package:provider/provider.dart';
 
 class SearchInput extends StatelessWidget {
-  List<String> items = [
+  final List<String> items = [
     "Tài chính/Ngân hàng",
     "Công nghệ thông tin",
     "Giáo dục",

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:job_portal/models/job_model.dart';
 import 'package:job_portal/providers/application_provider.dart';
-import 'package:job_portal/providers/job_provider.dart';
+import 'package:job_portal/providers/interaction_provider.dart';
+import 'package:job_portal/providers/user_provider.dart';
 import 'package:job_portal/screens/home/widgets/job_card.dart';
 import 'package:job_portal/screens/home/widgets/job_detail.dart';
 import 'package:provider/provider.dart';
 
-class ApplicationPage extends StatefulWidget {
+class JobInteractionPage extends StatefulWidget {
   final List<String> tagList = [
     'Đã ứng tuyển',
     'Đã lưu',
@@ -13,50 +15,56 @@ class ApplicationPage extends StatefulWidget {
     'Được chấp nhận',
     'Đã từ chối'
   ];
-  ApplicationPage({super.key});
+  JobInteractionPage({super.key});
 
   @override
-  State<ApplicationPage> createState() => _ApplicationPageState();
+  State<JobInteractionPage> createState() => _JobInteractionPageState();
 }
 
-class _ApplicationPageState extends State<ApplicationPage> {
+class _JobInteractionPageState extends State<JobInteractionPage> {
   int selected = 0;
+  List<Job?> jobFilted = [];
   @override
   void initState() {
     super.initState();
-    context.read<ApplicationProvider>();
+    final userProvider = context.read<UserProvider>();
+    context
+        .read<InteractionProvider>()
+        .fetchAllInteraction(userProvider.user.id!);
+    context
+        .read<ApplicationProvider>()
+        .fetchAllApplication(userProvider.user.id!);
+
+    Future.delayed(Duration.zero, () {
+      setState(() {
+        jobFilted = context
+            .read<ApplicationProvider>()
+            .allApplication
+            .map((application) => application.jobId)
+            .toList();
+      });
+    });
+    // });
+    // });
   }
 
   @override
   Widget build(BuildContext context) {
-    final jobProvider = context.watch<JobProvider>();
+    final applicationProvider = context.watch<ApplicationProvider>();
+    final interactionProvider = context.watch<InteractionProvider>();
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false, //ẩn nút back khi đi từ trang detail
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).pop();
-              },
-              child: Icon(
-                Icons.close_rounded,
-                size: 26,
-                color: Colors.white,
-              ),
-            ),
-            Text(
-              "Việc của tôi",
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
-            ),
-            SizedBox(width: 16)
-          ],
+        title: Text(
+          "Việc của tôi",
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
         ),
+
         centerTitle: true,
         backgroundColor: Color.fromRGBO(67, 177, 183, .8),
       ),
@@ -91,6 +99,28 @@ class _ApplicationPageState extends State<ApplicationPage> {
                         onTap: () {
                           setState(() {
                             selected = index;
+                            print("selected = $selected");
+                            if (selected == 0) {
+                              jobFilted = applicationProvider.allApplication
+                                  .map((application) => application.jobId)
+                                  .toList();
+                            } else if (selected == 1) {
+                              jobFilted = interactionProvider.allIteraction
+                                  .map((application) => application.jobId)
+                                  .toList();
+                            } else if (selected == 2) {
+                              jobFilted = interactionProvider.allIteraction
+                                  .map((application) => application.jobId)
+                                  .toList();
+                            } else if (selected == 3) {
+                              jobFilted = applicationProvider.allApplication
+                                  .map((application) => application.jobId)
+                                  .toList();
+                            } else if (selected == 4) {
+                              jobFilted = applicationProvider.allApplication
+                                  .map((application) => application.jobId)
+                                  .toList();
+                            }
                           });
                         },
                       ),
@@ -120,12 +150,12 @@ class _ApplicationPageState extends State<ApplicationPage> {
                           isScrollControlled: true,
                           context: context,
                           builder: (context) =>
-                              JobDetail(job: jobProvider.jobs[index]),
+                              JobDetail(job: jobFilted[index]!),
                         )
                       },
                       //lấy danh sách job tìm kiếm ở đây. nếu có thì truyền vào cho job card
                       child: JobCard(
-                        job: jobProvider.jobs[index],
+                        job: jobFilted[index]!,
                         timeJob: false,
                         salary: true,
                         companyNumChar: 80,
@@ -135,7 +165,7 @@ class _ApplicationPageState extends State<ApplicationPage> {
                 separatorBuilder: (_, index) => SizedBox(
                       height: 15,
                     ),
-                itemCount: jobProvider.jobs.length),
+                itemCount: jobFilted.length),
           )
         ],
       ),

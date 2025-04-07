@@ -16,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Service
@@ -66,7 +67,7 @@ public class JobService implements IJobService {
     @Override
     public void createVirtualData(String title, String experience, String workingTime,
                                   int numberRecruitment, String gender, String position,
-                                  Date exp_date, String requirement, String description,
+                                  LocalDate exp_date, String requirement, String description,
                                   String benefit, String workLocation, String category,
                                   int minSalary, int maxSalary,
                                   String companyName, String ImgCpnUrl, String introduction,

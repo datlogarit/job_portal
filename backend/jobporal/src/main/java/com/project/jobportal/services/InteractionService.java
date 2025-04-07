@@ -10,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class InteractionService implements IInteractionService {
@@ -50,13 +52,8 @@ public class InteractionService implements IInteractionService {
     @Override
     public void updateSaveInteraction(long applicantId, long jobId, InteractionDTO interactionDTO) {
         Interactions existInteraction = findByApplicantIdAndJobId(applicantId, jobId);
-
-
         existInteraction.setIsSaved(interactionDTO.getIsSaved());
-
-
         iInteractionRepository.save(existInteraction);
-
     }
 
 
@@ -66,8 +63,9 @@ public class InteractionService implements IInteractionService {
     }
 
     @Override
-    public Page<Interactions> getAllInteraction(PageRequest pageRequest) {
-        return iInteractionRepository.findAll(pageRequest);
+    public List<Interactions> getAllInteractionByUserId(long userId) {
+        return iInteractionRepository.finByApplicantId(userId).orElseThrow(()
+                -> new RuntimeException("Interaction not found"));
     }
 
     @Override

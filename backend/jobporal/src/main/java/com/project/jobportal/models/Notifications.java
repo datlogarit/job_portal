@@ -25,10 +25,6 @@ public class Notifications extends BaseEntity {
     @JoinColumn(name = "job_related")
     private Jobs jobRelated;
 
-    @ManyToOne
-    @JoinColumn(name = "application_id")
-    private Interactions applicationId;
-
     @Column(name = "categories_notification")
     private String categoryNotification;
 }

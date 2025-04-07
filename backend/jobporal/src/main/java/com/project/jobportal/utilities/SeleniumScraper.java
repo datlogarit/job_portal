@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -173,14 +174,14 @@ public class SeleniumScraper {
         return (max / 1000000) * 1000000; // Làm tròn thành bội số của 1 triệu
     }
 
-    private static Date exp_date;
+    private static LocalDate exp_date = LocalDate.of(2025, 8, 8);
 
-    static {
-        try {
-            exp_date = new SimpleDateFormat("dd/MM/yyyy").parse("08/08/2025");
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
-    }
+//    static {
+//        try {
+//            exp_date = new SimpleDateFormat("dd/MM/yyyy").parse("08/08/2025");
+//        } catch (ParseException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 }
 

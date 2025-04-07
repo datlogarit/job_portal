@@ -11,6 +11,7 @@ class NotificationRepository {
     var utf8Body = utf8.decode(respon.bodyBytes); //giải mã thành utf8
     List<dynamic> responObj = jsonDecode(utf8Body); // đưa về dạng list, Map,...
     if (respon.statusCode == 200 || respon.statusCode == 201) {
+      print("in repo: notification fetching");
       print("leng is: ${responObj.length}");
       print(responObj);
       responObj
@@ -40,9 +41,8 @@ class NotificationRepository {
         },
       ),
     ); //dạng json
+    print("in repo: notification is updating isRead");
 
-    // var utf8Body = utf8.decode(respon.bodyBytes); //giải mã thành utf8
-    // List<dynamic> responObj = jsonDecode(utf8Body); // đưa về dạng list, Map,...
     if (respon.statusCode == 200 || respon.statusCode == 201) {
       print(respon.body);
     } else {

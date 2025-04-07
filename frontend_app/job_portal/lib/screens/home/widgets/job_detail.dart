@@ -1,13 +1,11 @@
-import 'dart:math';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:job_portal/models/job_model.dart';
-import 'package:job_portal/providers/application_provider.dart';
+import 'package:job_portal/screens/application_page/application_page.dart';
+
 import 'package:job_portal/screens/report/report.dart';
 import 'package:job_portal/widgets/save_icon.dart';
 import 'package:job_portal/widgets/text_icons.dart';
-import 'package:provider/provider.dart';
 
 class JobDetail extends StatelessWidget {
   final Job job;
@@ -23,7 +21,7 @@ class JobDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final applicationProvider = context.read<ApplicationProvider>();
+    // final applicationProvider = context.read<InteractionProvider>();
     // TODO: implement build
     return Container(
         height: 580,
@@ -89,15 +87,6 @@ class JobDetail extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        // Icon(
-                        //   applicationProvider.isSave
-                        //       ? Icons.bookmark
-                        //       : Icons.bookmark_outline,
-                        //   color: applicationProvider.isSave
-                        //       ? Theme.of(context).primaryColor
-                        //       : Colors.grey,
-                        //   size: 32,
-                        // ),
                         SaveIcon(job: job),
                         SizedBox(
                           width: 8,
@@ -119,6 +108,7 @@ class JobDetail extends StatelessWidget {
                                       onTap: () {},
                                       child: GestureDetector(
                                         onTap: () {
+                                          Navigator.of(context).pop();
                                           Navigator.of(context)
                                               .push(MaterialPageRoute(
                                                   builder: (context) => Report(
@@ -206,12 +196,13 @@ class JobDetail extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
-                      /*nhấn vào apply thì update trạng thái thành applied và
-                      
-                      */
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => ApplicationPage(
+                                job: job,
+                              )));
                     },
                     child: Text(
-                      "Apply now",
+                      "Ứng tuyển ngay",
                       style:
                           TextStyle(fontSize: 15, fontWeight: FontWeight.w800),
                     ),

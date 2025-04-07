@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:job_portal/models/noti_user_model.dart';
 
 class TagListNotification extends StatefulWidget {
-  Function(String) bindingValue;
+  Function(String)
+      bindingValue; //biến có kiểu hàm mà nhận vào tham số là 1 string
 
   @override
   TagListNotification({super.key, required this.bindingValue});

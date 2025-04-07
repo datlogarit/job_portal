@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -38,7 +39,7 @@ public class JobDTO {
 
     @NotNull(message = "date is required")
     @JsonProperty("exp_date")
-    private Date expDate;
+    private LocalDate expDate;
 
     @NotNull(message = "requirement is required")
     private String requirement;

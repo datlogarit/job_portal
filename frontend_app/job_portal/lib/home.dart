@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:job_portal/screens/application/application.dart';
+import 'package:job_portal/screens/job_interaction/job_interaction.dart';
 import 'package:job_portal/screens/chat/chat_page.dart';
 import 'package:job_portal/screens/contact_page/contact_page.dart';
 import 'package:job_portal/screens/home/home_screen.dart';
 import 'package:job_portal/screens/persional/persional.dart';
+import 'package:job_portal/screens/search/search.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -21,8 +22,8 @@ class _HomeState extends State<Home> {
         index: currentIndexVar,
         children: [
           HomePage(),
-          ApplicationPage(),
-          ContactPage(),
+          JobInteractionPage(),
+          SearchPage(),
           ChatPage(),
           PersionalPage()
         ],
@@ -54,9 +55,10 @@ class _HomeState extends State<Home> {
             ),
           ),
           BottomNavigationBarItem(
-            label: 'Contact',
+            label: 'Search',
             icon: Icon(
-              Icons.contact_mail_outlined,
+              Icons.search_rounded,
+              size: 28,
             ),
           ),
           BottomNavigationBarItem(

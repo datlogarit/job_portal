@@ -5,6 +5,8 @@ import com.project.jobportal.models.Interactions;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
+import java.util.List;
+
 public interface IInteractionService {
     void createInteraction(InteractionDTO interactionDTO);
 
@@ -14,7 +16,7 @@ public interface IInteractionService {
 
     Interactions getInteractionById(long id);
 
-    Page<Interactions> getAllInteraction(PageRequest pageRequest);
+    List<Interactions> getAllInteractionByUserId(long userId);
 
     Interactions findByApplicantIdAndJobId(long applicantId, long jobId);
 }

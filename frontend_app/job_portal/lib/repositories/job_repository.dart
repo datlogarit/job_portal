@@ -40,7 +40,7 @@ class JobRepository {
     final response = await http.get(
       Uri.parse(url),
     );
-    print("search job in repo is running");
+    print("in repo: search job in repo is running");
     if (response.statusCode == 200) {
       final String utf8Body = //mã -> rõ (từ json sang json tiếng việt)
           utf8.decode(response.bodyBytes); //giải mã mảng byte thành string

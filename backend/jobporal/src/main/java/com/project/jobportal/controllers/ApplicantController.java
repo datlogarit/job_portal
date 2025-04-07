@@ -67,7 +67,7 @@ public class ApplicantController {
             String fileName = file.getOriginalFilename();
 
             //chi can file ket thuc la pdf hoac docx
-//            -> neu file ket thuc khac pdf va ket thuc khac doxs thi tra loi
+//            -> neu file ket thuc khac pdf va ket thuc khac doxs thi return response;
             if (!fileName.endsWith(".pdf") && !fileName.endsWith(".docx")) {
                 return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE).body("only accept pdf and docx file");
             }

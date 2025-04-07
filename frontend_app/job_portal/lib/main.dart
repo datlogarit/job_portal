@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:job_portal/providers/application_provider.dart';
+import 'package:job_portal/providers/interaction_provider.dart';
 import 'package:job_portal/providers/category_provider.dart';
 import 'package:job_portal/providers/job_provider.dart';
 import 'package:job_portal/providers/notification_provider.dart';
 import 'package:job_portal/providers/user_provider.dart';
 import 'package:job_portal/screens/start/login/login.dart';
+import 'package:job_portal/test_diaglog_pretty.dart';
+import 'package:job_portal/test_progess_tracker.dart';
+import 'package:progress_tracker/progress_tracker.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -33,6 +37,7 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
             create: (_) => CategoryProvider()), //ở đây các instance là duy nhất
+        ChangeNotifierProvider(create: (_) => InteractionProvider()),
         ChangeNotifierProvider(create: (_) => ApplicationProvider()),
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => NotificationProvider())
@@ -46,7 +51,7 @@ class MyApp extends StatelessWidget {
             secondary: Color(0xFFFED408),
           ),
         ),
-        home: Login(),
+        home: TestProgessTracker(),
         debugShowCheckedModeBanner: false,
       ),
     );

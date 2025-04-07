@@ -1,5 +1,6 @@
 package com.project.jobportal.models;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import jakarta.persistence.*;
@@ -11,6 +12,7 @@ import lombok.*;
 @NoArgsConstructor
 @Data
 @Builder
+@EqualsAndHashCode
 public class Jobs extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,7 +43,7 @@ public class Jobs extends BaseEntity {
     private String position;
 
     @Column(name = "exp_date")
-    private Date expDate;
+    private LocalDate expDate;
 
     @Column(name = "requirement")
     private String requirement;

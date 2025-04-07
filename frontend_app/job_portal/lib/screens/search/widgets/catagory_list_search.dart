@@ -63,7 +63,6 @@ class _CatagoryListSearchState extends State<CatagoryListSearch> {
           onTap: () {
             setState(() {
               categoryProvider.setSelectedItem(index);
-
               categoryProvider.setIdCateoryChoose(
                   listCategory[categoryProvider.selectedItem]);
             });

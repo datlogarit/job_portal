@@ -1,45 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:job_portal/models/application_model.dart';
 import 'package:job_portal/repositories/application_repository.dart';
+import 'package:job_portal/repositories/interaction_repository.dart';
 
 class ApplicationProvider extends ChangeNotifier {
   Application _application = Application(); // "_" đây là ký hiệu của private
+  List<Application> _allApplication = [];
   bool _isLoadingApplication = true;
-  bool _isSave = false;
-  Application get application =>
-      _application; //getter để lấy giá trị của biến private
+  Application get application => _application;
+  List<Application> get allApplication =>
+      _allApplication; //getter để lấy giá trị của biến private
   bool get isLoading => _isLoadingApplication;
-  bool get isSave => _isSave;
 
   Future<void> fetchApplication(int applicantId, int jobId) async {
     try {
       _application =
           await ApplicationRepository.fetchApplication(applicantId, jobId);
-      if (_application.isSaved == 1) {
-        _isSave = false;
-        notifyListeners();
-      }
     } catch (e) {
-      throw Exception("in provider: application not found");
+      throw Exception("in provider: Application not found");
     }
-
     _isLoadingApplication = false;
-    notifyListeners(); //🔥 Thông báo rằng _isLoadingApplication và_jobs đã thay đổi lần nữa
+    notifyListeners();
   }
 
-  Future<void> toggleIsSave(int applicanId, int jobId, bool isSave) async {
+  Future<void> fetchAllApplication(int applicantId) async {
     try {
-      await ApplicationRepository.toggleSave(applicanId, jobId, isSave);
+      _allApplication =
+          await ApplicationRepository.fetchAllApplication(applicantId);
     } catch (e) {
-      createApplication(applicanId, jobId);
+      throw Exception("in provider: Application not found");
     }
+    _isLoadingApplication = false;
+    notifyListeners(); //🔥 Thông báo rằng _isLoadingInteraction và_jobs đã thay đổi lần nữa
   }
 
-  Future<void> createApplication(int applicanId, int jobId) async {
-    try {
-      await ApplicationRepository.createApplication(applicanId, jobId);
-    } catch (e) {
-      throw Exception("Tạo mới application thất bại");
-    }
-  }
+  // Future<void> createApplication(int applicanId, int jobId) async {
+  //   try {
+  //     await ApplicationRepository.createApplication(applicanId, jobId);
+  //   } catch (e) {
+  //     throw Exception("Tạo mới Interaction thất bại");
+  //   }
+  // }
 }

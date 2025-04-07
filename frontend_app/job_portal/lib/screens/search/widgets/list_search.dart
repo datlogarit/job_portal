@@ -6,14 +6,8 @@ import 'package:job_portal/screens/home/widgets/job_card.dart';
 import 'package:job_portal/screens/home/widgets/job_detail.dart';
 import 'package:provider/provider.dart';
 
-class ListSearch extends StatefulWidget {
+class ListSearch extends StatelessWidget {
   const ListSearch({super.key});
-
-  @override
-  State<ListSearch> createState() => _ListSearchState();
-}
-
-class _ListSearchState extends State<ListSearch> {
   @override
   Widget build(BuildContext context) {
     final categoryProvider = context.watch<CategoryProvider>();
@@ -36,7 +30,7 @@ class _ListSearchState extends State<ListSearch> {
     if (jobProvider.jobsBySearch.isEmpty) {
       //nếu k có cv nào
       return Container(
-        height: 490,
+        height: 450,
         margin: EdgeInsets.symmetric(horizontal: 22),
         child: ListView.separated(
             scrollDirection: Axis.vertical,
@@ -66,7 +60,7 @@ class _ListSearchState extends State<ListSearch> {
       );
     }
     return Container(
-      height: 490,
+      height: 460,
       margin: EdgeInsets.symmetric(horizontal: 22),
       child: ListView.separated(
           scrollDirection: Axis.vertical,
@@ -95,3 +89,7 @@ class _ListSearchState extends State<ListSearch> {
     );
   }
 }
+
+// class _ListSearchState extends State<ListSearch> {
+
+// }

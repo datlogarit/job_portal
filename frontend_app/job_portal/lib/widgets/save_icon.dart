@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:job_portal/models/job_model.dart';
-import 'package:job_portal/providers/application_provider.dart';
+import 'package:job_portal/providers/interaction_provider.dart';
 import 'package:job_portal/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -18,17 +18,17 @@ class _SaveIconState extends State<SaveIcon> {
   @override
   void initState() {
     super.initState();
-    getApplication();
+    getInteraction();
   }
 
-  void getApplication() async {
+  void getInteraction() async {
     try {
       final userProvider = context.read<UserProvider>();
-      final applicationProvider = context.read<ApplicationProvider>();
-      await applicationProvider.fetchApplication(
+      final interactionProvider = context.read<InteractionProvider>();
+      await interactionProvider.fetchInteraction(
           userProvider.user.id!, widget.job.id!);
       setState(() {
-        if (applicationProvider.application.isSaved == 1) {
+        if (interactionProvider.interaction.isSaved == 1) {
           isSave = true;
         } else {
           isSave = false;
@@ -44,10 +44,10 @@ class _SaveIconState extends State<SaveIcon> {
   void toggleSave() {
     setState(() {
       isSave = !isSave;
-      final applicationProvider = context.read<ApplicationProvider>();
+      final interactionProvider = context.read<InteractionProvider>();
       final userProvider = context.read<UserProvider>();
 
-      applicationProvider.toggleIsSave(
+      interactionProvider.toggleIsSave(
           userProvider.user.id!, widget.job.id!, isSave);
     });
 

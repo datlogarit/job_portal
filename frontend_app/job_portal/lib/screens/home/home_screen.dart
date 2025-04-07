@@ -1,16 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:job_portal/screens/application/application.dart';
+
 import 'package:job_portal/screens/home/widgets/home_app_bar.dart';
 import 'package:job_portal/screens/home/widgets/job_list.dart';
 import 'package:job_portal/screens/home/widgets/search_card.dart';
 import 'package:job_portal/screens/home/widgets/tag_list.dart';
-
-// class HomePage extends StatefulWidget {
-//   HomePage({super.key});
-
-//   @override
-//   State<HomePage> createState() => _HomePageState();
-// }
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});

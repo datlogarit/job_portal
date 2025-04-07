@@ -6,13 +6,14 @@ import com.project.jobportal.models.Jobs;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public interface IJobService {
     void createJob(JobDTO jobDTO);
 
     void createVirtualData(String title, String experience, String workingTime, int numberRecruitment, String gender,
-                           String position, Date exp_date, String requirement, String description,
+                           String position, LocalDate exp_date, String requirement, String description,
                            String benefit, String workLocation, String category,
                            int minSalary, int maxSalary, String companyName, String ImgCpnUrl,
                            String introduction, String location, String email, String name, String password);

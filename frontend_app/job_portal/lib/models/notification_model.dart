@@ -1,4 +1,4 @@
-import 'package:job_portal/models/application_model.dart';
+import 'package:job_portal/models/interaction_model.dart';
 import 'package:job_portal/models/job_model.dart';
 
 class Notification {
@@ -8,7 +8,7 @@ class Notification {
   String? title;
   String? content;
   Job? jobRelated;
-  Application? applicationId;
+  Interaction? applicationId;
   String? categoryNotification;
   Notification(
       {this.createdAt,
@@ -30,7 +30,7 @@ class Notification {
         ? new Job.fromJson(json['jobRelated'])
         : null;
     applicationId = json['applicationId'] != null
-        ? new Application.fromJson(json['applicationId'])
+        ? new Interaction.fromJson(json['applicationId'])
         : null;
     categoryNotification = json['categoryNotification'];
   }

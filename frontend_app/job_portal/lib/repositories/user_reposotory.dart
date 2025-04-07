@@ -26,6 +26,7 @@ class UserReposotory {
       print("login false ${data.statusCode}, ${data.body}");
       throw Exception(dataObj['message']);
     }
+    print("in repo: loging");
     return dataObj;
   }
 
@@ -43,6 +44,7 @@ class UserReposotory {
         },
       ),
     );
+    print("in repo: registering");
     print("name: $fullname");
     print("email: $email");
     print("password: $password");
@@ -55,8 +57,6 @@ class UserReposotory {
       String content = jsonDecode(utf8Body)['message']; //chuyển từ json về map
 
       throw Exception(content); //ném ra ngoại lệ và bắt ở UI
-      // print("register false $statusCode, $content");
-      // return false;
     }
   }
 }
