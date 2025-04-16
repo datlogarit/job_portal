@@ -1,5 +1,6 @@
 package com.project.jobportal.services;
 
+import com.project.jobportal.DTOs.UserDTO;
 import com.project.jobportal.models.Users;
 import org.apache.catalina.User;
 
@@ -7,8 +8,7 @@ import java.io.IOException;
 import java.util.List;
 
 public interface IUserService {
-
-    void updateStatusUser();
+    void updateStatusUser(long userId, int status);
 
     Users getUserById(long id);
 
@@ -19,4 +19,6 @@ public interface IUserService {
     List<User> filterJobs(String title, String position, Integer experience, Integer minSalary, Integer maxSalary);
 
     void uploadAvt(long userId, String fileName) throws IOException;
+
+    void updateUserByID(UserDTO userDTO, long id) throws IOException;
 }

@@ -53,7 +53,7 @@ class Register extends StatelessWidget {
               ),
             ),
             Expanded(
-              flex: 11,
+              flex: 12,
               child: SizedBox(
                 width: double.infinity,
                 child: Container(

@@ -53,6 +53,9 @@ class SearchInput extends StatelessWidget {
                 ),
               ),
               onSubmitted: (value) async {
+                if (value == "" || value.isEmpty) {
+                  return;
+                }
                 await jobProvider.searchJob(value);
                 context
                     .read<CategoryProvider>()

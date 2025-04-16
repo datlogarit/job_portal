@@ -1,5 +1,6 @@
 package com.project.jobportal.services;
 
+import com.project.jobportal.DTOs.UserDTO;
 import com.project.jobportal.models.Users;
 import com.project.jobportal.repositories.IUserRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,13 +19,17 @@ public class UserService implements IUserService {
     private final IUserRepository iUserRepository;
 
     @Override
-    public void updateStatusUser() {
-
+    public void updateStatusUser(long userId, int status) {
+        Users user = iUserRepository.findById(userId).orElseThrow(() -> new RuntimeException("use not found"));
+        user.setIsActive(status);
+        iUserRepository.save(user);
     }
 
     @Override
     public Users getUserById(long id) {
-        return null;
+        Users user = iUserRepository.findById(id).orElseThrow(() -> new RuntimeException("use not found"));
+
+        return user;
     }
 
     @Override
@@ -54,5 +59,35 @@ public class UserService implements IUserService {
         Files.delete(oldPath);
         iUserRepository.save(user);
     }
+
+    @Override
+    public void updateUserByID(UserDTO userDTO, long id) throws IOException {
+        Users user = iUserRepository.findById(id).orElseThrow(() -> new RuntimeException("use not found"));
+        boolean isChange = false;
+        if (userDTO.getPassword() != null) {
+            user.setPassword(userDTO.getPassword());
+            isChange = true;
+        }
+        if (userDTO.getName() != null) {
+            user.setName(userDTO.getName());
+            isChange = true;
+        }
+        if (userDTO.getPhoneNumber() != null) {
+            if (iUserRepository.existsByPhoneNumber(userDTO.getPhoneNumber())
+            ) {
+                throw new RuntimeException("Số điện thoại đã tồn tại");
+            }
+            user.setPhoneNumber(userDTO.getPhoneNumber());
+            isChange = true;
+        }
+        if (userDTO.getDob() != null) {
+            user.setDob(userDTO.getDob());
+            isChange = true;
+        }
+        if (isChange) {
+            iUserRepository.save(user);
+        }
+    }
+
 
 }

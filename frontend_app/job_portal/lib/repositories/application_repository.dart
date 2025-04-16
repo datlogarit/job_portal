@@ -48,11 +48,11 @@ class ApplicationRepository {
         jsonDecode(utf8Body); //có dạng đối tượng Dart (như List, Map,...)
     Application dataObject =
         Application.fromJson(data); //chuyển thành đối tượng application;
-
+    print("in repo data is ${dataObject.statusApply}");
     if (respon.statusCode == 200 || respon.statusCode == 201) {
       print(dataObject);
     }
-    print("in repo: fetch interaction is running");
+    print("in repo: fetch application is running");
     return dataObject;
   }
 

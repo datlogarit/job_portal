@@ -32,7 +32,7 @@ public class HandleFile {
         if (file.isEmpty() || file.getOriginalFilename() == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("file is null");
         }
-        if (file.getSize() > 2 * 1022 * 1024) {
+        if (file.getSize() > 5 * 1022 * 1024) {
             return ResponseEntity.status(HttpStatus.PAYLOAD_TOO_LARGE).body("file is too large");
         }
         return null;

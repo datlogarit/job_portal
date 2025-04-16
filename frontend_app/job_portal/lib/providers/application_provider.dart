@@ -16,6 +16,7 @@ class ApplicationProvider extends ChangeNotifier {
     try {
       _application =
           await ApplicationRepository.fetchApplication(applicantId, jobId);
+      print("provider: application is ${_application.statusApply}");
     } catch (e) {
       throw Exception("in provider: Application not found");
     }

@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.nio.file.Paths;
 
 @RestController
@@ -22,18 +23,23 @@ public class UserController {
     private final UserService userService;
     private final HandleFile handleFile;
 
-
-    //truyen du lieu qua dau
     @PostMapping("login/{role}")
     public ResponseEntity<?> login(@RequestBody UserDTO userDTO, @PathVariable("role") String role) {
         return ResponseEntity.ok(userService.login(userDTO.getEmail(), userDTO.getPassword(), role));
     }
 
-    //cac quyen cua admin
-    //sua doi trang thai (active)
-    @PutMapping("active")
-    public ResponseEntity<?> updateApplicant() {
-        return null;
+    @PutMapping("/{userId}")
+    public ResponseEntity<?> updateApplicantById(@PathVariable(name = "userId") long id, @RequestBody UserDTO userDTO
+    ) throws IOException {
+        userService.updateUserByID(userDTO, id);
+        return ResponseEntity.ok("update status successfully");
+    }
+
+    @PutMapping("active/{userId}/{status}")
+    public ResponseEntity<?> updateStatusApplicant(@PathVariable(name = "userId") long id,
+                                                   @PathVariable(name = "status") int status) {
+        userService.updateStatusUser(id, status);
+        return ResponseEntity.ok("update status successfully");
     }
 
     @PutMapping(value = "image/{userId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -63,17 +69,6 @@ public class UserController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e);
         }
-
-        //xu ly file
-        /*
-        1. ktra xem no co phai file anh ko
-        2. ktra xem user co truyen file khong (size != 0)
-        2. ktra dung luong (khong vuot qua 2MB)
-        3. doi ten file (tranh trung lap)
-        4. luu file vao thu muc upload tren server
-        5. luu ten file len db
-         */
-
     }
 
     @GetMapping("/images/{imageName}")
@@ -94,14 +89,15 @@ public class UserController {
         }
     }
 
-    @GetMapping("")
-    public ResponseEntity<?> getAllUser() {
-        return null;
-    }
-
+    //    @GetMapping("")
+//    public ResponseEntity<?> getAllUser() {
+//        return null;
+//    }
+//
     @GetMapping("/{id}")
     public ResponseEntity<?> getUserById(@PathVariable long id) {
-        return null;
+
+        return ResponseEntity.ok(userService.getUserById(id));
     }
 }
 

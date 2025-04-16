@@ -70,12 +70,14 @@ public class SeleniumScraper {
 
         WebDriverManager.chromedriver().setup();
         WebDriver driver = setupDriver();
-        try {//xong job 50 cua trang 50
+        try {//xong trang 1-50
             //xong phần job về IT
-            for (int i = 51; i <= 60; i++) { // Crawl 1 trang
+//             xong trang 150 - 194
+//            xong job 38 cua trang 137
+            for (int i = 100; i <= 149; i++) { // Crawl 1 trang
 
 
-                driver.get(String.format("https://www.vietnamworks.com/viec-lam?q=it-support-help-desk&page=%d&sorting=relevant", i));
+                driver.get(String.format("https://www.vietnamworks.com/viec-lam?page=%d", i));
 
                 WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(20));
                 wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".view_job_item.search_list")));
@@ -145,14 +147,14 @@ public class SeleniumScraper {
     public static String getRandomEmail() {
         Random random = new Random();
         String name = NAMES[random.nextInt(NAMES.length)]; // Chọn ngẫu nhiên từ 30 tên
-        int number = random.nextInt(10000); // Thêm số ngẫu nhiên từ 0 - 9999
+        int number = random.nextInt(100000); // Thêm số ngẫu nhiên từ 0 - 9999
         String domain = DOMAINS[random.nextInt(DOMAINS.length)]; // Chọn domain ngẫu nhiên
         return name + number + "@" + domain;
     }
 
     private static final String[] JOB_TYPES = {"part time", "fulltime", "remote", "thỏa thuận"};
     private static final String[] SEX = {"Nam", "Nữ", "Không yêu cầu"};
-    private static final String[] NAMES = {"john", "jane", "david", "alice", "michael", "sophia"};
+    private static final String[] NAMES = {"john", "jane", "david", "alice", "michael", "sophia", "jack", "piter", "bin"};
     private static final String[] POSITION_JOBS = {"intern", "senior", "junior", "fresher", "leader", "manager"};
     private static final String[] DOMAINS = {
             "gmail.com", "yahoo.com", "outlook.com", "example.com", "hotmail.com", "icloud.com"

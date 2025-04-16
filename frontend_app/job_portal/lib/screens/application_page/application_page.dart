@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:job_portal/screens/home/widgets/job_detail.dart';
 import 'package:quickalert/quickalert.dart';
 import 'package:flutter/material.dart';
 import 'package:job_portal/models/job_model.dart';
@@ -12,7 +14,7 @@ import 'package:provider/provider.dart';
 class ApplicationPage extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  late File? fileByUser;
+  File? fileByUser;
   Job job;
   ApplicationPage({super.key, required this.job});
   void getFile(File? file) {
@@ -22,13 +24,12 @@ class ApplicationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userProvider = context.read<UserProvider>();
-    final TextEditingController _nameController =
+    final TextEditingController nameController =
         TextEditingController(text: userProvider.user.name);
-    final TextEditingController _emailController =
+    final TextEditingController emailController =
         TextEditingController(text: userProvider.user.email);
-    final TextEditingController _phoneNumberController =
-        TextEditingController();
-    final TextEditingController _messageController = TextEditingController();
+    final TextEditingController phoneNumberController = TextEditingController();
+    final TextEditingController messageController = TextEditingController();
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false, //ẩn nút back khi đi từ trang detail
@@ -216,7 +217,7 @@ class ApplicationPage extends StatelessWidget {
                       ),
                     ),
                     TextField(
-                      controller: _nameController,
+                      controller: nameController,
                       enabled: false,
                       decoration: InputDecoration(
                         isDense: true,
@@ -264,7 +265,7 @@ class ApplicationPage extends StatelessWidget {
                           ],
                         )),
                     TextField(
-                      controller: _emailController,
+                      controller: emailController,
                       enabled: false,
                       decoration: InputDecoration(
                         isDense: true,
@@ -312,7 +313,7 @@ class ApplicationPage extends StatelessWidget {
                           ],
                         )),
                     TextFormField(
-                      controller: _phoneNumberController,
+                      controller: phoneNumberController,
                       enabled: true,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -373,7 +374,7 @@ class ApplicationPage extends StatelessWidget {
                           ],
                         )),
                     TextFormField(
-                      controller: _messageController,
+                      controller: messageController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Không được bỏ trống trường này';
@@ -420,26 +421,26 @@ class ApplicationPage extends StatelessWidget {
                         child: ElevatedButton(
                           onPressed: () async {
                             if (_formKey.currentState?.validate() ?? false) {
-                              // if (fileByUser == null) {
-                              //   Fluttertoast.showToast(
-                              //     msg: "Vui lòng chọn CV trước khi ứng tuyển!",
-                              //     toastLength: Toast.LENGTH_SHORT,
-                              //     gravity: ToastGravity.BOTTOM,
-                              //     backgroundColor: Colors.redAccent,
-                              //     textColor: Colors.white,
-                              //     fontSize: 16.0,
-                              //   );
-                              //   return; // Dừng xử lý nếu chưa có file
-                              // }
+                              if (fileByUser == null) {
+                                Fluttertoast.showToast(
+                                  msg: "Hãy tải lên CV của bạn!",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.BOTTOM,
+                                  backgroundColor: Colors.redAccent,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0,
+                                );
+                                return; // Dừng xử lý nếu chưa có file
+                              }
                               bool isSuccess =
                                   await ApplicationRepository.createApplication(
                                       userProvider.user.id!,
                                       job.id!,
                                       userProvider.user.name!,
                                       userProvider.user.email!,
-                                      _phoneNumberController.text,
+                                      phoneNumberController.text,
                                       fileByUser!,
-                                      _messageController.text);
+                                      messageController.text);
                               isSuccess
                                   ? QuickAlert.show(
                                       context: context,
@@ -462,7 +463,7 @@ class ApplicationPage extends StatelessWidget {
                               await Future.delayed(Duration(
                                 milliseconds: 3500,
                               ));
-                              Navigator.of(context).pop();
+                              Navigator.pop(context, 'applied');
                             }
                           },
                           style: ElevatedButton.styleFrom(

@@ -71,7 +71,7 @@ class __FormContentRegisterState extends State<FormContentRegister> {
               validator: (value) {
                 // add email validation
                 if (value == null || value.isEmpty) {
-                  return 'Please enter some texte';
+                  return 'Please enter some text';
                 }
 
                 bool emailValid = RegExp(

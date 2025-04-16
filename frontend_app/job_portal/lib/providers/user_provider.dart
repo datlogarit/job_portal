@@ -16,5 +16,17 @@ class UserProvider extends ChangeNotifier {
     _isLoading = false;
     notifyListeners(); //thông báo cho UI
   }
+
+  Future<void> getUserUpdate(int id) async {
+    _user = await UserReposotory.getUserbyId(id);
+    notifyListeners();
+  }
+
+  Future<bool> updateUser(int id, String? name, String? password,
+      String? phoneNumber, String? birthDay) async {
+    await UserReposotory.updateUserById(
+        id, name, password, phoneNumber, birthDay);
+    return true;
+  }
   //fetch dữ liệu và tiến hành lưu vào User model
 }
