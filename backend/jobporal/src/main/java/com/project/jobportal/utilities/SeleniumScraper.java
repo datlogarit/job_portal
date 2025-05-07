@@ -74,7 +74,7 @@ public class SeleniumScraper {
             //xong phần job về IT
 //             xong trang 150 - 194
 //            xong job 38 cua trang 137
-            for (int i = 100; i <= 149; i++) { // Crawl 1 trang
+            for (int i = 1; i <= 10; i++) { // Crawl 1 trang
 
 
                 driver.get(String.format("https://www.vietnamworks.com/viec-lam?page=%d", i));
@@ -177,13 +177,6 @@ public class SeleniumScraper {
     }
 
     private static LocalDate exp_date = LocalDate.of(2025, 8, 8);
-
-//    static {
-//        try {
-//            exp_date = new SimpleDateFormat("dd/MM/yyyy").parse("08/08/2025");
-//        } catch (ParseException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
+    
 }
 

@@ -15,10 +15,6 @@ public class RecruiterVerifications extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne
-    @JoinColumn(name = "recruiter_id")
-    private Recruiters recruiterId;
-
     @Column(name = "authorization_letter_url")
     private String authorizationLetterUrl;
 

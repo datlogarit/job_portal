@@ -31,7 +31,7 @@ class JobRepository {
       {int page = 0, int limit = 10, String searchKey = ''}) async {
     String url;
     if (searchKey == '') {
-      url = "http://10.0.2.2:8088/api/v1/job?page=30&limit=10";
+      url = "http://10.0.2.2:8088/api/v1/job?page=2&limit=10";
     } else {
       url =
           'http://10.0.2.2:8088/api/v1/job?page=0&limit=10&search_keyword=$searchKey';

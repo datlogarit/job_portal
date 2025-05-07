@@ -4,9 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.project.jobportal.DTOs.RecruiterVerificationDTO;
 import com.project.jobportal.models.RecruiterVerifications;
-import com.project.jobportal.models.Recruiters;
 import com.project.jobportal.repositories.IRecruiterVerificationRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -16,38 +14,52 @@ import lombok.RequiredArgsConstructor;
 public class RecruiterVerificationService implements
         IRecruiterVerificationsService {
     private final IRecruiterVerificationRepository recruiterVerificationRepository;
-    //    private final IRecruiterRepository recruiterRepository;
     private final RecruiterService recruiterService;
 
     @Override
-    public void createRecruiterVerification(RecruiterVerificationDTO recruiterVerificationDTO,
-                                            String businessLicense,
-                                            String authorizationLetter) {
-        Recruiters existRecruiter = recruiterService.getRecruiter(recruiterVerificationDTO.getRecruiterId());
+    public void createRecruiterVerification(
+            long recruiterId,
+            String businessLicense,
+            String authorizationLetter) {
         RecruiterVerifications recruiterVerifications = RecruiterVerifications.builder()
-                .recruiterId(existRecruiter)
-                .authorizationLetterUrl(businessLicense)
-                .businessLicenseUrl(authorizationLetter)
-                .status(0)
+                .businessLicenseUrl(businessLicense)
+                .authorizationLetterUrl(authorizationLetter)
+                .status(1)
                 .rejectReason("")
                 .build();
         recruiterVerificationRepository.save(recruiterVerifications);
+        recruiterService.updateVerification(recruiterId, recruiterVerifications.getId());
     }
 
     @Override
-    public void updateRecruiterVerification(long id, RecruiterVerificationDTO recruiterVerificationDTO) {
-        // tìm xem bản ghi này có tồn tại không
-        RecruiterVerifications existRecruiterVerification = getRecruiterVerificationById(id);
-        if (existRecruiterVerification == null) {
-            throw new RuntimeException("Recruiter Verification not found");
-        }
-        existRecruiterVerification.setAuthorizationLetterUrl(recruiterVerificationDTO.getAuthorizationLetterUrl());
-        existRecruiterVerification.setBusinessLicenseUrl(recruiterVerificationDTO.getBusinessLicenseUrl());
-        existRecruiterVerification.setStatus(recruiterVerificationDTO.getStatus());
-        existRecruiterVerification.setStatus(recruiterVerificationDTO.getStatus());
-        existRecruiterVerification.setRejectReason(recruiterVerificationDTO.getRejectReason());
-        recruiterVerificationRepository.save(existRecruiterVerification);
+    public void updateRecruiterVerification(
+            long verifyId,
+            String businessLicense,
+            String authorizationLetter) {
+        RecruiterVerifications recruiterVerifications = recruiterVerificationRepository.findById(verifyId).orElseThrow(
+                () -> new RuntimeException("Recruiter verify not found"));
+        recruiterVerifications
+                .setBusinessLicenseUrl(businessLicense);
+        recruiterVerifications.setAuthorizationLetterUrl(authorizationLetter);
+        recruiterVerifications.setStatus(1);
+        recruiterVerificationRepository.save(recruiterVerifications);
+//        recruiterService.updateVerification(recruiterId, recruiterVerifications.getId());
     }
+
+//    @Override
+//    public void updateRecruiterVerification(long id, RecruiterVerificationDTO recruiterVerificationDTO) {
+//        // tìm xem bản ghi này có tồn tại không
+//        RecruiterVerifications existRecruiterVerification = getRecruiterVerificationById(id);
+//        if (existRecruiterVerification == null) {
+//            throw new RuntimeException("Recruiter Verification not found");
+//        }
+//        existRecruiterVerification.setAuthorizationLetterUrl(recruiterVerificationDTO.getAuthorizationLetterUrl());
+//        existRecruiterVerification.setBusinessLicenseUrl(recruiterVerificationDTO.getBusinessLicenseUrl());
+//        existRecruiterVerification.setStatus(recruiterVerificationDTO.getStatus());
+//        existRecruiterVerification.setStatus(recruiterVerificationDTO.getStatus());
+//        existRecruiterVerification.setRejectReason(recruiterVerificationDTO.getRejectReason());
+//        recruiterVerificationRepository.save(existRecruiterVerification);
+//    }
 
     @Override
     public RecruiterVerifications getRecruiterVerificationById(long id) {

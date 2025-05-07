@@ -17,5 +17,8 @@ public class RecruiterDTO {
     @JsonProperty("number_of_post")
     private int numberOfPost;
 
+    @JsonProperty("verify_id ")
+    private int verifyId;
+
     private String position;
 }

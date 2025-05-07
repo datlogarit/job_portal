@@ -30,7 +30,11 @@ public class Recruiters {
 
     @Column(name = "number_of_post")
     private int numberOfPost;
-
+    
     @Column(name = "position")
     private String position;
+
+    @OneToOne
+    @JoinColumn(name = "verify_id ")
+    private RecruiterVerifications verifyId;
 }

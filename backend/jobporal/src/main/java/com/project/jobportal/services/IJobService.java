@@ -1,13 +1,15 @@
 package com.project.jobportal.services;
 
 import com.project.jobportal.DTOs.JobDTO;
+import com.project.jobportal.DTOs.RecommenInputDTO;
 import com.project.jobportal.models.Jobs;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDate;
-import java.util.Date;
+import java.util.List;
 
 public interface IJobService {
     void createJob(JobDTO jobDTO);
@@ -32,4 +34,8 @@ public interface IJobService {
 
     Page<Jobs> searchJobByFilter(String catgoryName, String positon, String experience, Integer minSalary,
                                  Integer maxSalary, PageRequest pageRequest);
+
+    List<Jobs> searchSameJobById(long jobId) throws Exception;
+
+    List<Jobs> getRecommendedJob(RecommenInputDTO recommenInputDTO) throws Exception;
 }

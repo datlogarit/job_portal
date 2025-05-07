@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Cập Nhật Thông Tin Công Ty</title>
+    <link rel="stylesheet" href="./assets/css/output.css">
+    <!-- toast lib -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+
+</head>
+
+<body class="bg-gray-50 flex items-center justify-center min-h-screen">
+    <div class="bg-white my-4 p-5 rounded-lg shadow-lg w-full max-w-[740px]">
+        <h1 class="text-xl font-bold mb-4 text-center">Cập nhật thông tin công ty</h1>
+
+        <!-- Logo Placeholder -->
+        <div class="flex justify-center mb-6">
+            <div class="relative">
+                <div class="w-24 h-24 overflow-hidden bg-gray-200 rounded-full flex items-center justify-center">
+                    <img id="preview" class="w-full h-full hidden"
+                        src="./assets/images/wallpaperflare.com_wallpaper (2).jpg" alt="">
+                    <span id="temp_avt" class="text-[10px] text-gray-500">Ảnh đại diện</span>
+                </div>
+                <div class="w-[30px] h-[30px] bg-gray-400 rounded-[50%] absolute top-[70px] right-[2px] ">
+                    <div class="flex justify-center items-center h-full text-white hover:cursor-pointer">
+                        <input type="file" id="logoUpload" accept="image/*" class="hidden">
+                        <label for="logoUpload" class="hover:cursor-pointer">
+                            <ion-icon name="camera-outline"></ion-icon>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="grid grid-cols-2 gap-4">
+            <!-- Mã số thuế -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Mã số thuế <span
+                        class="text-red-500">*</span></label>
+                <input id="tax_code" type="text" required
+                    class="mt-1 block w-full px-2 py-1.5 border border-gray-300 rounded-md hover:border-[#0169dd] focus:border-[#0169dd] focus:outline-none"
+                    placeholder="Nhập mã số thuế">
+            </div>
+
+            <!-- Tên công ty -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Tên công ty <span
+                        class="text-red-500">*</span></label>
+                <input id="company_name" type="text" required
+                    class="mt-1 block w-full px-2 py-1.5 border border-gray-300 rounded-md hover:border-[#0169dd] focus:border-[#0169dd] focus:outline-none"
+                    placeholder="Nhập tên công ty">
+            </div>
+
+            <!-- Website -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Website</label>
+                <div class="mt-1 flex items-center">
+                    <input id="website_company" type="text" value="https://" required
+                        class="block w-full px-2 py-1.5 border border-gray-300 rounded-md hover:border-[#0169dd] focus:border-[#0169dd] focus:outline-none"
+                        placeholder="Nhập website">
+                </div>
+            </div>
+
+            <!-- Quy mô -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Quy mô <span
+                        class="text-red-500">*</span></label>
+                <select id="scale_company"
+                    class="mt-1 block w-full px-2 py-1.5 border border-gray-300 rounded-md hover:border-[#0169dd] focus:border-[#0169dd] focus:outline-none">
+                    <option>1-9 nhân viên</option>
+                    <option>10-24 nhân viên</option>
+                    <option>25-99 nhân viên</option>
+                    <option>100-499 nhân viên</option>
+                    <option>500-1000 nhân viên</option>
+                    <option>1000+</option>
+                    <option>3000+</option>
+                    <option>5000+</option>
+                </select>
+            </div>
+
+            <!-- Địa chỉ -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Địa chỉ <span
+                        class="text-red-500">*</span></label>
+                <input id="address_company" type="text" required
+                    class="mt-1 block w-full px-2 py-1.5 border border-gray-300 rounded-md hover:border-[#0169dd] focus:border-[#0169dd] focus:outline-none"
+                    placeholder="Nhập địa chỉ">
+            </div>
+
+            <!-- Email -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Email <span class="text-red-500">*</span></label>
+                <input id="email_company" type="email" required
+                    class="mt-1 block w-full px-2 py-1.5 border border-gray-300 rounded-md hover:border-[#0169dd] focus:border-[#0169dd] focus:outline-none"
+                    placeholder="Nhập email">
+            </div>
+
+            <!-- Số điện thoại -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Số điện thoại <span
+                        class="text-red-500">*</span></label>
+                <input id="phone_number" type="text" required
+                    class="mt-1 block w-full px-2 py-1.5 border border-gray-300 rounded-md hover:border-[#0169dd] focus:border-[#0169dd] focus:outline-none"
+                    placeholder="Nhập số điện thoại">
+            </div>
+        </div>
+
+        <!-- Text Editor Placeholder -->
+        <div class="mt-4">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Giới thiệu công ty</label>
+            <textarea id="description_company" name="description" required class="editor"></textarea>
+        </div>
+
+        <button onclick="sendInfCompany()" class="w-full flex justify-end hover:cursor-pointer">
+            <div class=" px-3 py-1.5 max-w-fit flex flex-row items-center bg-black rounded-2xl mt-4">
+                <h5 class="text-white mr-1">Tiếp theo: </h5>
+                <p class="text-[#43b1b7] mr-1">Xác thực công ty</p>
+                <ion-icon class="text-white content-center text-2xl mt-0.5" name="arrow-forward-outline"></ion-icon>
+            </div>
+        </button>
+    </div>
+    <!-- ion-icon -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+    <!-- text-editor -->
+    <script src="https://cdn.tiny.cloud/1/vbzhy4mji7p7gmshmolvvcweki8c6elwl47t1zqr9wfpfmvf/tinymce/7/tinymce.min.js"
+        referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea.editor'
+        });
+    </script>
+
+    <!-- xử lý gửi thông tin -->
+    <script>//type="module"
+        // import { loginRecruiter } from "./assets/js/auth.js"
+        async function sendInfCompany() {
+            const tax_code = document.getElementById("tax_code").value;
+            const company_name = document.getElementById("company_name").value;
+            const website_company = document.getElementById("website_company").value;
+            const scale_company = document.getElementById("scale_company").value;
+            const address_company = document.getElementById("address_company").value;
+            const email_company = document.getElementById("email_company").value;
+            const phone_number = document.getElementById("phone_number").value;
+            const description_company = tinymce.get("description_company").getContent(); // Lấy nội dung từ TinyMCE
+            const logo = document.getElementById("logoUpload").files[0];
+
+            const formData = new FormData();
+            const companyData = {
+                tax_code: tax_code,
+                name: company_name,
+                website: website_company,
+                scale: scale_company,
+                address: address_company,
+                email: email_company,
+                hotline: phone_number,
+                introduction: description_company
+            };
+
+            formData.append("company", JSON.stringify(companyData));
+            if (logo) {
+                formData.append("logo", logo);
+            }
+            var notyf = new Notyf({
+                duration: 2500, position: {
+                    x: 'right',   // left | center | right
+                    y: 'top'
+                }, dismissible: true // Có nút tắt hay không
+            });
+            const user = JSON.parse(localStorage.getItem("user"))
+            fetch(`http://localhost:8088/api/v1/company/${user.id}`, {
+                method: 'POST',
+                body: formData // KHÔNG đặt headers Content-Type, trình duyệt sẽ tự set multipart/form-data
+            })
+                .then(async (response) => {
+                    if (response.ok) {
+                        notyf.success('Đăng ký cty thành công!');
+                        setTimeout(function () {
+                            window.location.href = "./verify_company.html"
+                        }, 2600)
+                    }
+                    else {
+                        response.text().then(data => {
+                            notyf.error(data)
+                        })
+                    }
+                })
+                .catch(error => {
+                    notyf.error(error);
+                });
+        }
+    </script>
+
+    <!-- xử lý preview ảnh -->
+    <script>
+        // Lấy input file và hình ảnh preview
+        const fileInput = document.getElementById('logoUpload');
+        const previewImage = document.getElementById('preview');
+
+        // Xử lý khi người dùng chọn file
+        fileInput.addEventListener('change', function (event) {
+            const file = event.target.files[0]; // Lấy file đầu tiên (vì chỉ chọn 1 file)
+
+            if (file) {
+                // Hiển thị ảnh preview
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    previewImage.classList.remove('hidden');
+                    document.getElementById('temp_avt').classList.add('hidden');
+                    previewImage.src = e.target.result; // Cập nhật src của thẻ img
+                };
+                reader.readAsDataURL(file); // Đọc file dưới dạng URL dữ liệu
+            }
+        });
+    </script>
+</body>
+
+</html>

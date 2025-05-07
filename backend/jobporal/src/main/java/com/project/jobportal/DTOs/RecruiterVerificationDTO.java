@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RecruiterVerificationDTO {
-    @JsonProperty("recruiter_id")
-    private long RecruiterId;
+//    @JsonProperty("recruiter_id")
+//    private long RecruiterId;
 
     @JsonProperty("authorization_letter_url")
     private String authorizationLetterUrl;

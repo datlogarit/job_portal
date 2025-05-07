@@ -1,6 +1,9 @@
 package com.project.jobportal.services;
 
 import com.project.jobportal.DTOs.User_RecruiterDTO;
+import com.project.jobportal.models.RecruiterVerifications;
+import com.project.jobportal.repositories.ICompanyRepository;
+import com.project.jobportal.repositories.IRecruiterVerificationRepository;
 import org.springframework.stereotype.Service;
 
 import com.project.jobportal.models.Companies;
@@ -18,10 +21,25 @@ import lombok.RequiredArgsConstructor;
 public class RecruiterService implements IRecruiterService {
     private final IRecruiterRepository iRecruiterRepository;
     private final IUserRepository iUserRepository;
-    private final CompanyService CompanyService;
+    private final ICompanyRepository iCompanyRepository;
+    private final IRecruiterVerificationRepository iRecruiterVerificationRepository;
+
+    @Override
+    public Recruiters login(String email, String password) {
+        Recruiters recruiters = iRecruiterRepository.login(email, password);
+        if (recruiters == null) {
+            throw new RuntimeException("Tài khoản hoặc mật khẩu không đúng");
+        }
+
+        return recruiters;
+    }
 
     @Override
     public void createRecruiter(User_RecruiterDTO userRecruiter) {
+
+        if (iRecruiterRepository.findByEmail(userRecruiter.getEmail()) != null) {
+            throw new RuntimeException("Email đã tồn tại");
+        }
         Users newUser = Users.builder()
                 .email(userRecruiter.getEmail())
                 .password(userRecruiter.getPassword())
@@ -33,13 +51,11 @@ public class RecruiterService implements IRecruiterService {
                 .isActive(userRecruiter.getIsActive())
                 .build();
 
-        Companies existCompany =
-                CompanyService.getCompanyById(userRecruiter.getCompanyId());
         Recruiters recruiters = Recruiters.builder()
                 .userId(newUser)
-                .companyId(existCompany)
-                .isVerify(userRecruiter.getIsVerify())
-                .numberOfPost(userRecruiter.getNumberOfPost())
+//                .companyId(existCompany)
+                .isVerify(0)
+                .numberOfPost(0)
                 .position(userRecruiter.getPosition())
                 .build();
         iRecruiterRepository.save(recruiters);
@@ -54,7 +70,7 @@ public class RecruiterService implements IRecruiterService {
         existUser.setDob(userRecruiterDTO.getDob());
         existUser.setUrlAvatar(userRecruiterDTO.getUrlAvatar());
         Companies existCompany =
-                CompanyService.getCompanyById(userRecruiterDTO.getCompanyId());
+                iCompanyRepository.findById(userRecruiterDTO.getCompanyId()).orElseThrow();
         Recruiters existRecruiters = getRecruiter(id);
         existRecruiters.setUserId(existUser);
         existRecruiters.setCompanyId(existCompany);
@@ -62,6 +78,24 @@ public class RecruiterService implements IRecruiterService {
         existRecruiters.setNumberOfPost(userRecruiterDTO.getNumberOfPost());
         existRecruiters.setPosition(userRecruiterDTO.getPosition());
         iRecruiterRepository.save(existRecruiters);
+    }
+
+    @Override
+    public void updateCompany(long recruiterId, long companyId) {
+        Recruiters recruiters = iRecruiterRepository.findById(recruiterId).orElseThrow(
+                () -> new RuntimeException("Recruiter not found"));
+        Companies companies = iCompanyRepository.findById(companyId).orElseThrow();
+        recruiters.setCompanyId(companies);
+        iRecruiterRepository.save(recruiters);
+    }
+
+    @Override
+    public void updateVerification(long recruiterId, long verificationId) {
+        Recruiters recruiters = iRecruiterRepository.findById(recruiterId).orElseThrow(
+                () -> new RuntimeException("Recruiter not found"));
+        RecruiterVerifications verifications = iRecruiterVerificationRepository.findById(verificationId).orElseThrow();
+        recruiters.setVerifyId(verifications);
+        iRecruiterRepository.save(recruiters);
     }
 
     @Override
@@ -95,7 +129,7 @@ public class RecruiterService implements IRecruiterService {
                 .build();
 
         Companies existCompany =
-                CompanyService.getCompanyById(CompanyId);
+                iCompanyRepository.findById(CompanyId).orElseThrow();
         Recruiters recruiters = Recruiters.builder()
                 .userId(newUser)
                 .companyId(existCompany)

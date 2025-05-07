@@ -1,6 +1,7 @@
 package com.project.jobportal.controllers;
 
 import com.project.jobportal.DTOs.JobDTO;
+import com.project.jobportal.DTOs.RecommenInputDTO;
 import com.project.jobportal.models.Jobs;
 import com.project.jobportal.services.JobService;
 
@@ -94,6 +95,18 @@ public class JobController {
         List<Jobs> jobsFilter = jobService
                 .searchJobByFilter(category, position, experience, minSalary, maxSalary, pageRequest).getContent();
         return ResponseEntity.ok(jobsFilter);
+    }
+
+    @GetMapping("/sameJob/{jobId}")
+    public ResponseEntity<?> getSameJob(@PathVariable(name = "jobId") long jobId) throws Exception {
+
+        return ResponseEntity.ok(jobService.searchSameJobById(jobId));
+    }
+
+    @PostMapping("/recommendation")
+    public ResponseEntity<?> getRecommendationJob(@RequestBody RecommenInputDTO recommenInputDTO) throws Exception {
+
+        return ResponseEntity.ok(jobService.getRecommendedJob(recommenInputDTO));
     }
 
     @DeleteMapping("/{id}")

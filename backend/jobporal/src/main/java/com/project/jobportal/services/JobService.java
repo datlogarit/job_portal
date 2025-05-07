@@ -1,6 +1,9 @@
 package com.project.jobportal.services;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.jobportal.DTOs.JobDTO;
+import com.project.jobportal.DTOs.RecommenInputDTO;
 import com.project.jobportal.models.Categories;
 import com.project.jobportal.models.Companies;
 import com.project.jobportal.models.Jobs;
@@ -10,19 +13,21 @@ import com.project.jobportal.repositories.IRecruiterRepository;
 
 import lombok.RequiredArgsConstructor;
 
-import org.openqa.selenium.NotFoundException;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
-import java.util.Date;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
 public class JobService implements IJobService {
-    private final IJobRepository iJobReposiroty;
+//    private final RestTemplate restTemplate = new RestTemplate();
+
+    private final IJobRepository iJobRepository;
     private final IRecruiterRepository iRecruiterRepository;
     private final RecruiterService recruiterService;
     private final CategoryService iCategoryService;
@@ -30,10 +35,8 @@ public class JobService implements IJobService {
 
     @Override
     public void createJob(JobDTO jobDTO) {
-        Recruiters existRecruiter = iRecruiterRepository.findById(jobDTO.getPostedBy()).get();
-        if (existRecruiter == null) {
-            throw new RuntimeException("Recruiter not found");
-        }
+        Recruiters existRecruiter = iRecruiterRepository.findById(jobDTO.getPostedBy()).orElseThrow(()
+                -> new RuntimeException("Recruiter not found"));
 
         Categories existCategory = iCategoryService.getCategoryById(jobDTO.getCategoryId());
         if (existCategory == null) {
@@ -61,7 +64,7 @@ public class JobService implements IJobService {
                 .isLock(jobDTO.getIsLock())
                 .isActive(jobDTO.getIsActive())
                 .build();
-        iJobReposiroty.save(jobs);
+        iJobRepository.save(jobs);
     }
 
     @Override
@@ -72,10 +75,6 @@ public class JobService implements IJobService {
                                   int minSalary, int maxSalary,
                                   String companyName, String ImgCpnUrl, String introduction,
                                   String location, String email, String name, String password) {
-        //DANG LOI O DAY
-//        ---------------------------------
-//                -------------
-//                        ----------
 
         Categories categories = iCategoryService.finByNameCategory(category);
         Companies companies = companyService.finByName(companyName, location, ImgCpnUrl);
@@ -104,12 +103,12 @@ public class JobService implements IJobService {
                 .isLock(0)//khoa tu phia nguoi dung
                 .isActive(0)//khóa tu phia admin
                 .build();
-        iJobReposiroty.save(newJob);
+        iJobRepository.save(newJob);
     }
 
     @Override
     public void updateJob(long id, JobDTO jobDTO) {
-        Jobs existJob = iJobReposiroty.findById(id).orElseThrow(() -> new RuntimeException("Job not found"));
+        Jobs existJob = iJobRepository.findById(id).orElseThrow(() -> new RuntimeException("Job not found"));
         existJob.setTitle(jobDTO.getTitle());
         existJob.setMinSalary(jobDTO.getMinSalary());
         existJob.setMaxSalary(jobDTO.getMaxSalary());
@@ -129,22 +128,22 @@ public class JobService implements IJobService {
         existJob.setIsEdit(jobDTO.getIsEdit());
         existJob.setIsLock(jobDTO.getIsLock());
         existJob.setIsActive(jobDTO.getIsActive());
-        iJobReposiroty.save(existJob);
+        iJobRepository.save(existJob);
     }
 
     @Override
     public Jobs getJobById(long id) {
-        return iJobReposiroty.findById(id).orElseThrow(() -> new RuntimeException("Job not found"));
+        return iJobRepository.findById(id).orElseThrow(() -> new RuntimeException("Job not found"));
     }
 
     @Override
     public Page<Jobs> getAllJob(PageRequest pageRequest) {
-        return iJobReposiroty.findAll(pageRequest);
+        return iJobRepository.findAll(pageRequest);
     }
 
     @Override
     public Page<Jobs> searchJob(String SearchKeyword, PageRequest pageRequest) {
-        return iJobReposiroty.searchJob(SearchKeyword, pageRequest);
+        return iJobRepository.searchJob(SearchKeyword, pageRequest);
     }
 
     @Override
@@ -152,20 +151,77 @@ public class JobService implements IJobService {
         Categories newCategory = new Categories();
         newCategory.setId(categoryId);
 
-        return iJobReposiroty.findByCategoryId(newCategory, pageRequest);
+        return iJobRepository.findByCategoryId(newCategory, pageRequest);
     }
 
     @Override
     public Page<Jobs> searchJobByCompany(long companyId, PageRequest pageRequest) {
-        // Companies newCompany = new Companies();
-        // newCompany.setId(companyId);//truyền vào company chỉ có ID
-        return iJobReposiroty.findJobsByCompanyId(companyId, pageRequest);
+        return iJobRepository.findJobsByCompanyId(companyId, pageRequest);
     }
 
     @Override
     public Page<Jobs> searchJobByFilter(String category, String position, String experience, Integer minSalary,
                                         Integer maxSalary, PageRequest pageRequest) {
-        Page<Jobs> jobs = iJobReposiroty.filterJobs(category, position, experience, minSalary, maxSalary, pageRequest);
+        Page<Jobs> jobs = iJobRepository.filterJobs(category, position, experience, minSalary, maxSalary, pageRequest);
         return jobs;
+    }
+
+    @Override
+    public List<Jobs> searchSameJobById(long jobId) throws Exception {
+        RestTemplate restTemplate1 = new RestTemplate();
+        List<Jobs> sameJobs = new ArrayList<>();
+        String url = String.format("http://localhost:8000/api/v1/recommend/%d", jobId);
+
+        ResponseEntity<String> response = restTemplate1.getForEntity(url, String.class);
+
+        ObjectMapper mapper = new ObjectMapper();
+        //tạo ra 1 node json
+        JsonNode root = mapper.readTree(response.getBody()); // jsonString là chuỗi JSON
+        JsonNode jobs = root.get("jobs");//lấy ra node jobs
+        for (JsonNode job : jobs) {
+            long id = job.get("id").asInt();//lấy ra node id trong json
+            sameJobs.add(getJobById(id));
+        }
+        return sameJobs;
+    }
+
+    @Override
+    public List<Jobs> getRecommendedJob(RecommenInputDTO recommenInputDTO) throws Exception {
+        RestTemplate restTemplate = new RestTemplate();
+        String url = "http://localhost:8000/api/v1/hybrid_recommend_jobs";
+
+        // Chuẩn bị JSON body
+//        Map<String, Object> body = new HashMap<>();
+//        body.put("user_id", inputDTO.getUserId());
+//        body.put("title", inputDTO.getTitle());
+//        body.put("category_id", inputDTO.getCategoryId());
+//        body.put("locations", List.of(inputDTO.getWorkLocation()));
+//        body.put("total_jobs", inputDTO.getTotalJobs());
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<RecommenInputDTO> requestEntity = new HttpEntity<>(recommenInputDTO, headers);
+
+        // Gọi Python API
+        ResponseEntity<String> response = restTemplate.postForEntity(url, requestEntity, String.class);
+
+        // Xử lý JSON trả về
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode root = mapper.readTree(response.getBody());
+        JsonNode cbJobs = root.get("content_based_jobs");
+        JsonNode cfJobs = root.get("collaborative_filtering_jobs");
+
+        List<Jobs> recommended = new ArrayList<>();
+        for (JsonNode job : cbJobs) {
+            long id = job.asLong();
+            recommended.add(getJobById(id)); // hàm tự viết lấy từ DB
+        }
+        for (JsonNode job : cfJobs) {
+            long id = job.asLong();
+            recommended.add(getJobById(id));
+        }
+
+        return recommended;
     }
 }

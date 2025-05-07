@@ -10,10 +10,22 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Companies {
+public class Companies extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Column(name = "tax_code")
+    private String taxCode;
+
+    @Column(name = "website")
+    private String website;
+
+    @Column(name = "scale")
+    private String scale;
+
+    @Column(name = "email")
+    private String email;
 
     @Column(name = "company_name", nullable = false, length = 50)
     private String name;

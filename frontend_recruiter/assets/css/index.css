@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+/* cmd */
+/* npx @tailwindcss/cli -i ./assets/css/index.css -o ./assets/css/output.css --watch */
+/* primary color: #43b1b7 */
+/* body {
+    position: relative;
+    background-color: white;
+} */

@@ -1,5 +1,6 @@
 package com.project.jobportal.controllers;
 
+import com.project.jobportal.DTOs.UserDTO;
 import com.project.jobportal.DTOs.User_RecruiterDTO;
 import com.project.jobportal.services.RecruiterService;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,11 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class RecruiterController {
     private final RecruiterService recruiterService;
+
+    @PostMapping("login/recruiter")
+    public ResponseEntity<?> login(@RequestBody UserDTO userDTO) {
+        return ResponseEntity.ok(recruiterService.login(userDTO.getEmail(), userDTO.getPassword()));
+    }
 
     @PostMapping("")
     public ResponseEntity<?> createInfoRecruiter(@RequestBody User_RecruiterDTO userRecruiterDTO) {

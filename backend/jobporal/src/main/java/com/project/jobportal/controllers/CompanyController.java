@@ -33,10 +33,11 @@ public class CompanyController {
     private final CompanyService companyService;
     private final HandleFile handleFile;
 
-    @PostMapping(value = "", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> createCompany(@RequestPart("company") String CompanyJson,//data nhận là String, hài thật chứ
-                                           @RequestPart("file") MultipartFile file,
-                                           BindingResult result) throws JsonProcessingException {
+    @PostMapping(value = "/{recruiterId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> createCompanyByRecruiterId(@PathVariable("recruiterId") long recruiterId,
+                                                        @RequestPart("company") String CompanyJson,//data nhận là String, hài thật chứ
+                                                        @RequestPart(value = "logo") MultipartFile file,
+                                                        BindingResult result) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         CompanyDTO companyDTO = objectMapper.readValue(CompanyJson, CompanyDTO.class);
         if (result.hasErrors()) {
@@ -54,10 +55,10 @@ public class CompanyController {
         }
         try {
             String fileName = handleFile.storeFile(file, "avtCompany_uploads");
-            companyService.crateCompany(companyDTO, fileName);
+            companyService.crateCompany(recruiterId, companyDTO, fileName);
             return ResponseEntity.ok("create company successfully");
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e);
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 

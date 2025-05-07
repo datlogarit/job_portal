@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
         title: 'Job Portal App',
         theme: ThemeData(
           fontFamily: 'montserrat',
-          primaryColor: Color(0xFF43B1B7),
+          primaryColor: Color.fromRGBO(67, 177, 183, 1),
           colorScheme: ColorScheme.fromSwatch().copyWith(
             secondary: Color(0xFFFED408),
           ),

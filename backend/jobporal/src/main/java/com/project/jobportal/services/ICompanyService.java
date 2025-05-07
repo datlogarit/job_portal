@@ -6,9 +6,9 @@ import com.project.jobportal.models.Companies;
 import java.util.List;
 
 public interface ICompanyService {
-    void crateCompany(CompanyDTO companyDTO, String file);
-
     void updateCompany(long id, CompanyDTO companyDTO);
+
+    void crateCompany(long recruiterId, CompanyDTO companyDTO, String fileName);
 
     Companies getCompanyById(long id);
 

@@ -12,17 +12,34 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CompanyService implements ICompanyService {
     private final ICompanyRepository iCompanyRepository;
+    private final RecruiterService recruiterService;
 
     @Override
-    public void crateCompany(CompanyDTO companyDTO, String fileName) {
+    public void crateCompany(long recruiterId, CompanyDTO companyDTO, String fileName) {
+        if (iCompanyRepository.existsByEmail(companyDTO.getEmail())) {
+            throw new RuntimeException("Email đã tồn tại");
+        }
+        if (iCompanyRepository.existsByHotline(companyDTO.getHotline())) {
+            throw new RuntimeException("Hotline đã được sử dụng");
+        }
+        if (iCompanyRepository.existsByName(companyDTO.getName())) {
+            throw new RuntimeException("Công ty này đã tồn tại");
+        }
         Companies newCompanies = Companies.builder()
                 .name(companyDTO.getName())
-                .location(companyDTO.getLocation())
+                .taxCode(companyDTO.getTaxCode())
+                .website(companyDTO.getWebsite())
+                .scale(companyDTO.getScale())
+                .email(companyDTO.getEmail())
+                .location(companyDTO.getAddress())
                 .introduction(companyDTO.getIntroduction())
                 .url_avt(fileName)
                 .hotline(companyDTO.getHotline())
                 .build();
         iCompanyRepository.save(newCompanies);
+//        update thong tin cty cho nhà tuyen dung
+        recruiterService.updateCompany(recruiterId, newCompanies.getId());
+
     }
 
     @Override
@@ -39,8 +56,8 @@ public class CompanyService implements ICompanyService {
             existCompany.setName(companyDTO.getName());
             isUpdate = true;
         }
-        if (companyDTO.getLocation() != null) {
-            existCompany.setLocation(companyDTO.getLocation());
+        if (companyDTO.getAddress() != null) {
+            existCompany.setLocation(companyDTO.getAddress());
             isUpdate = true;
         }
         if (companyDTO.getIntroduction() != null) {

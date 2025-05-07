@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form Đăng Tải Giấy Tờ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <!-- toast lib -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+</head>
+
+<body class="bg-gray-50 p-6">
+    <div class="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-6">
+        <h2 id="title_form" class="text-xl font-semibold mb-4">Thông tin Giấy đăng ký doanh nghiệp</h2>
+
+        <div class="space-y-2">
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="radio" name="docType" value="business"
+                    class="doc-toggle w-5 h-5 text-[#2563eb] focus:ring-[#2563ebcc] border-gray-300" checked />
+                <span class="font-medium flex items-center gap-1">
+                    <ion-icon name="business-outline" class="text-lg"></ion-icon>
+                    Giấy đăng ký doanh nghiệp hoặc Giấy tờ tương đương khác
+                </span>
+            </label>
+
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="radio" name="docType" value="authorization"
+                    class="doc-toggle w-5 h-5 text-[#2563eb] focus:ring-[#2563ebcc] border-gray-300" />
+                <span class="font-medium flex items-center gap-1">
+                    <ion-icon name="document-text-outline" class="text-lg"></ion-icon>
+                    Giấy uỷ quyền và Giấy tờ định danh
+                </span>
+            </label>
+        </div>
+
+        <!-- Business License Upload -->
+        <div id="business-section" class="border rounded-lg p-4 space-y-4 bg-gray-50 mt-4">
+            <div>
+                <label class="font-semibold text-gray-700">Giấy tờ *</label>
+                <p class="text-sm text-green-700 font-medium mt-1">Giấy phép kinh doanh</p>
+                <div class="border-dashed border-2 border-gray-300 rounded-md p-4 mt-2 text-center">
+                    <input type="file" class="hidden" id="businessUpload" accept=".pdf,.doc,.docx" />
+                    <label for="businessUpload"
+                        class="cursor-pointer inline-block px-4 py-2 bg-[#2563ebcc] text-white rounded hover:bg-[#2563eb]">
+                        <ion-icon name="cloud-upload-outline" class="align-middle"></ion-icon>
+                        Chọn file
+                    </label>
+                    <p id="businessFileName" class="text-sm text-gray-700 mt-2 hidden"></p>
+                    <p class="text-sm text-gray-500 mt-2">Dung lượng tối đa 5MB, định dạng: jpeg, jpg, png, pdf</p>
+                </div>
+                <p class="text-orange-500 text-sm mt-2">⚠️ Các văn bản đăng tải cần đầy đủ các mặt và không có dấu hiệu
+                    chỉnh sửa/che/cắt thông tin</p>
+            </div>
+            <div class="mt-4">
+                <p class="font-semibold mb-2">Minh hoạ</p>
+                <img src="./assets/images/sample-licence.7436372.jpg" alt="Giấy phép kinh doanh minh hoạ"
+                    class="w-72 border rounded shadow" />
+            </div>
+        </div>
+
+        <!-- Authorization Upload -->
+        <div id="authorization-section" class="border rounded-lg p-4 space-y-4 bg-gray-50 mt-4 hidden">
+            <div>
+                <label class="font-semibold text-gray-700">Giấy uỷ quyền *</label>
+                <div class="border-dashed border-2 border-gray-300 rounded-md p-4 mt-2 text-center">
+                    <input type="file" class="hidden" id="authUpload" accept=".pdf,.doc,.docx" />
+                    <label for="authUpload"
+                        class="cursor-pointer inline-block px-4 py-2 bg-[#2563ebcc] text-white rounded hover:bg-[#2563eb]">
+                        <ion-icon name="cloud-upload-outline" class="align-middle"></ion-icon>
+                        Chọn file
+                    </label>
+                    <p id="authFileName" class="text-sm text-gray-700 mt-2 hidden"></p>
+                    <p class="text-sm text-gray-500 mt-2">Dung lượng tối đa 5MB, định dạng: jpeg, jpg, png, pdf</p>
+                </div>
+                <p class="text-orange-500 text-sm mt-2">⚠️ Các văn bản đăng tải cần đầy đủ các mặt và không có dấu hiệu
+                    chỉnh sửa/che/cắt thông tin</p>
+            </div>
+            <div class="mt-4 flex items-center space-x-4">
+                <div>
+                    <p class="font-semibold mb-2">Minh hoạ</p>
+                    <img src="./assets/images/authorization_letter_sample.png" alt="Giấy uỷ quyền minh hoạ"
+                        class="w-48 border rounded shadow" />
+                </div>
+                <div>
+                    <button class="mt-6 px-4 py-2 bg-[#2563ebcc] text-white rounded hover:bg-[#2563eb]">
+                        <a href="./assets/docs_for_user/06. Mẫu ủy quyền sử dụng dịch vụ_V1.0.docx" download><ion-icon
+                                name="cloud-download-outline" class="align-middle mr-1.5"></ion-icon>Tải mẫu
+                            giấy uỷ quyền</a>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="w-full flex justify-end">
+            <button id="submitForm" onclick="sendInfVerify()"
+                class="mt-5  px-10 py-1.5 bg-[#2563ebcc] rounded-[6px] text-[white] hover:bg-[#2563eb]">
+                Hoàn tất
+            </button>
+        </div>
+
+    </div>
+
+    <script>
+        // Toggle giữa 2 loại tài liệu
+        document.querySelectorAll('.doc-toggle').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                const type = e.target.value;
+                document.getElementById('business-section').classList.toggle('hidden', type !== 'business');
+                document.getElementById('authorization-section').classList.toggle('hidden', type !== 'authorization');
+            });
+        });
+
+        // Hiển thị tên file business
+        document.getElementById('businessUpload').addEventListener('change', function () {
+            const file = this.files[0];
+            const display = document.getElementById('businessFileName');
+            if (file) {
+                display.textContent = `📄 ${file.name}`;
+                display.classList.remove('hidden');
+            } else {
+                display.textContent = '';
+                display.classList.add('hidden');
+            }
+        });
+
+        // Hiển thị tên file ủy quyền
+        document.getElementById('authUpload').addEventListener('change', function () {
+            const file = this.files[0];
+            const display = document.getElementById('authFileName');
+            if (file) {
+                display.textContent = `📄 ${file.name}`;
+                display.classList.remove('hidden');
+            } else {
+                display.textContent = '';
+                display.classList.add('hidden');
+            }
+        });
+    </script>
+    <script>
+        //gọi đến api và gủi thông tin về file business và authorization lên ở đây
+    </script>
+    <script>
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (user.verifyId) {
+            document.getElementById("title_form").innerHTML = "Cập nhật giấy đăng ký doanh nghiệp"
+        }
+        async function sendInfVerify() {
+            const businessFile = document.getElementById('businessUpload').files[0];
+            const authFile = document.getElementById('authUpload').files[0];
+            var notyf = new Notyf({
+                duration: 2500, position: {
+                    x: 'right',   // left | center | right
+                    y: 'top'
+                }, dismissible: true // Có nútj tắt hay không
+            });
+            if (!businessFile || !authFile) {
+                notyf.error("Vui lòng chọn đầy đủ cả hai loại giấy tờ!")
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("business_license_url", businessFile);
+            formData.append("authorization_letter_url", authFile);
+            if (!user.verifyId) {//nếu chưa có thông tin
+                try {
+                    const response = await fetch(`http://localhost:8088/api/v1/recruiterVerification/${user.id}`, {
+                        method: "POST",
+                        body: formData,
+                    });
+                    const result = await response.text(); // hoặc response.json() nếu trả về JSON
+                    if (response.ok) {
+                        notyf.success("Gửi thông tin xác thực thành công")
+                        setTimeout(() => {
+                            window.location.href = "./login2.html"
+                        }, 1500);
+                    } else {
+                        notyf.error("Gửi thông tin xác thực thất bại")
+                    }
+                } catch (error) {
+                    notyf.error("Lỗi khi kết nối máy chủ")
+                }
+            }
+            else {//nếu đã có thông tin
+                try {
+                    const response = await fetch(`http://localhost:8088/api/v1/recruiterVerification/${user.verifyId.id}`, {
+                        method: "PUT",
+                        body: formData,
+                    });
+                    const result = await response.text(); // hoặc response.json() nếu trả về JSON
+                    if (response.ok) {
+                        notyf.success("Cập nhật thành công")
+                        setTimeout(() => {
+                            window.location.href = "./login2.html"
+                        }, 1500);
+                    } else {
+                        notyf.error("Cập nhật thất bại")
+                    }
+                } catch (error) {
+                    notyf.error("Lỗi khi kết nối máy chủ")
+                }
+            }
+
+        }
+
+    </script>
+
+</body>
+
+</html>

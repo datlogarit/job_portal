@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Hiển Thị Form</title>
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+    <link rel="stylesheet" href="./assets/css/output.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        .modal-open {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
+        }
+
+        .modal-closed {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
+        }
+
+        .backdrop-open {
+            opacity: 1;
+            transition: opacity 300ms ease-in-out;
+        }
+
+        .backdrop-closed {
+            opacity: 0;
+            transition: opacity 300ms ease-in-out;
+        }
+    </style>
+</head>
+
+<body class="bg-white flex items-center justify-center min-h-screen">
+    <!-- Nút bấm để mở modal -->
+    <button id="openModalBtn" class="bg-[#2563ebcc] text-white px-6 py-3 rounded-lg shadow-lg hover:bg-[#2563eb]">
+        Mở Form Xác Thực
+    </button>
+
+    <!-- Modal chứa form -->
+    <div id="modal"
+        class="fixed inset-0 bg-gray-300 bg-opacity-50 flex items-center justify-center hidden backdrop-closed">
+        <div id="modalContent" class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md relative modal-closed">
+            <!-- Nút đóng modal -->
+            <button id="closeModalBtn" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+
+            <!-- Nội dung form giống hệt như trước -->
+            <h1 class="text-xl font-bold text-gray-800 mb-2">Xin chào, Đạt Đoàn</h1>
+            <p class="text-gray-600 mb-4">
+                Vui lòng chuẩn bị các giấy tờ, thông tin cần thiết và thực hiện các bước xác thực dưới đây để bắt đầu
+                đăng tin tuyển dụng.
+            </p>
+
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-lg font-semibold text-gray-800">XÁC THỰC THÔNG TIN</h2>
+                <span class="text-[#2563eb] font-semibold">Hoàn thành 25%</span>
+            </div>
+
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-6">
+                <div class="bg-[#2563eb] h-2.5 rounded-full" style="width: 25%"></div>
+            </div>
+
+            <ul class="space-y-4">
+                <!-- <li class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input type="radio" name="verification" class="hidden">
+                        <span class="w-6 h-6 border-2 border-gray-300 rounded-full mr-3"></span>
+                        <span class="text-gray-700">Xác thực số điện thoại</span>
+                    </div>
+                    <i class="fas fa-chevron-right text-gray-400"></i>
+                </li> -->
+                <li class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input type="radio" name="verification" class="hidden" checked>
+                        <span class="w-6 h-6 flex items-center justify-center mr-3">
+                            <i class="fas fa-check-circle text-[#2563eb] text-2xl"></i>
+                        </span>
+                        <span class="text-gray-700">Cập nhật thông tin công ty</span>
+                    </div>
+                    <div
+                        class="w-[32px] h-[32px] rounded-[50%] text-gray-500 duration-300 hover:bg-[#2563eb] hover:text-white flex justify-center items-center">
+                        <ion-icon name="arrow-forward-outline" class="text-[26px] "></ion-icon>
+                    </div>
+                </li>
+                <li class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input type="radio" name="verification" class="hidden">
+                        <span class="w-6 h-6 border-2 border-gray-300 rounded-full mr-3"></span>
+                        <span class="text-gray-700">Cập nhật Giấy đăng ký doanh nghiệp</span>
+                    </div>
+                    <div
+                        class="w-[32px] h-[32px] rounded-[50%] text-gray-500 duration-300 hover:bg-[#2563eb] hover:text-white flex justify-center items-center">
+                        <ion-icon name="arrow-forward-outline" class="text-[26px] "></ion-icon>
+                    </div>
+                </li>
+
+                <li class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input type="radio" name="verification" class="hidden">
+                        <span class="w-6 h-6 border-2 border-gray-300 rounded-full mr-3"></span>
+                        <span class="text-gray-700">Đăng tin tuyển dụng đầu tiên</span>
+                    </div>
+                    <div
+                        class="w-[32px] h-[32px] rounded-[50%] text-gray-500 duration-300 hover:bg-[#2563eb] hover:text-white flex justify-center items-center">
+                        <ion-icon name="arrow-forward-outline" class="text-[26px] "></ion-icon>
+                    </div>
+                    <!-- <div class="flex items-center">
+                        <span class="text-green-500 font-semibold mr-2">+0 TOP POINT</span>
+                        <i class="fas fa-chevron-right text-gray-400"></i>
+                    </div> -->
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <!-- Script để xử lý mở/đóng modal với hiệu ứng -->
+    <script>
+        const openModalBtn = document.getElementById('openModalBtn');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const modal = document.getElementById('modal');
+        const modalContent = document.getElementById('modalContent');
+
+        openModalBtn.addEventListener('click', () => {
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('backdrop-closed');
+                modal.classList.add('backdrop-open');
+                modalContent.classList.remove('modal-closed');
+                modalContent.classList.add('modal-open');
+            }, 10);
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+            modal.classList.remove('backdrop-open');
+            modal.classList.add('backdrop-closed');
+            modalContent.classList.remove('modal-open');
+            modalContent.classList.add('modal-closed');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        });
+
+        // Đóng modal khi nhấn ra ngoài
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('backdrop-open');
+                modal.classList.add('backdrop-closed');
+                modalContent.classList.remove('modal-open');
+                modalContent.classList.add('modal-closed');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300);
+            }
+        });
+    </script>
+</body>
+
+</html>

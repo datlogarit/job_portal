@@ -44,6 +44,7 @@ class _ChangePassState extends State<ChangePass> {
         ),
         centerTitle: true,
         backgroundColor: Color.fromRGBO(67, 177, 183, .8),
+        // backgroundColor: Color.fromRGBO(67, 177, 183, 1),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12.0),

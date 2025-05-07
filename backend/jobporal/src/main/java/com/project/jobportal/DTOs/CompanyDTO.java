@@ -6,24 +6,29 @@ import lombok.*;
 
 @Data
 public class CompanyDTO {
-    //    @NotEmpty(message = "name can't is empty")
+
+    @JsonProperty("tax_code")
+    private String taxCode;
+
     private String name;
 
-    //    @NotEmpty(message = "name can't is empty")
-    private String location;
+    private String website;
 
-    //    @NotEmpty(message = "name can't is empty")
+    private String scale;
+
+    private String address;
+
+    private String email;
+
+    private String hotline;
+
+//    private String location;
+
     private String introduction;
 
     @JsonProperty("avt_url")
-//    @NotEmpty(message = "name can't is empty")
     private String avtUrl;
-
-    //    @NotEmpty(message = "phone number can't is empty")
-//    @Min(value = 5, message = "the minimum length of phone number is 10 characters")
-//    @Max(value = 11, message = "the maximum length of phone number is 11 characters")
-    private String hotline;
-
+    
     private boolean isActive;
 
 }

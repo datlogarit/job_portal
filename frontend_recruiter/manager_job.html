@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My All Posts</title>
+    <link rel="stylesheet" href="./assets/css/output.css">
+    <link rel="stylesheet" href="./assets/css/navbar_addJob.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <!-- popup model - sweet alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+</head>
+
+<body class="bg-white">
+    <nav id="navbar">
+        <ul class="navbar-items flexbox-col">
+            <li class="navbar-logo flexbox-left">
+                <a class="navbar-item-inner flexbox">
+
+                    <img src="https://cdn.vietnamworks.com/images?url=https%3A%2F%2Fimages.vietnamworks.com%2Fpictureofcompany%2F7e%2F11125544.png&w=1920&q=75"
+                        alt="" />
+                </a>
+            </li>
+            <li class="navbar-item flexbox-left">
+                <a class="navbar-item-inner flexbox-left">
+                    <div class="navbar-item-inner-icon-wrapper flexbox">
+                        <ion-icon name="home-outline"></ion-icon>
+                    </div>
+                    <span class="link-text">Trang chủ</span>
+                </a>
+            </li>
+            <li class="navbar-item flexbox-left notification" data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
+                <a class="navbar-item-inner flexbox-left" id="notification_item">
+                    <div class="navbar-item-inner-icon-wrapper flexbox">
+                        <ion-icon name="notifications-outline"></ion-icon>
+                    </div>
+                    <span class="link-text">Thông báo</span>
+
+                </a>
+            </li>
+
+            <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions"
+                aria-labelledby="offcanvasWithBothOptionsLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Thông báo mới nhận</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <p>Nội dung thông báo</p>
+                </div>
+            </div>
+
+            <li class="navbar-item flexbox-left">
+                <a class="navbar-item-inner flexbox-left">
+                    <div class="navbar-item-inner-icon-wrapper flexbox">
+                        <ion-icon name="add-circle-outline"></ion-icon>
+                    </div>
+                    <span class="link-text">Thêm công việc</span>
+                </a>
+            </li>
+            <li class="navbar-item flexbox-left">
+                <a class="navbar-item-inner flexbox-left">
+                    <div class="navbar-item-inner-icon-wrapper flexbox">
+                        <ion-icon name="business-outline"></ion-icon>
+                    </div>
+                    <span class="link-text">Công ty</span>
+                </a>
+            </li>
+            <li class="navbar-item flexbox-left">
+                <a class="navbar-item-inner flexbox-left">
+                    <div class="navbar-item-inner-icon-wrapper flexbox">
+                        <ion-icon name="briefcase-outline"></ion-icon>
+                    </div>
+                    <span class="link-text">Việc của tôi</span>
+                </a>
+            </li>
+            <li class="navbar-item flexbox-left">
+                <a class="navbar-item-inner flexbox-left">
+                    <div class="navbar-item-inner-icon-wrapper flexbox">
+                        <ion-icon name="person-outline"></ion-icon>
+                    </div>
+                    <span class="link-text">Cá nhân</span>
+                </a>
+            </li>
+            <li class="navbar-item flexbox-left">
+                <a class="navbar-item-inner flexbox-left">
+                    <div class="navbar-item-inner-icon-wrapper flexbox">
+                        <ion-icon name="log-out-outline"></ion-icon>
+                    </div>
+                    <span class="link-text">Đăng xuất</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="flex justify-center ml-[80px] form_managerJob">
+        <div style="min-width: 870px;" class="bg-[#f3f6f9] my-4  max-w-6xl p-6 rounded-xl shadow-md">
+            <h4 style="margin-bottom: 20px;" class="text-2xl font-bold text-center">My All Posts</h4>
+
+            <!-- Search and Filter -->
+            <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-6 gap-4">
+
+                <!-- Search box -->
+                <div class="relative w-full md:w-1/2">
+                    <span class="absolute inset-y-0 left-3 flex items-center text-gray-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z" />
+                        </svg>
+                    </span>
+                    <input type="text" placeholder="Search job title..."
+                        class="pl-10 pr-4 py-2 w-full rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent">
+                </div>
+
+                <!-- Dropdown Filter -->
+                <div class="w-full md:w-1/4">
+                    <select
+                        class="w-full p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent">
+                        <option value="">All Jobs</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="overflow-x-auto">
+                <table class="w-full table-auto border-collapse">
+                    <thead>
+                        <tr class="bg-gray-800 text-white">
+                            <th class="p-3 text-left">Job Title</th>
+                            <th class="p-3 text-left">Posted Date</th>
+                            <th class="p-3 text-left">Date Expiring</th>
+                            <th class="p-3 text-left">Status</th>
+                            <th class="p-3 text-left">Applicants</th>
+                            <th class="p-3 text-left">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-700">
+                        <tr class="border-b">
+                            <td class="p-3 text-green-600 hover:underline cursor-pointer">Network Engineer</td>
+                            <td class="p-3">May 08, 2020</td>
+                            <td class="p-3">Apr 30, 2020</td>
+                            <td class="p-3">Opening</td>
+                            <td class="p-3 text-green-600 hover:underline cursor-pointer">Applicants</td>
+                            <td class="p-3 space-x-2">
+                                <button class="bg-cyan-600 text-white px-3 py-1 rounded hover:bg-cyan-700">Edit</button>
+                                <button onclick="messageAlert()"
+                                    class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700">Inactive</button>
+
+                            </td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="p-3 text-green-600 hover:underline cursor-pointer">Laravel Developer</td>
+                            <td class="p-3">May 08, 2020</td>
+                            <td class="p-3">Jul 01, 2020</td>
+                            <td class="p-3">Closed</td>
+                            <td class="p-3 text-green-600 hover:underline cursor-pointer">Applicants</td>
+                            <!-- <td class="p-3 flex space-x-2">
+                                <button class="bg-cyan-600 text-white px-3 py-1 rounded hover:bg-cyan-700">Edit</button>
+                                <button style="margin-left: 8px;"
+                                    class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700">Inactive</button>
+                            </td> -->
+                        </tr>
+                        <tr class="border-b">
+                            <td class="p-3 text-green-600 hover:underline cursor-pointer">Network Engineer</td>
+                            <td class="p-3">May 08, 2020</td>
+                            <td class="p-3">Apr 30, 2020</td>
+                            <td class="p-3">Opening</td>
+                            <td class="p-3 text-green-600 hover:underline cursor-pointer">Applicants</td>
+                            <td class="p-3 space-x-2">
+                                <button class="bg-cyan-600 text-white px-3 py-1 rounded hover:bg-cyan-700">Edit</button>
+                                <button onclick="messageAlert()"
+                                    class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700">Inactive</button>
+
+                            </td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="p-3 text-green-600 hover:underline cursor-pointer">Laravel Developer</td>
+                            <td class="p-3">May 08, 2020</td>
+                            <td class="p-3">Jul 01, 2020</td>
+                            <td class="p-3">Closed</td>
+                            <td class="p-3 text-green-600 hover:underline cursor-pointer">Applicants</td>
+                            <!-- <td class="p-3 flex space-x-2">
+                                                        <button class="bg-cyan-600 text-white px-3 py-1 rounded hover:bg-cyan-700">Edit</button>
+                                                        <button style="margin-left: 8px;"
+                                                            class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700">Inactive</button>
+                                                    </td> -->
+                        </tr>
+                        <tr class="border-b">
+                            <td class="p-3 text-green-600 hover:underline cursor-pointer">Network Engineer</td>
+                            <td class="p-3">May 08, 2020</td>
+                            <td class="p-3">Apr 30, 2020</td>
+                            <td class="p-3">Opening</td>
+                            <td class="p-3 text-green-600 hover:underline cursor-pointer">Applicants</td>
+                            <td class="p-3 space-x-2">
+                                <button class="bg-cyan-600 text-white px-3 py-1 rounded hover:bg-cyan-700">Edit</button>
+                                <button onclick="messageAlert()"
+                                    class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700">Inactive</button>
+
+                            </td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="p-3 text-green-600 hover:underline cursor-pointer">Laravel Developer</td>
+                            <td class="p-3">May 08, 2020</td>
+                            <td class="p-3">Jul 01, 2020</td>
+                            <td class="p-3">Closed</td>
+                            <td class="p-3 text-green-600 hover:underline cursor-pointer">Applicants</td>
+                            <!-- <td class="p-3 flex space-x-2">
+                                                        <button class="bg-cyan-600 text-white px-3 py-1 rounded hover:bg-cyan-700">Edit</button>
+                                                        <button style="margin-left: 8px;"
+                                                            class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700">Inactive</button>
+                                                    </td> -->
+                        </tr>
+                        <tr class="border-b">
+                            <td class="p-3 text-green-600 hover:underline cursor-pointer">Network Engineer</td>
+                            <td class="p-3">May 08, 2020</td>
+                            <td class="p-3">Apr 30, 2020</td>
+                            <td class="p-3">Opening</td>
+                            <td class="p-3 text-green-600 hover:underline cursor-pointer">Applicants</td>
+                            <td class="p-3 space-x-2">
+                                <button class="bg-cyan-600 text-white px-3 py-1 rounded hover:bg-cyan-700">Edit</button>
+                                <button onclick="messageAlert()"
+                                    class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700">Inactive</button>
+
+                            </td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="p-3 text-green-600 hover:underline cursor-pointer">Laravel Developer</td>
+                            <td class="p-3">May 08, 2020</td>
+                            <td class="p-3">Jul 01, 2020</td>
+                            <td class="p-3">Closed</td>
+                            <td class="p-3 text-green-600 hover:underline cursor-pointer">Applicants</td>
+                            <!-- <td class="p-3 flex space-x-2">
+                                                        <button class="bg-cyan-600 text-white px-3 py-1 rounded hover:bg-cyan-700">Edit</button>
+                                                        <button style="margin-left: 8px;"
+                                                            class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700">Inactive</button>
+                                                    </td> -->
+                        </tr>
+                        <tr class="border-b">
+                            <td class="p-3 text-green-600 hover:underline cursor-pointer">Network Engineer</td>
+                            <td class="p-3">May 08, 2020</td>
+                            <td class="p-3">Apr 30, 2020</td>
+                            <td class="p-3">Opening</td>
+                            <td class="p-3 text-green-600 hover:underline cursor-pointer">Applicants</td>
+                            <td class="p-3 space-x-2">
+                                <button class="bg-cyan-600 text-white px-3 py-1 rounded hover:bg-cyan-700">Edit</button>
+                                <button onclick="messageAlert()"
+                                    class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700">Inactive</button>
+
+                            </td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="p-3 text-green-600 hover:underline cursor-pointer">Laravel Developer</td>
+                            <td class="p-3">May 08, 2020</td>
+                            <td class="p-3">Jul 01, 2020</td>
+                            <td class="p-3">Closed</td>
+                            <td class="p-3 text-green-600 hover:underline cursor-pointer">Applicants</td>
+                            <!-- <td class="p-3 flex space-x-2">
+                                <button class="bg-cyan-600 text-white px-3 py-1 rounded hover:bg-cyan-700">Edit</button>
+                                <button style="margin-left: 8px;"
+                                    class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700">Inactive</button>
+                            </td> -->
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+
+        function messageAlert() {
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: "btn btn-danger ms-2",
+                    cancelButton: "btn btn-primary"
+                },
+                buttonsStyling: false
+            });
+            swalWithBootstrapButtons.fire({
+                title: "Bạn có chắc chắn?",
+                text: "Bạn sẽ không thể kích hoạt lại Job này!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Xác nhận!",
+                cancelButtonText: "Hủy bỏ",
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    swalWithBootstrapButtons.fire({
+                        title: "Vô hiệu hóa!",
+                        text: "Công việc đã bị vô hiệu hóa.",
+                        icon: "success"
+                    });
+                }
+            });
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+        crossorigin="anonymous"></script>
+    <!-- Ionic -->
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+    <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
+</body>
+
+</html>
