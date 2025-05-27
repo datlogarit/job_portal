@@ -3,7 +3,7 @@
 /* cmd */
 /* npx @tailwindcss/cli -i ./assets/css/index.css -o ./assets/css/output.css --watch */
 /* primary color: #43b1b7 */
-/* body {
+body {
     position: relative;
-    background-color: white;
-} */
+    /* background-color: #43b1b7cc; */
+}

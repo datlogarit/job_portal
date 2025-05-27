@@ -5,14 +5,19 @@ import 'package:job_portal/repositories/job_repository.dart';
 class JobProvider extends ChangeNotifier {
   List<Job> _jobs = [];
   List<Job> _jobsBySearch = []; // "_" đây là ký hiệu của private
+  List<Job> _recommendedJobs = [];
+  List<Job> _sameJobs = [];
   bool _isLoading = true;
 
   List<Job> get jobs => _jobs;
   List<Job> get jobsBySearch =>
       _jobsBySearch; //getter để lấy giá trị của biến private
+  List<Job> get recommendedJobs => _recommendedJobs;
+  List<Job> get sameJobs => _sameJobs;
   bool get isLoading => _isLoading;
   JobProvider() {
     getJobs();
+    getRecommendedJobs(1142, "frontend developer", 13, "Hà Nội");
   }
   Future<void> getJobs() async {
     try {
@@ -21,7 +26,7 @@ class JobProvider extends ChangeNotifier {
       print("ERROR: $e");
     }
     _isLoading = false;
-    notifyListeners(); //🔥 Thông báo rằng _isLoading và_jobs đã thay đổi lần nữa
+    notifyListeners(); // Thông báo _isLoading và_jobs đã thay đổi.
   }
 
   Future<void> searchJob(String keyword) async {
@@ -35,6 +40,34 @@ class JobProvider extends ChangeNotifier {
     _isLoading = false;
     notifyListeners(); //🔥 Thông báo rằng _isLoading và_jobs đã thay đổi lần nữa
   }
+
+  //lấy danh sách các việc làm được đề xuất cho người dùng
+  Future<void> getRecommendedJobs(
+      int userId, String title, int categoryId, String location) async {
+    _isLoading = true;
+    notifyListeners();
+    try {
+      _recommendedJobs = await JobRepository.fetchRecommendedJobs(
+          userId: userId,
+          title: title,
+          categoryId: categoryId,
+          location: location);
+    } catch (e) {
+      print("ERROR: $e");
+    }
+    _isLoading = false;
+    notifyListeners(); //Thông báo rằng _isLoading và_jobs đã thay đổi lần nữa
+  }
+
+  Future<void> getSameJobs(int jobId) async {
+    _isLoading = true;
+    notifyListeners();
+    try {
+      _sameJobs = await JobRepository.fetchSameJob(jobId: jobId);
+    } catch (e) {
+      print("ERROR: $e");
+    }
+    _isLoading = false;
+    notifyListeners(); //Thông báo rằng _isLoading và_jobs đã thay đổi lần nữa
+  }
 }
-//thực ra ở class này không có gì đặc biệt, nó chỉ hỗ trợ thông báo tới UI
-// khi có sự thay đổi dữ liệu bằng notifyListeners;

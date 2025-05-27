@@ -14,11 +14,12 @@ class TagListNotification extends StatefulWidget {
 
 class _TagListNotificationState extends State<TagListNotification> {
   final List<String> tagList = [
-    'Tất cả',
-    'Sắp hết hạn',
-    'Thay đổi trạng thái ',
-    'Phản hồi báo cáo',
-    'Thông báo chung',
+    'All',
+    'Invited',
+    'Expired',
+    'Status change',
+    'Response report',
+    'General notice',
   ];
   int selected = 0;
 
@@ -55,18 +56,22 @@ class _TagListNotificationState extends State<TagListNotification> {
                       widget.bindingValue(selectedCategory);
                     }
                     if (selected == 1) {
-                      String selectedCategory = 'expired';
+                      String selectedCategory = 'invite apply';
                       widget.bindingValue(selectedCategory);
                     }
                     if (selected == 2) {
-                      String selectedCategory = 'status change';
+                      String selectedCategory = 'expired';
                       widget.bindingValue(selectedCategory);
                     }
                     if (selected == 3) {
-                      String selectedCategory = 'respon report';
+                      String selectedCategory = 'status change';
                       widget.bindingValue(selectedCategory);
                     }
                     if (selected == 4) {
+                      String selectedCategory = 'respon report';
+                      widget.bindingValue(selectedCategory);
+                    }
+                    if (selected == 5) {
                       String selectedCategory = 'general notice';
                       widget.bindingValue(selectedCategory);
                     }

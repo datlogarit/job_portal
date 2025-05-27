@@ -12,9 +12,9 @@ public class InteractionDTO {
     private long jobId;
 
     @JsonProperty("is_save")
-    private int isSaved;
+    private Long isSaved;
 
     @JsonProperty("is_read")
-    private int isRead;
+    private Long isRead;
 
 }

@@ -4,10 +4,12 @@ import com.project.jobportal.models.Recruiters;
 import com.project.jobportal.models.Users;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface IRecruiterRepository extends JpaRepository<Recruiters, Long> {
@@ -22,4 +24,6 @@ public interface IRecruiterRepository extends JpaRepository<Recruiters, Long> {
 
     @Query("SELECT r FROM Recruiters r WHERE r.userId.email = :email AND r.userId.password = :password")
     Recruiters login(@Param("email") String email, @Param("password") String password);
+
+    List<Recruiters> findByVerifyIdIsNotNullAndVerifyIdStatus(Integer status, Sort sort);
 }

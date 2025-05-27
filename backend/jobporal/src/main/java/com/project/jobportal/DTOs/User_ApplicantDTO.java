@@ -39,7 +39,7 @@ public class User_ApplicantDTO {
     @JsonProperty("working_time")
     private String workingTime;
 
-    private String profession;
+    private long field;
 
     @JsonProperty("desired_position")
     private String desiredPosition;

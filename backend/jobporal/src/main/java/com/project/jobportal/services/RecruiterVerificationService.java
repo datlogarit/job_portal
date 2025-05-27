@@ -46,7 +46,7 @@ public class RecruiterVerificationService implements
 //        recruiterService.updateVerification(recruiterId, recruiterVerifications.getId());
     }
 
-//    @Override
+    //    @Override
 //    public void updateRecruiterVerification(long id, RecruiterVerificationDTO recruiterVerificationDTO) {
 //        // tìm xem bản ghi này có tồn tại không
 //        RecruiterVerifications existRecruiterVerification = getRecruiterVerificationById(id);
@@ -60,6 +60,12 @@ public class RecruiterVerificationService implements
 //        existRecruiterVerification.setRejectReason(recruiterVerificationDTO.getRejectReason());
 //        recruiterVerificationRepository.save(existRecruiterVerification);
 //    }
+    public void updateStatusVerify(Long verifyId, int status) {
+        RecruiterVerifications recruiterVerifications = recruiterVerificationRepository.findById(verifyId).orElseThrow(
+                () -> new RuntimeException("verifycation not found"));
+        recruiterVerifications.setStatus(status);
+        recruiterVerificationRepository.save(recruiterVerifications);
+    }
 
     @Override
     public RecruiterVerifications getRecruiterVerificationById(long id) {

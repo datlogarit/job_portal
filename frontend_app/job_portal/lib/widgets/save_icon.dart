@@ -22,19 +22,22 @@ class _SaveIconState extends State<SaveIcon> {
   }
 
   void getInteraction() async {
+    final userProvider = context.read<UserProvider>();
+    final interactionProvider = context.read<InteractionProvider>();
+
     try {
-      final userProvider = context.read<UserProvider>();
-      final interactionProvider = context.read<InteractionProvider>();
       await interactionProvider.fetchInteraction(
-          userProvider.user.id!, widget.job.id!);
+        userProvider.user.id!,
+        widget.job.id!,
+      );
+
+      final isSaved = interactionProvider.interaction.isSaved == 1;
       setState(() {
-        if (interactionProvider.interaction.isSaved == 1) {
-          isSave = true;
-        } else {
-          isSave = false;
-        }
+        isSave = isSaved;
       });
     } catch (e) {
+      // Fluttertoast.showToast(msg: e.toString());
+      // Bắt lỗi và gán isSave = false nếu có exception
       setState(() {
         isSave = false;
       });
@@ -68,7 +71,7 @@ class _SaveIconState extends State<SaveIcon> {
       child: Icon(
         isSave ? Icons.bookmark : Icons.bookmark_outline,
         color: isSave ? Theme.of(context).primaryColor : Colors.grey,
-        size: 32,
+        size: 28,
       ),
       onTap: () {
         toggleSave();

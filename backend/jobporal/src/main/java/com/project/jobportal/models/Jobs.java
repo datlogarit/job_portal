@@ -68,12 +68,12 @@ public class Jobs extends BaseEntity {
     @Column(name = "status")
     private String status;
 
-    @Column(name = "is_edit")
-    private int isEdit;
+//    @Column(name = "is_edit")
+//    private int isEdit;
 
     @Column(name = "is_lock")
-    private int isLock;
+    private long isLock;
 
-    @Column(name = "is_active")
-    private int isActive;
+//    @Column(name = "is_active")
+//    private int isActive;
 }

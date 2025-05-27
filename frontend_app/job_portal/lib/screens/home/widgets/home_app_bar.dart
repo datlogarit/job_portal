@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:job_portal/helper.dart';
 import 'package:job_portal/providers/user_provider.dart';
 import 'package:job_portal/screens/notification/notification.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +18,7 @@ class HomeAppBar extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Welcome home",
+                "Welcome home,",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.grey,
@@ -27,7 +28,7 @@ class HomeAppBar extends StatelessWidget {
                 height: 5,
               ),
               Text(
-                "Jame Madision",
+                formatText(userProvider.user.name!, 25),
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
               )
             ],

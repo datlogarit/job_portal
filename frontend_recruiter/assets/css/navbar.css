@@ -426,8 +426,8 @@ textarea:focus {
     position: absolute;
     inset: 0;
     /* left: 800px; */
-    background-image: linear-gradient(to right, #003699b3,
-            #0036994d);
+    background-image: linear-gradient(to right, rgba(0, 54, 153, 0.702),
+            rgba(0, 54, 153, 0.302));
     z-index: 1;
 }
 

@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface IUserService {
     void updateStatusUser(long userId, int status);
+    
+    void changePassword(long userId, String oldPassword, String newPassword);
 
     Users getUserById(long id);
 

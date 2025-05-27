@@ -31,7 +31,7 @@ class _ChangePassState extends State<ChangePass> {
               ),
             ),
             Text(
-              "Đổi mật khẩu",
+              "Change Password",
               style: TextStyle(
                 // fontFamily: "Roboto",
                 color: Colors.white,
@@ -58,7 +58,7 @@ class _ChangePassState extends State<ChangePass> {
                   height: 25,
                 ),
                 Text(
-                  "Mật khẩu hiện tại",
+                  "Current Password",
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: 17,
@@ -71,7 +71,7 @@ class _ChangePassState extends State<ChangePass> {
                   obscureText: !isVisibilityPw,
                   validator: (value) {},
                   decoration: InputDecoration(
-                    hintText: "Nhập mật khẩu hiện tại",
+                    hintText: "Current password",
                     hintStyle: TextStyle(color: Colors.grey),
                     suffixIcon: GestureDetector(
                       onTap: () {
@@ -102,7 +102,7 @@ class _ChangePassState extends State<ChangePass> {
                   height: 25,
                 ),
                 Text(
-                  "Mật khẩu mới",
+                  "New Password",
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: 17,
@@ -115,7 +115,7 @@ class _ChangePassState extends State<ChangePass> {
                   obscureText: !isVisibilityNPw,
                   validator: (value) {},
                   decoration: InputDecoration(
-                    hintText: "Nhập mật khẩu mới",
+                    hintText: "Enter the new password",
                     hintStyle: TextStyle(color: Colors.grey),
                     suffixIcon: GestureDetector(
                       onTap: () {
@@ -146,7 +146,7 @@ class _ChangePassState extends State<ChangePass> {
                   height: 25,
                 ),
                 Text(
-                  "Xác nhận mật khẩu mới",
+                  "Retype Password",
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: 17,
@@ -159,7 +159,7 @@ class _ChangePassState extends State<ChangePass> {
                   obscureText: !isVisibilityCFNPw,
                   validator: (value) {},
                   decoration: InputDecoration(
-                    hintText: "Nhập lại mật khẩu mới",
+                    hintText: "Re-enter new password",
                     hintStyle: TextStyle(color: Colors.grey),
                     suffixIcon: GestureDetector(
                       onTap: () {
@@ -203,7 +203,7 @@ class _ChangePassState extends State<ChangePass> {
                         foregroundColor: Colors.white),
                     onPressed: () {},
                     child: Text(
-                      "Cập nhật",
+                      "Update",
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18,

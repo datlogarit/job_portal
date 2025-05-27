@@ -23,8 +23,8 @@ public class Interactions extends BaseEntity {
     private Jobs jobId;
 
     @Column(name = "is_save")
-    private int isSaved;
+    private Long isSaved;
 
     @Column(name = "is_read")
-    private int isRead;
+    private Long isRead;
 }

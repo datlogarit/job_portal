@@ -8,9 +8,9 @@ import org.springframework.data.domain.PageRequest;
 import java.util.List;
 
 public interface IInteractionService {
-    void createInteraction(InteractionDTO interactionDTO);
+    Interactions createInteraction(InteractionDTO interactionDTO);
 
-    void updateInteraction(long applicantId, long jobId, InteractionDTO interactionDTO);
+    void updateReadInteraction(InteractionDTO interactionDTO);
 
     void updateSaveInteraction(long applicantId, long jobId, InteractionDTO interactionDTO);
 

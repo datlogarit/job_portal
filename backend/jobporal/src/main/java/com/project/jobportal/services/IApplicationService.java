@@ -17,4 +17,6 @@ public interface IApplicationService {
     Applications getApplicationByApplicantIdAndJobId(long applicantId, long jobId);
 
     List<Applications> getAllApplicationByApplicantId(long id);
+
+    List<Applications> getApplicationByJobId(long applicantId);
 }

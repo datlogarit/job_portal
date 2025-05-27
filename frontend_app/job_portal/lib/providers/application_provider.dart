@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:job_portal/models/application_model.dart';
 import 'package:job_portal/repositories/application_repository.dart';
-import 'package:job_portal/repositories/interaction_repository.dart';
 
 class ApplicationProvider extends ChangeNotifier {
   Application _application = Application(); // "_" đây là ký hiệu của private

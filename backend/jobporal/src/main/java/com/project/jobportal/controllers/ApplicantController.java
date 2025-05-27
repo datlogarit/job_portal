@@ -30,6 +30,10 @@ public class ApplicantController {
     private final ApplicantService applicantService;
     private final HandleFile handleFile;
 
+    @PostMapping("login")
+    public ResponseEntity<?> login(@RequestBody UserDTO userDTO) {
+        return ResponseEntity.ok(applicantService.login(userDTO.getEmail(), userDTO.getPassword()));
+    }
 
     @PostMapping("")
     public ResponseEntity<?> createInfoApplicant(@Valid @RequestBody User_ApplicantDTO userApplicantDTO, BindingResult result) {
@@ -78,7 +82,6 @@ public class ApplicantController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
     }
 
     @GetMapping("/resume/{resumeName}")
@@ -113,5 +116,10 @@ public class ApplicantController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getApplicantById(@PathVariable long id) {
         return ResponseEntity.ok(applicantService.getApplicantById(id));
+    }
+
+    @GetMapping("/recommendApplicant/{jobId}")
+    public ResponseEntity<?> recommendedApplicantByJobId(@PathVariable long jobId) throws Exception {
+        return ResponseEntity.ok(applicantService.recommendApplicantByJobId(jobId));
     }
 }

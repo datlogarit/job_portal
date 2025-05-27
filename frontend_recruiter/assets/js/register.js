@@ -14,15 +14,15 @@ document
       //   localStorage.setItem("user", JSON.stringify(user));
 
       Swal.fire({
-        title: "Đăng ký thành công",
-        text: "Vui lòng đăng nhập để sử dụng dịch vụ",
+        title: "Register successfully",
+        text: "Please login for use service",
         icon: "success",
       }).then(() => {
         window.location.href = "./login2.html";
       });
     } catch (err) {
       Swal.fire({
-        title: "Lỗi đăng ký",
+        title: "Registration error",
         text: `${err.message}`,
         icon: "error",
       });

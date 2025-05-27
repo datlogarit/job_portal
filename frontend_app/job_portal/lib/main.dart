@@ -4,9 +4,13 @@ import 'package:job_portal/providers/application_provider.dart';
 import 'package:job_portal/providers/interaction_provider.dart';
 import 'package:job_portal/providers/category_provider.dart';
 import 'package:job_portal/providers/job_provider.dart';
+import 'package:job_portal/providers/merged_interaction_provider.dart';
 import 'package:job_portal/providers/notification_provider.dart';
 import 'package:job_portal/providers/user_provider.dart';
 import 'package:job_portal/screens/start/login/login.dart';
+import 'package:job_portal/test/test_form_res_noty.dart';
+import 'package:job_portal/test/test_profile_page.dart';
+import 'package:job_portal/test/test_steper.dart';
 
 import 'package:provider/provider.dart';
 
@@ -30,7 +34,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           //giúp wiget lắng nghe sự thay đổi của dữ liệu
-          create: (_) => JobProvider(), //tạo ra 1 instance của JobProvider
+          create: (_) => JobProvider()
+            ..getRecommendedJobs(1142, "frontend developer", 13,
+                "Hà Nội"), //tạo ra 1 instance của JobProvider
           // ..fetchJobs(), //..cascade notation (ký hiệu xếp tầng), dùng để khởi tạo nay phương thức khi class được gọi
         ),
         ChangeNotifierProvider(
@@ -38,7 +44,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => InteractionProvider()),
         ChangeNotifierProvider(create: (_) => ApplicationProvider()),
         ChangeNotifierProvider(create: (_) => UserProvider()),
-        ChangeNotifierProvider(create: (_) => NotificationProvider())
+        ChangeNotifierProvider(create: (_) => NotificationProvider()),
+        ChangeNotifierProvider(create: (_) => MergedInteractionProvider()),
       ],
       child: MaterialApp(
         title: 'Job Portal App',
@@ -49,7 +56,7 @@ class MyApp extends StatelessWidget {
             secondary: Color(0xFFFED408),
           ),
         ),
-        home: Login(),
+        home: FormResNoty(),
         debugShowCheckedModeBanner: false,
       ),
     );

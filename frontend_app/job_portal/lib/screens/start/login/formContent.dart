@@ -179,7 +179,7 @@ class __FormContentState extends State<FormContent> {
                       return;
                     }
                     Fluttertoast.showToast(
-                        msg: "Đăng nhập thành công",
+                        msg: "Loggin successfuly",
                         fontSize: 16,
                         backgroundColor: Theme.of(context).primaryColor,
                         gravity: ToastGravity.CENTER,
@@ -189,6 +189,9 @@ class __FormContentState extends State<FormContent> {
                       MaterialPageRoute(builder: (context) => Home()),
                       (rount) => false,
                     );
+                    //tiến hành kiểm tra đã có thông tin gợi ý hay chưa
+                    //--nếu chưa-> hiển thị form điền thông tin->home()
+                    //--nếu có->  home()
                   }
                 },
               ),

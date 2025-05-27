@@ -15,7 +15,7 @@ public interface IInteractionRepository extends JpaRepository<Interactions, Long
     Page<Interactions> findAll(Pageable pageable);
 
     @Query("SELECT i FROM Interactions i WHERE i.applicantId.userId.id = :applicantId AND i.jobId.id = :jobId")
-    Optional<Interactions> finByApplicantIdAndJobId(@Param("applicantId") long applicantId, @Param("jobId") long jobId);
+    Optional<Interactions> findByApplicantIdAndJobId(@Param("applicantId") long applicantId, @Param("jobId") long jobId);
 
     @Query("SELECT i FROM Interactions i WHERE i.applicantId.userId.id = :applicantId")
     Optional<List<Interactions>> finByApplicantId(@Param("applicantId") long applicantId);

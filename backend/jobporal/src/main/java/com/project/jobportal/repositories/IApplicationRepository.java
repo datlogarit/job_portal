@@ -14,4 +14,7 @@ public interface IApplicationRepository extends JpaRepository<Applications, Long
 
     @Query("SELECT a FROM Applications a WHERE a.applicantId.userId.id = :applicantId")
     Optional<List<Applications>> finByApplicantId(@Param("applicantId") long applicantId);
+
+    @Query("SELECT a FROM Applications a WHERE a.jobId.id = :jobId")
+    Optional<List<Applications>> findByJobId(@Param(("jobId")) long jobId);
 }

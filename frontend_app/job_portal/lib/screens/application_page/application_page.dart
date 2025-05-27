@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:job_portal/screens/home/widgets/job_detail.dart';
+import 'package:job_portal/screens/home/widgets/job_detail2.dart';
 import 'package:quickalert/quickalert.dart';
 import 'package:flutter/material.dart';
 import 'package:job_portal/models/job_model.dart';
@@ -144,8 +144,13 @@ class ApplicationPage extends StatelessWidget {
                               child: CachedNetworkImage(
                                 imageUrl: job.postedBy!.companyId!.urlAvt!,
                                 fit: BoxFit.cover,
+                                placeholder: (context, url) =>
+                                    Center(child: CircularProgressIndicator()),
                                 errorWidget: (context, url, error) =>
-                                    Icon(Icons.error),
+                                    Image.asset(
+                                  'assets/images/vietnamwork_avt.png',
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
                             SizedBox(
@@ -463,7 +468,7 @@ class ApplicationPage extends StatelessWidget {
                               await Future.delayed(Duration(
                                 milliseconds: 3500,
                               ));
-                              Navigator.pop(context, 'applied');
+                              Navigator.pop(context, 'Pending');
                             }
                           },
                           style: ElevatedButton.styleFrom(

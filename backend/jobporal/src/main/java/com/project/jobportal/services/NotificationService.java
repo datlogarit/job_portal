@@ -45,11 +45,11 @@ public class NotificationService implements INotificationService {
 
 
     //hàm chạy tự động mỗi ngày. dùng để ktra công việc sắp hết hạn và thông báo cho user
-    @Scheduled(cron = "0 0 6 * * ?") // Chạy lúc 6h sáng mỗi ngày
+    @Scheduled(cron = "0 22 16 * * ?") // Chạy lúc 6h sáng mỗi ngày
     public void notifyExpiringJobs() {
         LocalDate threeDaysLater = LocalDate.now().plusDays(5);//5 ngày sau ngày chỉ định
         List<Interactions> interactionsSaved = iInteractionRepository.findByIsSaved(1).orElseThrow(() ->
-                new RuntimeException("interaction not found")); //tìm nhưững iteraction mà co trang thai isSave = 1;
+                new RuntimeException("interaction not found")); //tìm những interaction mà co trang thai isSave = 1;
 
         for (Interactions interaction : interactionsSaved) {
             Jobs jobs = jobService.getJobById(interaction.getJobId().getId());// co job roi bay h check roi gui thong bao la xong

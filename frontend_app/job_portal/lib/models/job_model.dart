@@ -21,33 +21,34 @@ class Job {
   Recruiter? postedBy;
   Category? categoryId;
   String? status;
-  int? isEdit;
+  // int? isEdit;
   int? isLock;
-  int? isActive;
+  // int? isActive;
 
-  Job(
-      {this.createdAt,
-      this.updatedAt,
-      this.id,
-      this.title,
-      this.minSalary,
-      this.maxSalary,
-      this.experience,
-      this.workingTime,
-      this.numberRecruitment,
-      this.gender,
-      this.position,
-      this.expDate,
-      this.requirement,
-      this.description,
-      this.benefit,
-      this.workLocation,
-      this.postedBy,
-      this.categoryId,
-      this.status,
-      this.isEdit,
-      this.isLock,
-      this.isActive});
+  Job({
+    this.createdAt,
+    this.updatedAt,
+    this.id,
+    this.title,
+    this.minSalary,
+    this.maxSalary,
+    this.experience,
+    this.workingTime,
+    this.numberRecruitment,
+    this.gender,
+    this.position,
+    this.expDate,
+    this.requirement,
+    this.description,
+    this.benefit,
+    this.workLocation,
+    this.postedBy,
+    this.categoryId,
+    this.status,
+    // this.isEdit,
+    this.isLock,
+    // this.isActive
+  });
 
   Job.fromJson(Map<String, dynamic> json) {
     createdAt = json['createdAt'];
@@ -76,9 +77,9 @@ class Job {
         ? new Category.fromJson(json['categoryId'])
         : null;
     status = json['status'];
-    isEdit = json['isEdit'];
+    // isEdit = json['isEdit'];
     isLock = json['isLock'];
-    isActive = json['isActive'];
+    // isActive = json['isActive'];
   }
 
   Map<String, dynamic> toJson() {
@@ -106,9 +107,9 @@ class Job {
       data['categoryId'] = this.categoryId!.toJson();
     }
     data['status'] = this.status;
-    data['isEdit'] = this.isEdit;
+    // data['isEdit'] = this.isEdit;
     data['isLock'] = this.isLock;
-    data['isActive'] = this.isActive;
+    // data['isActive'] = this.isActive;
     return data;
   }
 }

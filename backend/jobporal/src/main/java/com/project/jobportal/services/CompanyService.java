@@ -17,7 +17,7 @@ public class CompanyService implements ICompanyService {
     @Override
     public void crateCompany(long recruiterId, CompanyDTO companyDTO, String fileName) {
         if (iCompanyRepository.existsByEmail(companyDTO.getEmail())) {
-            throw new RuntimeException("Email đã tồn tại");
+            throw new RuntimeException("Email already exists");
         }
         if (iCompanyRepository.existsByHotline(companyDTO.getHotline())) {
             throw new RuntimeException("Hotline đã được sử dụng");
@@ -52,23 +52,39 @@ public class CompanyService implements ICompanyService {
     public void updateCompany(long id, CompanyDTO companyDTO) {
         boolean isUpdate = false;
         Companies existCompany = getCompanyById(id);
-        if (companyDTO.getName() != null) {
+        if (companyDTO.getName() != null && !companyDTO.getName().isEmpty()) {
             existCompany.setName(companyDTO.getName());
             isUpdate = true;
         }
-        if (companyDTO.getAddress() != null) {
+        if (companyDTO.getTaxCode() != null && !companyDTO.getTaxCode().isEmpty()) {
+            existCompany.setTaxCode(companyDTO.getTaxCode());
+            isUpdate = true;
+        }
+        if (companyDTO.getWebsite() != null && !companyDTO.getWebsite().isEmpty()) {
+            existCompany.setWebsite(companyDTO.getWebsite());
+            isUpdate = true;
+        }
+        if (companyDTO.getScale() != null && !companyDTO.getScale().isEmpty()) {
+            existCompany.setScale(companyDTO.getScale());
+            isUpdate = true;
+        }
+        if (companyDTO.getEmail() != null && !companyDTO.getEmail().isEmpty()) {
+            existCompany.setEmail(companyDTO.getEmail());
+            isUpdate = true;
+        }
+        if (companyDTO.getAddress() != null && !companyDTO.getAddress().isEmpty()) {
             existCompany.setLocation(companyDTO.getAddress());
             isUpdate = true;
         }
-        if (companyDTO.getIntroduction() != null) {
+        if (companyDTO.getIntroduction() != null && !companyDTO.getIntroduction().isEmpty()) {
             existCompany.setIntroduction(companyDTO.getIntroduction());
             isUpdate = true;
         }
-        if (companyDTO.getAvtUrl() != null) {
+        if (companyDTO.getAvtUrl() != null && !companyDTO.getAvtUrl().isEmpty()) {
             existCompany.setUrl_avt(companyDTO.getAvtUrl());
             isUpdate = true;
         }
-        if (companyDTO.getHotline() != null) {
+        if (companyDTO.getHotline() != null && !companyDTO.getHotline().isEmpty()) {
             existCompany.setHotline(companyDTO.getHotline());
             isUpdate = true;
         }

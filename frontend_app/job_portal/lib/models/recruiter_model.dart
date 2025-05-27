@@ -1,21 +1,14 @@
 import 'package:job_portal/models/company_model.dart';
+import 'package:job_portal/models/recruiter_verification.dart';
 import 'package:job_portal/models/user_model.dart';
 
 class Recruiter {
   int? id;
   User? userId;
   Company? companyId;
-  int? isVerify;
-  int? numberOfPost;
-  String? position;
+  RecruiterVerification? verifyId;
 
-  Recruiter(
-      {this.id,
-      this.userId,
-      this.companyId,
-      this.isVerify,
-      this.numberOfPost,
-      this.position});
+  Recruiter({this.id, this.userId, this.companyId, this.verifyId});
 
   Recruiter.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -23,9 +16,9 @@ class Recruiter {
     companyId = json['companyId'] != null
         ? new Company.fromJson(json['companyId'])
         : null;
-    isVerify = json['isVerify'];
-    numberOfPost = json['numberOfPost'];
-    position = json['position'];
+    verifyId = json['verifyId'] != null
+        ? new RecruiterVerification.fromJson(json['verifyId'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -37,9 +30,9 @@ class Recruiter {
     if (this.companyId != null) {
       data['companyId'] = this.companyId!.toJson();
     }
-    data['isVerify'] = this.isVerify;
-    data['numberOfPost'] = this.numberOfPost;
-    data['position'] = this.position;
+    if (this.verifyId != null) {
+      data['verifyId'] = this.verifyId!.toJson();
+    }
     return data;
   }
 }

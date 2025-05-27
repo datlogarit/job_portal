@@ -2,6 +2,7 @@ package com.project.jobportal.services;
 
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.project.jobportal.DTOs.ReportDTO;
@@ -19,6 +20,7 @@ public class ReportService implements IReportService {
     private final IReportRepository iReportRepository;
     private final IApplicantRepository iApplicantRepository;
     private final JobService jobService;
+    private final UserService userService;
 
     @Override
     public void createReport(ReportDTO reportDTO) {
@@ -35,19 +37,19 @@ public class ReportService implements IReportService {
     }
 
     @Override
-    public void updateReport(long id, ReportDTO reportDTO) {
+    public void updateStatusReport(long id, long statusSolve) {
         Reports existReport = getReportById(id);
         if (existReport == null) {
             throw new RuntimeException("Report not found");
         }
         // chỉ cho phép sửa trạng thái giải quyết - quyền của admin
-        existReport.setIsSolve(reportDTO.getIsSolve());
+        existReport.setIsSolve(statusSolve);
         iReportRepository.save(existReport);
     }
 
     @Override
     public List<Reports> getAllReport() {
-        return iReportRepository.findAll();
+        return iReportRepository.findAllByIsSolve(0, Sort.by(Sort.Direction.DESC, "createdAt"));
     }
 
     @Override
@@ -56,5 +58,21 @@ public class ReportService implements IReportService {
                 .orElseThrow(() -> new RuntimeException("Report not found"));
         return existReport;
     }
+
+    @Override
+    public void banUser(Long reportId) {
+        Reports reports = iReportRepository.findById(reportId).orElseThrow(
+                () -> new RuntimeException("not foud"));
+        userService.updateStatusUser(reports.getReportedJob().getPostedBy().getId(), 0);//ban user
+        updateStatusReport(reportId, 1);//update status
+    }
+
+    public void banPost(Long reportId) {
+        Reports reports = iReportRepository.findById(reportId).orElseThrow(
+                () -> new RuntimeException("not foud"));
+        jobService.updateLockJob(reports.getReportedJob().getId(), 1);//ban job
+        updateStatusReport(reportId, 1);//update status
+    }
+
 
 }

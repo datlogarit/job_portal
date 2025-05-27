@@ -4,10 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.jobportal.DTOs.JobDTO;
 import com.project.jobportal.DTOs.RecommenInputDTO;
-import com.project.jobportal.models.Categories;
-import com.project.jobportal.models.Companies;
-import com.project.jobportal.models.Jobs;
-import com.project.jobportal.models.Recruiters;
+import com.project.jobportal.models.*;
 import com.project.jobportal.repositories.IJobRepository;
 import com.project.jobportal.repositories.IRecruiterRepository;
 
@@ -16,7 +13,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.*;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
@@ -42,7 +41,6 @@ public class JobService implements IJobService {
         if (existCategory == null) {
             throw new RuntimeException("Category not found");
         }
-
         Jobs jobs = Jobs.builder()
                 .title(jobDTO.getTitle())
                 .minSalary(jobDTO.getMinSalary())
@@ -59,10 +57,8 @@ public class JobService implements IJobService {
                 .workLocation(jobDTO.getWorkLocation())
                 .postedBy(existRecruiter)
                 .categoryId(existCategory)
-                .status(jobDTO.getStatus())
-                .isEdit(jobDTO.getIsEdit())
-                .isLock(jobDTO.getIsLock())
-                .isActive(jobDTO.getIsActive())
+                .status("Opening")// Khóa từ phía ngươi dùng
+                .isLock(0)//khóa từ phía admin
                 .build();
         iJobRepository.save(jobs);
     }
@@ -99,9 +95,9 @@ public class JobService implements IJobService {
                 .postedBy(recruiters)
                 .categoryId(categories)
                 .status("open")
-                .isEdit(0)
+//                .isEdit(0)
                 .isLock(0)//khoa tu phia nguoi dung
-                .isActive(0)//khóa tu phia admin
+//                .isActive(0)//khóa tu phia admin
                 .build();
         iJobRepository.save(newJob);
     }
@@ -109,31 +105,83 @@ public class JobService implements IJobService {
     @Override
     public void updateJob(long id, JobDTO jobDTO) {
         Jobs existJob = iJobRepository.findById(id).orElseThrow(() -> new RuntimeException("Job not found"));
-        existJob.setTitle(jobDTO.getTitle());
-        existJob.setMinSalary(jobDTO.getMinSalary());
-        existJob.setMaxSalary(jobDTO.getMaxSalary());
-        existJob.setExperience(jobDTO.getExperience());
-        existJob.setWorkingTime(jobDTO.getWorkingTime());
-        existJob.setNumberRecruitment(jobDTO.getNumberRecruitment());
-        existJob.setGender(jobDTO.getGender());
-        existJob.setPosition(jobDTO.getPosition());
-        existJob.setExpDate(jobDTO.getExpDate());
-        existJob.setRequirement(jobDTO.getRequirement());
-        existJob.setDescription(jobDTO.getDescription());
-        existJob.setBenefit(jobDTO.getBenefit());
-        existJob.setWorkLocation(jobDTO.getWorkLocation());
-        existJob.setPostedBy(iRecruiterRepository.findById(jobDTO.getPostedBy()).get());
-        existJob.setCategoryId(iCategoryService.getCategoryById(jobDTO.getCategoryId()));
-        existJob.setStatus(jobDTO.getStatus());
-        existJob.setIsEdit(jobDTO.getIsEdit());
-        existJob.setIsLock(jobDTO.getIsLock());
-        existJob.setIsActive(jobDTO.getIsActive());
+        if (jobDTO.getTitle() != null) {
+            existJob.setTitle(jobDTO.getTitle());
+        }
+        if (jobDTO.getMinSalary() != null) {
+            existJob.setMinSalary(jobDTO.getMinSalary());
+        }
+        if (jobDTO.getMaxSalary() != null) {
+            existJob.setMaxSalary(jobDTO.getMaxSalary());
+        }
+        if (jobDTO.getExperience() != null) {
+            existJob.setExperience(jobDTO.getExperience());
+        }
+        if (jobDTO.getWorkingTime() != null) {
+            existJob.setWorkingTime(jobDTO.getWorkingTime());
+        }
+        if (jobDTO.getNumberRecruitment() != null) {
+            existJob.setNumberRecruitment(jobDTO.getNumberRecruitment());
+        }
+        if (jobDTO.getGender() != null) {
+            existJob.setGender(jobDTO.getGender());
+        }
+        if (jobDTO.getPosition() != null) {
+            existJob.setPosition(jobDTO.getPosition());
+        }
+        if (jobDTO.getExpDate() != null) {
+            existJob.setExpDate(jobDTO.getExpDate());
+        }
+        if (jobDTO.getRequirement() != null) {
+            existJob.setRequirement(jobDTO.getRequirement());
+        }
+        if (jobDTO.getDescription() != null) {
+            existJob.setDescription(jobDTO.getDescription());
+        }
+        if (jobDTO.getBenefit() != null) {
+            existJob.setBenefit(jobDTO.getBenefit());
+        }
+        if (jobDTO.getWorkLocation() != null) {
+            existJob.setWorkLocation(jobDTO.getWorkLocation());
+        }
+        if (jobDTO.getPostedBy() != null) {
+            existJob.setPostedBy(iRecruiterRepository.findById(jobDTO.getPostedBy()).get());
+        }
+        if (jobDTO.getCategoryId() != null) {
+            existJob.setCategoryId(iCategoryService.getCategoryById(jobDTO.getCategoryId()));
+        }
+        if (jobDTO.getStatus() != null) {
+            existJob.setStatus(jobDTO.getStatus());
+        }
+//        if (jobDTO.getIsEdit() != null) {
+//            existJob.setIsEdit(jobDTO.getIsEdit());
+//        }
+        if (jobDTO.getIsLock() != null) {
+            existJob.setIsLock(jobDTO.getIsLock());
+        }
+
+//        existJob.setPosition(jobDTO.getPosition());
+//        existJob.setExpDate(jobDTO.getExpDate());
+//        existJob.setRequirement(jobDTO.getRequirement());
+//        existJob.setDescription(jobDTO.getDescription());
+//        existJob.setBenefit(jobDTO.getBenefit());
+//        existJob.setWorkLocation(jobDTO.getWorkLocation());
+//        existJob.setStatus(jobDTO.getStatus());
+//        existJob.setIsEdit(jobDTO.getIsEdit());
+//        existJob.setIsLock(jobDTO.getIsLock());
+//        existJob.setIsActive(jobDTO.getIsActive());
         iJobRepository.save(existJob);
     }
 
     @Override
     public Jobs getJobById(long id) {
         return iJobRepository.findById(id).orElseThrow(() -> new RuntimeException("Job not found"));
+    }
+
+    @Override
+    public Page<Jobs> getJobByRecruiterId(long recruiterId, PageRequest pageRequest) {
+        Recruiters recruiters = recruiterService.getRecruiter(recruiterId);
+        return iJobRepository.findByPostedBy(recruiters, pageRequest);
     }
 
     @Override
@@ -190,14 +238,6 @@ public class JobService implements IJobService {
         RestTemplate restTemplate = new RestTemplate();
         String url = "http://localhost:8000/api/v1/hybrid_recommend_jobs";
 
-        // Chuẩn bị JSON body
-//        Map<String, Object> body = new HashMap<>();
-//        body.put("user_id", inputDTO.getUserId());
-//        body.put("title", inputDTO.getTitle());
-//        body.put("category_id", inputDTO.getCategoryId());
-//        body.put("locations", List.of(inputDTO.getWorkLocation()));
-//        body.put("total_jobs", inputDTO.getTotalJobs());
-
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
@@ -221,7 +261,20 @@ public class JobService implements IJobService {
             long id = job.asLong();
             recommended.add(getJobById(id));
         }
-
         return recommended;
+    }
+
+    public void updateLockJob(long jobId, long status) {
+        Jobs jobs = iJobRepository.findById(jobId).orElseThrow(
+                () -> new RuntimeException("job not found"));
+        jobs.setIsLock(status);
+        iJobRepository.save(jobs);
+    }
+
+    @Scheduled(cron = "0 5 0 * * *")//len lich chay luc 0:5 phut sang
+    @Transactional//du lieu se duoc khoi phuc giong truoc do neu gap loi
+    public void closeExpiredJobs() {
+        int affectedJob = iJobRepository.closeExpiredJobs(LocalDate.now());
+        System.out.println("to day close " + affectedJob + " job");
     }
 }

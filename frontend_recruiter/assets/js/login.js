@@ -56,7 +56,7 @@ if (userOld) {
     window.location.href = "/index.html";
   }
 }
-// Nếu chưa đăng nhập → cho ở lại trang login
+// Nếu chưa đăng nhập → ở lại trang login
 document.getElementById("login_button").addEventListener("click", async (e) => {
   e.preventDefault();
   const email = document.getElementById("email").value;
@@ -66,8 +66,8 @@ document.getElementById("login_button").addEventListener("click", async (e) => {
     const user = JSON.parse(localStorage.getItem("user"));
 
     Swal.fire({
-      title: "Thành công",
-      text: "Đăng nhập thành công",
+      title: "Success",
+      text: "Login successfully",
       icon: "success",
       showConfirmButton: false,
       timer: 1500,
@@ -83,8 +83,8 @@ document.getElementById("login_button").addEventListener("click", async (e) => {
       document.getElementById("form_login").classList.add("hidden");
       document.getElementById(
         "name_text"
-      ).innerHTML = `Xin chào, ${user.userId.name}`;
-      if (user.companyId.id != 0) {
+      ).innerHTML = `Hello, ${user.userId.name}`;
+      if (user.companyId) {
         document.getElementById(
           "step_company"
         ).outerHTML = `<span class="w-6 h-6 flex items-center justify-center mr-3">
@@ -112,7 +112,7 @@ document.getElementById("login_button").addEventListener("click", async (e) => {
                         </span>`;
           document.getElementById(
             "step_admin_review_text"
-          ).outerHTML = `<span class="text-red-500 mr-1">Xét duyệt thất bại, bạn cần gửi lại thông tin xác minh</span>`;
+          ).outerHTML = `<span class="text-red-500 mr-1">Authentication failed, please resend information</span>`;
         }
       }
     } else {
@@ -122,11 +122,11 @@ document.getElementById("login_button").addEventListener("click", async (e) => {
     }
   } catch (err) {
     // document.getElementById("error").textContent = err.message;
-    // Swal.fire({
-    //   title: "Lỗi",
-    //   text: `${err.message}`,
-    //   icon: "error",
-    // });
+    Swal.fire({
+      title: "Error",
+      text: `${err.message}`,
+      icon: "error",
+    });
     document.getElementById("email").value = "";
     document.getElementById("password").value = "";
   }

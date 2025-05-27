@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:job_portal/helper.dart';
 import 'package:job_portal/models/noti_user_model.dart';
 import 'package:job_portal/providers/notification_provider.dart';
 import 'package:job_portal/providers/user_provider.dart';
@@ -12,7 +13,7 @@ class CustomNotification extends StatefulWidget {
 }
 
 class _CustomNotificationState extends State<CustomNotification> {
-  String choosedCategory = 'Tất cả';
+  String choosedCategory = 'All';
   @override
   void initState() {
     final userProvider = context.read<UserProvider>();
@@ -32,7 +33,7 @@ class _CustomNotificationState extends State<CustomNotification> {
 
   List<NotiUser> getFilteredNotifications(List<NotiUser> notiUser) {
     return notiUser.where((noti) {
-      return choosedCategory == "Tất cả" ||
+      return choosedCategory == "All" ||
           noti.idNoti!.categoryNotification == choosedCategory;
     }).toList();
   }
@@ -61,7 +62,7 @@ class _CustomNotificationState extends State<CustomNotification> {
                 ),
               ),
               Text(
-                "Thông báo",
+                "Notification",
                 style: TextStyle(
                   // fontFamily: "Roboto",
                   color: Colors.black,
@@ -131,10 +132,10 @@ class _CustomNotificationState extends State<CustomNotification> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Image(
-                                    height: 70,
-                                    width: 70,
-                                    image:
-                                        AssetImage("assets/images/avt_nam.jpg"),
+                                    height: 65,
+                                    width: 65,
+                                    image: AssetImage(
+                                        "assets/images/vietnamwork_avt.png"),
                                   ),
                                   Expanded(
                                     child: Padding(
@@ -160,6 +161,41 @@ class _CustomNotificationState extends State<CustomNotification> {
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.normal),
                                           ),
+                                          SizedBox(
+                                            height: 8,
+                                          ),
+                                          Row(children: [
+                                            Text(
+                                              convertDate(
+                                                  "${fiteredNotification[index].idNoti!.createdAt}"), //${widget.fiteredNotification[index]["content"]}
+                                              style: TextStyle(
+                                                  fontSize: 13,
+                                                  fontWeight:
+                                                      FontWeight.normal),
+                                            ),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Container(
+                                              height: 8,
+                                              width: 8,
+                                              decoration: BoxDecoration(
+                                                color: Colors.grey,
+                                                shape: BoxShape.circle,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: 5,
+                                            ),
+                                            Text(
+                                              capitalizeFirstLetter(
+                                                  "${fiteredNotification[index].idNoti!.categoryNotification}"), //${widget.fiteredNotification[index]["content"]}
+                                              style: TextStyle(
+                                                  fontSize: 13,
+                                                  fontWeight:
+                                                      FontWeight.normal),
+                                            ),
+                                          ]),
                                         ],
                                       ),
                                     ),
@@ -170,7 +206,7 @@ class _CustomNotificationState extends State<CustomNotification> {
                       ),
                     ),
                 separatorBuilder: (_, index) => SizedBox(
-                      height: 2,
+                      height: 4,
                     ),
                 itemCount: fiteredNotification.length),
           )

@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/v1/user")
@@ -40,6 +41,14 @@ public class UserController {
                                                    @PathVariable(name = "status") int status) {
         userService.updateStatusUser(id, status);
         return ResponseEntity.ok("update status successfully");
+    }
+
+    @PutMapping("password/{userId}")
+    public ResponseEntity<?> changePassword(@PathVariable(name = "userId") long id,
+                                            @RequestParam(name = "oldPassword") String oldPassword,
+                                            @RequestParam(name = "newPassword") String newPassword) {
+        userService.changePassword(id, oldPassword, newPassword);
+        return ResponseEntity.ok(Map.of("message", "Password changed successfully!", "status", 200));
     }
 
     @PutMapping(value = "image/{userId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

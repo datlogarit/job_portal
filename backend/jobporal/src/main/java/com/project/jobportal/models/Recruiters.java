@@ -25,14 +25,14 @@ public class Recruiters {
     @JoinColumn(name = "company_id")//chỉ định cột chứa khóa ngoại
     private Companies companyId;
 
-    @Column(name = "is_verify")
-    private int isVerify;
+//    @Column(name = "is_verify")
+//    private int isVerify;
+//
+//    @Column(name = "number_of_post")
+//    private int numberOfPost;
 
-    @Column(name = "number_of_post")
-    private int numberOfPost;
-    
-    @Column(name = "position")
-    private String position;
+//    @Column(name = "position")
+//    private String position;
 
     @OneToOne
     @JoinColumn(name = "verify_id ")

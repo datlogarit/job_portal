@@ -20,7 +20,7 @@ class ApplicationRepository {
         {
           "applicant_id": applicantId,
           "job_id": jobId,
-          "status_apply": "applied",
+          "status_apply": "Pending",
           "full_name": fullName,
           "email": email,
           "phone_number": phoneNumber,

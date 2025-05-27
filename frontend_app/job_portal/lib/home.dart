@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:job_portal/screens/job_interaction/job_interaction.dart';
 import 'package:job_portal/screens/chat/chat_page.dart';
-import 'package:job_portal/screens/contact_page/contact_page.dart';
 import 'package:job_portal/screens/home/home_screen.dart';
 import 'package:job_portal/screens/persional/persional.dart';
 import 'package:job_portal/screens/search/search.dart';
@@ -24,8 +23,8 @@ class _HomeState extends State<Home> {
           HomePage(),
           JobInteractionPage(),
           SearchPage(),
-          ChatPage(),
-          PersionalPage()
+          // ChatPage(),
+          ProfileScreen()
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -61,13 +60,13 @@ class _HomeState extends State<Home> {
               size: 28,
             ),
           ),
-          BottomNavigationBarItem(
-            label: 'Chat',
-            icon: Icon(
-              Icons.chat_outlined,
-              size: 28,
-            ),
-          ),
+          // BottomNavigationBarItem(
+          //   label: 'Chat',
+          //   icon: Icon(
+          //     Icons.chat_outlined,
+          //     size: 28,
+          //   ),
+          // ),
           BottomNavigationBarItem(
             label: 'Person',
             icon: Icon(

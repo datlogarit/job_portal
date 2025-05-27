@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Cập Nhật Thông Tin Công Ty</title>
+    <!-- <link rel="stylesheet" href="./assets/css/output.css"> -->
+    <link rel="stylesheet" href="./assets/css/navbar_addJob.css">
+    <!-- text-editor -->
+    <script src="https://cdn.tiny.cloud/1/vbzhy4mji7p7gmshmolvvcweki8c6elwl47t1zqr9wfpfmvf/tinymce/7/tinymce.min.js"
+        referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea.editor'
+        });
+    </script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+        crossorigin="anonymous"></script>
+    <!-- popup model - sweet alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- toast -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <!-- font-awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Ionic -->
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+    <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2563eb',
+                    },
+                },
+            },
+        };
+    </script>
+</head>
+
+<body class="bg-[#f1f5fb] ">
+    <nav id="navbar">
+        <ul class="navbar-items flexbox-col">
+            <li class="navbar-logo flexbox-left">
+                <a class="navbar-item-inner flexbox">
+
+                    <img id="avtCom"
+                        src="https://cdn.vietnamworks.com/images?url=https%3A%2F%2Fimages.vietnamworks.com%2Fpictureofcompany%2F7e%2F11125544.png&w=1920&q=75"
+                        alt="" />
+                </a>
+            </li>
+            <li class="navbar-item flexbox-left">
+                <a class="navbar-item-inner flexbox-left">
+                    <div class="navbar-item-inner-icon-wrapper flexbox">
+                        <ion-icon name="home-outline"></ion-icon>
+                    </div>
+                    <span class="link-text">Trang chủ</span>
+                </a>
+            </li>
+            <li class="navbar-item flexbox-left notification" data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
+                <a class="navbar-item-inner flexbox-left" id="notification_item">
+                    <div class="navbar-item-inner-icon-wrapper flexbox">
+                        <ion-icon name="notifications-outline"></ion-icon>
+                    </div>
+                    <span class="link-text">Thông báo</span>
+
+                </a>
+            </li>
+
+            <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions"
+                aria-labelledby="offcanvasWithBothOptionsLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Thông báo mới nhận</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <p>Nội dung thông báo</p>
+                </div>
+            </div>
+
+            <li class="navbar-item flexbox-left">
+                <a class="navbar-item-inner flexbox-left">
+                    <div class="navbar-item-inner-icon-wrapper flexbox">
+                        <ion-icon name="add-circle-outline"></ion-icon>
+                    </div>
+                    <span class="link-text">Thêm công việc</span>
+                </a>
+            </li>
+            <li class="navbar-item flexbox-left">
+                <a class="navbar-item-inner flexbox-left">
+                    <div class="navbar-item-inner-icon-wrapper flexbox">
+                        <ion-icon name="business-outline"></ion-icon>
+                    </div>
+                    <span class="link-text">Công ty</span>
+                </a>
+            </li>
+            <li class="navbar-item flexbox-left">
+                <a class="navbar-item-inner flexbox-left">
+                    <div class="navbar-item-inner-icon-wrapper flexbox">
+                        <ion-icon name="briefcase-outline"></ion-icon>
+                    </div>
+                    <span class="link-text">Việc của tôi</span>
+                </a>
+            </li>
+            <li class="navbar-item flexbox-left">
+                <a class="navbar-item-inner flexbox-left">
+                    <div class="navbar-item-inner-icon-wrapper flexbox">
+                        <ion-icon name="person-outline"></ion-icon>
+                    </div>
+                    <span class="link-text">Cá nhân</span>
+                </a>
+            </li>
+            <li class="navbar-item flexbox-left">
+                <a class="navbar-item-inner flexbox-left">
+                    <div class="navbar-item-inner-icon-wrapper flexbox">
+                        <ion-icon name="log-out-outline"></ion-icon>
+                    </div>
+                    <span class="link-text">Đăng xuất</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <div id="updateCompany" class="flex ml-[80px] flex-col items-center justify-center min-h-screen">
+        <div class="flex justify-start w-[740px]">
+            <h3 class="text-[24px] font-bold my-3 text-center ">Cập nhật thông tin công ty</h3>
+        </div>
+        <div class="bg-white my-3 p-4 rounded-lg shadow-lg w-[740px]">
+            <div class="grid grid-cols-2 gap-4">
+                <!-- Mã số thuế -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Mã số thuế <span
+                            class="text-red-500">*</span></label>
+                    <input id="tax_code" type="text" required
+                        class="mt-1 block w-full px-2 py-1.5 border border-gray-300 rounded-md hover:!border-primary focus:!border-primary focus:outline-none"
+                        placeholder="Nhập mã số thuế">
+                </div>
+
+                <!-- Tên công ty -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Tên công ty <span
+                            class="text-red-500">*</span></label>
+                    <input id="company_name" type="text" required
+                        class="mt-1 block w-full px-2 py-1.5 border border-gray-300 rounded-md hover:!border-[#0169dd] focus:!border-[#0169dd] focus:outline-none"
+                        placeholder="Nhập tên công ty">
+                </div>
+
+                <!-- Website -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Website</label>
+                    <div class="mt-1 flex items-center">
+                        <input id="website_company" type="text" value="https://" required
+                            class="block w-full px-2 py-1.5 border border-gray-300 rounded-md hover:!border-[#0169dd] focus:!border-[#0169dd] focus:outline-none"
+                            placeholder="Nhập website">
+                    </div>
+                </div>
+
+                <!-- Quy mô -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Quy mô <span
+                            class="text-red-500">*</span></label>
+                    <select id="scale_company"
+                        class="mt-1 block w-full px-2 py-1.5 border border-gray-300 rounded-md hover:!border-[#0169dd] focus:!border-[#0169dd] focus:outline-none">
+                        <option>1-9 nhân viên</option>
+                        <option>10-24 nhân viên</option>
+                        <option>25-99 nhân viên</option>
+                        <option>100-499 nhân viên</option>
+                        <option>500-1000 nhân viên</option>
+                        <option>1000+</option>
+                        <option>3000+</option>
+                        <option>5000+</option>
+                    </select>
+                </div>
+
+                <!-- Địa chỉ -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Địa chỉ <span
+                            class="text-red-500">*</span></label>
+                    <input id="address_company" type="text" required
+                        class="mt-1 block w-full px-2 py-1.5 border border-gray-300 rounded-md hover:!border-[#0169dd] focus:!border-[#0169dd] focus:outline-none"
+                        placeholder="Nhập địa chỉ">
+                </div>
+
+                <!-- Email -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Email <span
+                            class="text-red-500">*</span></label>
+                    <input id="email_company" type="email" required
+                        class="mt-1 block w-full px-2 py-1.5 border border-gray-300 rounded-md hover:!border-[#0169dd] focus:!border-[#0169dd] focus:outline-none"
+                        placeholder="Nhập email">
+                </div>
+
+                <!-- Số điện thoại -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Số điện thoại <span
+                            class="text-red-500">*</span></label>
+                    <input id="phone_number" type="text" required
+                        class="mt-1 block w-full px-2 py-1.5 border border-gray-300 rounded-md hover:!border-[#0169dd] focus:!border-[#0169dd] focus:outline-none"
+                        placeholder="Nhập số điện thoại">
+                </div>
+            </div>
+
+            <!-- Text Editor Placeholder -->
+            <div class="mt-4">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Giới thiệu công ty</label>
+                <textarea id="description_company" name="description" required class="editor"></textarea>
+            </div>
+
+            <button onclick="updateCompany()" class="w-full flex justify-end hover:cursor-pointer">
+                <div class=" px-3 py-1.5 max-w-fit flex flex-row items-center bg-primary text-white rounded-xl mt-4">
+                    Update
+                </div>
+            </button>
+        </div>
+    </div>
+    <script src="./assets/js/company.js"></script>
+    <!-- ion-icon -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>

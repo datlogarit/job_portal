@@ -4,6 +4,7 @@ import com.project.jobportal.DTOs.User_RecruiterDTO;
 import com.project.jobportal.models.RecruiterVerifications;
 import com.project.jobportal.repositories.ICompanyRepository;
 import com.project.jobportal.repositories.IRecruiterVerificationRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.project.jobportal.models.Companies;
@@ -15,6 +16,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -54,9 +57,9 @@ public class RecruiterService implements IRecruiterService {
         Recruiters recruiters = Recruiters.builder()
                 .userId(newUser)
 //                .companyId(existCompany)
-                .isVerify(0)
-                .numberOfPost(0)
-                .position(userRecruiter.getPosition())
+//                .isVerify(0)
+//                .numberOfPost(0)
+//                .position(userRecruiter.getPosition())
                 .build();
         iRecruiterRepository.save(recruiters);
     }
@@ -74,9 +77,9 @@ public class RecruiterService implements IRecruiterService {
         Recruiters existRecruiters = getRecruiter(id);
         existRecruiters.setUserId(existUser);
         existRecruiters.setCompanyId(existCompany);
-        existRecruiters.setIsVerify(userRecruiterDTO.getIsVerify());
-        existRecruiters.setNumberOfPost(userRecruiterDTO.getNumberOfPost());
-        existRecruiters.setPosition(userRecruiterDTO.getPosition());
+//        existRecruiters.setIsVerify(userRecruiterDTO.getIsVerify());
+//        existRecruiters.setNumberOfPost(userRecruiterDTO.getNumberOfPost());
+//        existRecruiters.setPosition(userRecruiterDTO.getPosition());
         iRecruiterRepository.save(existRecruiters);
     }
 
@@ -107,7 +110,6 @@ public class RecruiterService implements IRecruiterService {
     public Recruiters getRecruiter(long id) {
         Recruiters recruiters = iRecruiterRepository.findById(id).orElseThrow(() -> new
                 RuntimeException("Recruiter not found"));
-        // TODO Auto-generated method stub
         return recruiters;
     }
 
@@ -133,12 +135,15 @@ public class RecruiterService implements IRecruiterService {
         Recruiters recruiters = Recruiters.builder()
                 .userId(newUser)
                 .companyId(existCompany)
-                .isVerify(0)
-                .numberOfPost(0)
-                .position("nha tuyen dung")
+//                .isVerify(0)
+//                .numberOfPost(0)
+//                .position("nha tuyen dung")
                 .build();
         iRecruiterRepository.save(recruiters);
         return recruiters;
+    }
 
+    public List<Recruiters> findRecruiterVerified() {
+        return iRecruiterRepository.findByVerifyIdIsNotNullAndVerifyIdStatus(1, Sort.by(Sort.Direction.DESC, "verifyId.createdAt"));
     }
 }

@@ -8,9 +8,11 @@ import com.project.jobportal.models.Reports;
 public interface IReportService {
     void createReport(ReportDTO reportDTO);
 
-    void updateReport(long id, ReportDTO reportDTO);
+    void updateStatusReport(long id, long statusSolve);
 
     List<Reports> getAllReport();
 
     Reports getReportById(long id);
+
+    void banUser(Long reportId);
 }

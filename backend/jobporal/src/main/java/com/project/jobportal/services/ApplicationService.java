@@ -96,6 +96,13 @@ public class ApplicationService implements IApplicationService {
         return applications;
     }
 
+    @Override
+    public List<Applications> getApplicationByJobId(long jobId) {
+        List<Applications> applications = iApplicationRepository.findByJobId(jobId).orElseThrow(()
+                -> new RuntimeException("Application not found"));
+        return applications;
+    }
+
 
 }
 

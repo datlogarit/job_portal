@@ -267,12 +267,14 @@ textarea:focus {
     width: 5em;
     height: 100vh;
     position: fixed;
-    background-color: #edf2f9;
+    /* background-color: #edf2f9; */
+    background-color: #2563eb;
     transition: width .35s cubic-bezier(var(--transition-main), 1);
     overflow-y: auto;
     overflow-x: hidden;
     z-index: 2;
-    color: #5e6e82;
+    /* color: #5e6e82; */
+    color: white;
 }
 
 #navbar:hover {
@@ -281,19 +283,27 @@ textarea:focus {
     padding: 0;
     width: 5em;
     height: 100vh;
-    /* position: fixed; */
-
-    /* background-color: rgba(0 54 153); */
-    background-color: #edf2f9;
-
+    background-color: #2563eb;
     transition: width .35s cubic-bezier(var(--transition-main), 1);
     overflow-y: auto;
     overflow-x: hidden;
     z-index: 2;
-    color: #5e6e82;
+    color: white;
 }
 
 #navbar:hover+.form_addJob {
+    margin-left: 250px;
+    /* background-color: red; */
+    transition: all .35s cubic-bezier(var(--transition-main), 1);
+}
+
+#navbar:hover+#profile {
+    margin-left: 250px;
+    /* background-color: red; */
+    transition: all .35s cubic-bezier(var(--transition-main), 1);
+}
+
+#navbar:hover+#updateCompany {
     margin-left: 250px;
     /* background-color: red; */
     transition: all .35s cubic-bezier(var(--transition-main), 1);
@@ -331,14 +341,10 @@ textarea:focus {
 /* Navbar Logo */
 .navbar-logo {
     margin: 0 0 2em 0;
-    /* width: 100%;
-    height: 5em; */
     width: 75px;
     height: 75px;
     border-radius: 20px;
-    /* background-color: rgba(67, 177, 183, .7); */
     background-color: rgb(0 54 153 .9);
-    /* background: hsl(var(--background-secondary-dark)); */
 }
 
 .navbar-logo>.navbar-item-inner {
@@ -361,21 +367,16 @@ textarea:focus {
     padding: 1em 0;
     width: 100%;
     position: relative;
-    color: #5e6e82;
-    /* color: #191c6f; */
+    color: white;
     border-radius: .25em;
     text-decoration: none;
     transition: all .2s cubic-bezier(var(--transition-main), 1);
 }
 
 .navbar-item-inner:hover {
-    /* color: hsl(var(--white)); */
-    color: #009cff;
-    /* background: hsl(var(--background-secondary-light)); */
-    /* background: rgb(30, 84, 183); */
-    background-color: #ffffff;
+    color: white;
+    background-color: #3b82f6;
     box-shadow: 0 17px 30px -10px hsla(var(--black), .25);
-    /* box-shadow: 0 0 10px rgba(255, 255, 255, 0.2); */
 }
 
 .navbar-item-inner-icon-wrapper {

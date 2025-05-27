@@ -5,13 +5,7 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.project.jobportal.DTOs.ReportDTO;
 import com.project.jobportal.services.ReportService;
@@ -45,9 +39,24 @@ public class ReportController {
         return ResponseEntity.ok(reportService.getAllReport());
     }
 
-    @PutMapping("/{id}") // update trường isSolve - cho admin
-    public ResponseEntity<?> updateReport(@PathVariable long id, @RequestBody ReportDTO reportDTO) {
-        reportService.updateReport(id, reportDTO);
+    @PutMapping("") // update trường isSolve - cho admin
+    public ResponseEntity<?> updateStatusReport(@RequestParam("reportId") long reportId,
+                                                @RequestParam("statusSolve") long statusSolve) {
+        reportService.updateStatusReport(reportId, statusSolve);
         return ResponseEntity.ok("Update report successfully");
+    }
+
+    @PutMapping("/BANUser") //BAN user
+    public ResponseEntity<?> banUser(
+            @RequestParam("reportId") Long reportId) {
+        reportService.banUser(reportId);
+        return ResponseEntity.ok("BAN user successfully");
+    }
+
+    @PutMapping("/BANPost") //BAN post
+    public ResponseEntity<?> banPost(
+            @RequestParam("reportId") Long reportId) {
+        reportService.banPost(reportId);
+        return ResponseEntity.ok("BAN post successfully");
     }
 }

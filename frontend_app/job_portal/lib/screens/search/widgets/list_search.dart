@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:job_portal/models/job_model.dart';
 import 'package:job_portal/providers/category_provider.dart';
 import 'package:job_portal/providers/job_provider.dart';
+import 'package:job_portal/providers/user_provider.dart';
+import 'package:job_portal/repositories/interaction_repository.dart';
 import 'package:job_portal/screens/home/widgets/job_card.dart';
-import 'package:job_portal/screens/home/widgets/job_detail.dart';
+import 'package:job_portal/screens/home/widgets/job_detail2.dart';
+import 'package:job_portal/screens/home/widgets/detailpage.dart';
 import 'package:provider/provider.dart';
 
 class ListSearch extends StatelessWidget {
-  const ListSearch({super.key});
+  final interectionRepo = InteractionRepository();
+  ListSearch({super.key});
   @override
   Widget build(BuildContext context) {
     final categoryProvider = context.watch<CategoryProvider>();
     final jobProvider = context.watch<JobProvider>();
-
+    final userProvider = context.watch<UserProvider>();
     List<Job> getFilterJob(List<Job> allJob) {
       return allJob
           .where((job) =>
@@ -35,18 +40,22 @@ class ListSearch extends StatelessWidget {
         child: ListView.separated(
             scrollDirection: Axis.vertical,
             itemBuilder: (context, index) => GestureDetector(
-                  onTap: () => {
-                    showModalBottomSheet(
-                      backgroundColor: Colors.transparent,
-                      isScrollControlled: true,
-                      context: context,
-                      builder: (context) =>
-                          JobDetail(job: jobProvider.jobs[index]),
-                    )
+                  onTap: () async {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => JobDetailPage(
+                              job: jobProvider.recommendedJobs[index],
+                            )));
+                    //gửi thông tin ở đây
+                    bool result = await interectionRepo.updateRead(
+                        userProvider.user.id!,
+                        jobProvider.recommendedJobs[index].id!);
+                    result
+                        ? Fluttertoast.showToast(msg: "thanh cong")
+                        : Fluttertoast.showToast(msg: "that bai");
                   },
                   //lấy danh sách job tìm kiếm ở đây. nếu có thì truyền vào cho job card
                   child: JobCard(
-                    job: jobProvider.jobs[index],
+                    job: jobProvider.recommendedJobs[index],
                     timeJob: false,
                     salary: true,
                     companyNumChar: 80,
@@ -56,7 +65,7 @@ class ListSearch extends StatelessWidget {
             separatorBuilder: (_, index) => SizedBox(
                   height: 15,
                 ),
-            itemCount: jobProvider.jobs.length),
+            itemCount: jobProvider.recommendedJobs.length),
       );
     }
     return Container(
@@ -65,13 +74,17 @@ class ListSearch extends StatelessWidget {
       child: ListView.separated(
           scrollDirection: Axis.vertical,
           itemBuilder: (context, index) => GestureDetector(
-                onTap: () => {
-                  showModalBottomSheet(
-                    backgroundColor: Colors.transparent,
-                    isScrollControlled: true,
-                    context: context,
-                    builder: (context) => JobDetail(job: jobFilted[index]),
-                  )
+                onTap: () async {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => JobDetailPage(
+                            job: jobFilted[index],
+                          )));
+                  //gửi thông tin ở đây
+                  bool result = await interectionRepo.updateRead(
+                      userProvider.user.id!, jobFilted[index].id!);
+                  result
+                      ? Fluttertoast.showToast(msg: "thanh cong")
+                      : Fluttertoast.showToast(msg: "that bai");
                 },
                 //lấy danh sách job tìm kiếm ở đây. nếu có thì truyền vào cho job card
                 child: JobCard(

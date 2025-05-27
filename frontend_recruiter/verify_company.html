@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Form Đăng Tải Giấy Tờ</title>
+    <title>Document upload form</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
@@ -13,95 +13,97 @@
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
 </head>
 
-<body class="bg-gray-50 p-6">
-    <div class="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-6">
-        <h2 id="title_form" class="text-xl font-semibold mb-4">Thông tin Giấy đăng ký doanh nghiệp</h2>
+<body class="bg-[#f1f5fb] p-6">
+    <div class="max-w-4xl mx-auto mb-2">
+        <h2 id="title_form" class="text-xl font-semibold mb-4">Bussiness License </h2>
+        <div class="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-6">
+            <div class="space-y-2">
+                <label class="flex items-center space-x-3 cursor-pointer">
+                    <input type="radio" name="docType" value="business"
+                        class="doc-toggle w-5 h-5 text-[#2563eb] focus:ring-[#2563ebcc] border-gray-300" checked />
+                    <span class="font-medium flex items-center gap-1">
+                        <ion-icon name="business-outline" class="text-lg"></ion-icon>
+                        Business registration certificate or equivalent document
+                    </span>
+                </label>
 
-        <div class="space-y-2">
-            <label class="flex items-center space-x-3 cursor-pointer">
-                <input type="radio" name="docType" value="business"
-                    class="doc-toggle w-5 h-5 text-[#2563eb] focus:ring-[#2563ebcc] border-gray-300" checked />
-                <span class="font-medium flex items-center gap-1">
-                    <ion-icon name="business-outline" class="text-lg"></ion-icon>
-                    Giấy đăng ký doanh nghiệp hoặc Giấy tờ tương đương khác
-                </span>
-            </label>
-
-            <label class="flex items-center space-x-3 cursor-pointer">
-                <input type="radio" name="docType" value="authorization"
-                    class="doc-toggle w-5 h-5 text-[#2563eb] focus:ring-[#2563ebcc] border-gray-300" />
-                <span class="font-medium flex items-center gap-1">
-                    <ion-icon name="document-text-outline" class="text-lg"></ion-icon>
-                    Giấy uỷ quyền và Giấy tờ định danh
-                </span>
-            </label>
-        </div>
-
-        <!-- Business License Upload -->
-        <div id="business-section" class="border rounded-lg p-4 space-y-4 bg-gray-50 mt-4">
-            <div>
-                <label class="font-semibold text-gray-700">Giấy tờ *</label>
-                <p class="text-sm text-green-700 font-medium mt-1">Giấy phép kinh doanh</p>
-                <div class="border-dashed border-2 border-gray-300 rounded-md p-4 mt-2 text-center">
-                    <input type="file" class="hidden" id="businessUpload" accept=".pdf,.doc,.docx" />
-                    <label for="businessUpload"
-                        class="cursor-pointer inline-block px-4 py-2 bg-[#2563ebcc] text-white rounded hover:bg-[#2563eb]">
-                        <ion-icon name="cloud-upload-outline" class="align-middle"></ion-icon>
-                        Chọn file
-                    </label>
-                    <p id="businessFileName" class="text-sm text-gray-700 mt-2 hidden"></p>
-                    <p class="text-sm text-gray-500 mt-2">Dung lượng tối đa 5MB, định dạng: jpeg, jpg, png, pdf</p>
-                </div>
-                <p class="text-orange-500 text-sm mt-2">⚠️ Các văn bản đăng tải cần đầy đủ các mặt và không có dấu hiệu
-                    chỉnh sửa/che/cắt thông tin</p>
+                <label class="flex items-center space-x-3 cursor-pointer">
+                    <input type="radio" name="docType" value="authorization"
+                        class="doc-toggle w-5 h-5 text-[#2563eb] focus:ring-[#2563ebcc] border-gray-300" />
+                    <span class="font-medium flex items-center gap-1">
+                        <ion-icon name="document-text-outline" class="text-lg"></ion-icon>
+                        Authorization letter
+                    </span>
+                </label>
             </div>
-            <div class="mt-4">
-                <p class="font-semibold mb-2">Minh hoạ</p>
-                <img src="./assets/images/sample-licence.7436372.jpg" alt="Giấy phép kinh doanh minh hoạ"
-                    class="w-72 border rounded shadow" />
-            </div>
-        </div>
 
-        <!-- Authorization Upload -->
-        <div id="authorization-section" class="border rounded-lg p-4 space-y-4 bg-gray-50 mt-4 hidden">
-            <div>
-                <label class="font-semibold text-gray-700">Giấy uỷ quyền *</label>
-                <div class="border-dashed border-2 border-gray-300 rounded-md p-4 mt-2 text-center">
-                    <input type="file" class="hidden" id="authUpload" accept=".pdf,.doc,.docx" />
-                    <label for="authUpload"
-                        class="cursor-pointer inline-block px-4 py-2 bg-[#2563ebcc] text-white rounded hover:bg-[#2563eb]">
-                        <ion-icon name="cloud-upload-outline" class="align-middle"></ion-icon>
-                        Chọn file
-                    </label>
-                    <p id="authFileName" class="text-sm text-gray-700 mt-2 hidden"></p>
-                    <p class="text-sm text-gray-500 mt-2">Dung lượng tối đa 5MB, định dạng: jpeg, jpg, png, pdf</p>
-                </div>
-                <p class="text-orange-500 text-sm mt-2">⚠️ Các văn bản đăng tải cần đầy đủ các mặt và không có dấu hiệu
-                    chỉnh sửa/che/cắt thông tin</p>
-            </div>
-            <div class="mt-4 flex items-center space-x-4">
+            <!-- Business License Upload -->
+            <div id="business-section" class="border rounded-lg p-4 space-y-4 bg-gray-50 mt-4">
                 <div>
-                    <p class="font-semibold mb-2">Minh hoạ</p>
-                    <img src="./assets/images/authorization_letter_sample.png" alt="Giấy uỷ quyền minh hoạ"
-                        class="w-48 border rounded shadow" />
+                    <label class="font-semibold text-gray-700">Document *</label>
+                    <p class="text-sm text-green-700 font-medium mt-1">Business license</p>
+                    <div class="border-dashed border-2 border-gray-300 rounded-md p-4 mt-2 text-center">
+                        <input type="file" class="hidden" id="businessUpload" accept=".pdf,.doc,.docx" />
+                        <label for="businessUpload"
+                            class="cursor-pointer inline-block px-4 py-2 bg-[#2563ebcc] text-white rounded hover:bg-[#2563eb]">
+                            <ion-icon name="cloud-upload-outline" class="align-middle"></ion-icon>
+                            Choose file
+                        </label>
+                        <p id="businessFileName" class="text-sm text-gray-700 mt-2 hidden"></p>
+                        <p class="text-sm text-gray-500 mt-2">Maximum size 5MB, format: jpeg, jpg, png, pdf</p>
+                    </div>
+                    <p class="text-orange-500 text-sm mt-2">⚠️ The published documents must be complete and free of any
+                        signs of editing/covering/cutting of information.</p>
                 </div>
-                <div>
-                    <button class="mt-6 px-4 py-2 bg-[#2563ebcc] text-white rounded hover:bg-[#2563eb]">
-                        <a href="./assets/docs_for_user/06. Mẫu ủy quyền sử dụng dịch vụ_V1.0.docx" download><ion-icon
-                                name="cloud-download-outline" class="align-middle mr-1.5"></ion-icon>Tải mẫu
-                            giấy uỷ quyền</a>
-                    </button>
+                <div class="mt-4">
+                    <p class="font-semibold mb-2">Illustration</p>
+                    <img src="./assets/images/sample-licence.7436372.jpg" alt="Giấy phép kinh doanh minh hoạ"
+                        class="w-72 border rounded shadow" />
                 </div>
             </div>
-        </div>
-        <div class="w-full flex justify-end">
-            <button id="submitForm" onclick="sendInfVerify()"
-                class="mt-5  px-10 py-1.5 bg-[#2563ebcc] rounded-[6px] text-[white] hover:bg-[#2563eb]">
-                Hoàn tất
-            </button>
-        </div>
 
+            <!-- Authorization Upload -->
+            <div id="authorization-section" class="border rounded-lg p-4 space-y-4 bg-gray-50 mt-4 hidden">
+                <div>
+                    <label class="font-semibold text-gray-700">Authorization letter *</label>
+                    <div class="border-dashed border-2 border-gray-300 rounded-md p-4 mt-2 text-center">
+                        <input type="file" class="hidden" id="authUpload" accept=".pdf,.doc,.docx" />
+                        <label for="authUpload"
+                            class="cursor-pointer inline-block px-4 py-2 bg-[#2563ebcc] text-white rounded hover:bg-[#2563eb]">
+                            <ion-icon name="cloud-upload-outline" class="align-middle"></ion-icon>
+                            Choose file
+                        </label>
+                        <p id="authFileName" class="text-sm text-gray-700 mt-2 hidden"></p>
+                        <p class="text-sm text-gray-500 mt-2">Maximum size 5MB, format: jpeg, jpg, png, pdf</p>
+                    </div>
+                    <p class="text-orange-500 text-sm mt-2">⚠️ The published documents must be complete and free of any
+                        signs of editing/covering/cutting of information</p>
+                </div>
+                <div class="mt-4 flex items-center space-x-4">
+                    <div>
+                        <p class="font-semibold mb-2">Illustration</p>
+                        <img src="./assets/images/authorization_letter_sample.png" alt="Giấy uỷ quyền minh hoạ"
+                            class="w-48 border rounded shadow" />
+                    </div>
+                    <div>
+                        <button class="mt-6 px-4 py-2 bg-[#2563ebcc] text-white rounded hover:bg-[#2563eb]">
+                            <a href="./assets/docs_for_user/06. Mẫu ủy quyền sử dụng dịch vụ_V1.0.docx"
+                                download><ion-icon name="cloud-download-outline"
+                                    class="align-middle mr-1.5"></ion-icon>Download the sample</a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="w-full flex justify-end">
+                <button id="submitForm" onclick="sendInfVerify()"
+                    class="mt-5  px-10 py-1.5 bg-blue-600 rounded-[6px] text-[white] hover:bg-blue-700">
+                    Submit
+                </button>
+            </div>
+
+        </div>
     </div>
+
 
     <script>
         // Toggle giữa 2 loại tài liệu
@@ -145,7 +147,7 @@
     <script>
         const user = JSON.parse(localStorage.getItem("user"));
         if (user.verifyId) {
-            document.getElementById("title_form").innerHTML = "Cập nhật giấy đăng ký doanh nghiệp"
+            document.getElementById("title_form").innerHTML = "Update the verify information"
         }
         async function sendInfVerify() {
             const businessFile = document.getElementById('businessUpload').files[0];
@@ -157,7 +159,7 @@
                 }, dismissible: true // Có nútj tắt hay không
             });
             if (!businessFile || !authFile) {
-                notyf.error("Vui lòng chọn đầy đủ cả hai loại giấy tờ!")
+                notyf.error("Please upload both documents!")
                 return;
             }
 
@@ -172,15 +174,15 @@
                     });
                     const result = await response.text(); // hoặc response.json() nếu trả về JSON
                     if (response.ok) {
-                        notyf.success("Gửi thông tin xác thực thành công")
+                        notyf.success("Information sent successfully")
                         setTimeout(() => {
                             window.location.href = "./login2.html"
                         }, 1500);
                     } else {
-                        notyf.error("Gửi thông tin xác thực thất bại")
+                        notyf.error("Send information failed")
                     }
                 } catch (error) {
-                    notyf.error("Lỗi khi kết nối máy chủ")
+                    notyf.error("Error while connecting to server")
                 }
             }
             else {//nếu đã có thông tin
@@ -191,15 +193,15 @@
                     });
                     const result = await response.text(); // hoặc response.json() nếu trả về JSON
                     if (response.ok) {
-                        notyf.success("Cập nhật thành công")
+                        notyf.success("Update successfully!")
                         setTimeout(() => {
                             window.location.href = "./login2.html"
                         }, 1500);
                     } else {
-                        notyf.error("Cập nhật thất bại")
+                        notyf.error("Update falsed")
                     }
                 } catch (error) {
-                    notyf.error("Lỗi khi kết nối máy chủ")
+                    notyf.error("Error while connecting to server")
                 }
             }
 

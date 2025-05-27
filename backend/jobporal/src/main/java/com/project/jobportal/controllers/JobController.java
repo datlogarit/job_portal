@@ -16,7 +16,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/v1/job")
@@ -53,6 +55,20 @@ public class JobController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getJobById(@PathVariable long id) {
         return ResponseEntity.ok(jobService.getJobById(id));
+    }
+
+    //Lấy tất cả các job theo nhà tuyển dụng
+    @GetMapping("/recruiter/{recruiterId}")
+    public ResponseEntity<?> getJobByRecruiterId(@PathVariable long recruiterId,
+                                                 @RequestParam("page") int page,
+                                                 @RequestParam("limit") int limit) {
+        PageRequest pageRequest = PageRequest.of(page, limit, Sort.by("createdAt").descending());
+        Page<Jobs> jobPage = jobService.getJobByRecruiterId(recruiterId, pageRequest);
+        Map<String, Object> response = new HashMap<>();
+        response.put("job", jobPage.getContent());
+        response.put("total Page", jobPage.getTotalPages());
+        response.put("total Element", jobPage.getTotalElements());
+        return ResponseEntity.ok(response);
     }
 
     // ứng với chức năng tìm kiếm, chia job theo category, hiển thị job theo company
@@ -97,18 +113,19 @@ public class JobController {
         return ResponseEntity.ok(jobsFilter);
     }
 
+    // lấy  job tương tự khi người dùng nhấn vào job nào đó
     @GetMapping("/sameJob/{jobId}")
     public ResponseEntity<?> getSameJob(@PathVariable(name = "jobId") long jobId) throws Exception {
-
         return ResponseEntity.ok(jobService.searchSameJobById(jobId));
     }
 
+    //lấy job được hệ thống gợi ý
     @PostMapping("/recommendation")
     public ResponseEntity<?> getRecommendationJob(@RequestBody RecommenInputDTO recommenInputDTO) throws Exception {
-
         return ResponseEntity.ok(jobService.getRecommendedJob(recommenInputDTO));
     }
 
+    //Xóa job
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteJob(@PathVariable long id) {
         return ResponseEntity.ok(String.format("delete job with id = %d successfully ", id));

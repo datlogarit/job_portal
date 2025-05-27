@@ -6,8 +6,6 @@ import com.project.jobportal.models.Interactions;
 import com.project.jobportal.models.Jobs;
 import com.project.jobportal.repositories.IInteractionRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +18,7 @@ public class InteractionService implements IInteractionService {
     private final JobService jobService;
 
     @Override
-    public void createInteraction(InteractionDTO interactionDTO) {
+    public Interactions createInteraction(InteractionDTO interactionDTO) {
         Applicants applicants = applicantService.getApplicantById(interactionDTO.getApplicantId());
         Jobs jobs = jobService.getJobById(interactionDTO.getJobId());
         Interactions newInteraction = Interactions.builder()
@@ -30,23 +28,20 @@ public class InteractionService implements IInteractionService {
                 .isRead(interactionDTO.getIsRead())
                 .build();
         iInteractionRepository.save(newInteraction);
+        return newInteraction;
     }
 
     @Override
-    public void updateInteraction(long applicantId, long jobId, InteractionDTO interactionDTO) {
-        boolean isUpdate = false;
-        Interactions existInteraction = findByApplicantIdAndJobId(applicantId, jobId);
-        if (interactionDTO.getIsSaved() != 0) {
-            existInteraction.setIsSaved(interactionDTO.getIsSaved());
-            isUpdate = true;
-        }
-        if (interactionDTO.getIsRead() != 0) {
-            existInteraction.setIsRead(interactionDTO.getIsRead());
-            isUpdate = true;
-        }
-        if (isUpdate) {
-            iInteractionRepository.save(existInteraction);
-        }
+    public void updateReadInteraction(InteractionDTO interactionDTO) {
+        Interactions existInteraction = iInteractionRepository.findByApplicantIdAndJobId(
+                interactionDTO.getApplicantId(), interactionDTO.getJobId()).orElseGet(() ->
+                createInteraction(interactionDTO
+                )
+        );
+//        if (existInteraction.getIsRead() != 1) {
+        existInteraction.setIsRead(1L);
+        iInteractionRepository.save(existInteraction);
+//        }
     }
 
     @Override
@@ -70,7 +65,7 @@ public class InteractionService implements IInteractionService {
 
     @Override
     public Interactions findByApplicantIdAndJobId(long applicantId, long jobId) {
-        Interactions interactions = iInteractionRepository.finByApplicantIdAndJobId(applicantId, jobId).orElseThrow(()
+        Interactions interactions = iInteractionRepository.findByApplicantIdAndJobId(applicantId, jobId).orElseThrow(()
                 -> new RuntimeException("Interaction not found"));
         return interactions;
     }

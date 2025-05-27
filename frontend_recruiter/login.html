@@ -34,21 +34,6 @@
             </form>
         </div>
     </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const user = JSON.parse(localStorage.getItem("user"));
-
-            // Kiểm tra nếu chưa có thông tin công ty
-            if (!user || !user.company) {
-                document.getElementById("modal").classList.remove("hidden");
-            }
-
-            // Nút đóng modal (nếu bạn cho phép đóng)
-            document.getElementById("closeModalBtn").addEventListener("click", () => {
-                document.getElementById("modal").classList.add("hidden");
-            });
-        });
-    </script>
 
 </body>
 

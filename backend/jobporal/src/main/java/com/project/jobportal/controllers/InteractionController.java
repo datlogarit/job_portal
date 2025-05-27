@@ -20,12 +20,13 @@ public class InteractionController {
         return ResponseEntity.ok("create Interaction successfully");
     }
 
-    @PutMapping("/{applicantId}/{jobId}")
-    public ResponseEntity<?> updateInteraction(@PathVariable(name = "applicantId") long applicantId,
-                                               @PathVariable(name = "jobId") long jobId,
-                                               @RequestBody InteractionDTO interactionDTO) {
-        interactionService.updateInteraction(applicantId, jobId, interactionDTO);
-        return ResponseEntity.ok(String.format("update interaction successfully with applicantId = %d and jobId = %d", applicantId, jobId));
+    @PutMapping("/read")
+    public ResponseEntity<?> updateInteraction(
+            @RequestBody InteractionDTO interactionDTO) {
+        interactionService.updateReadInteraction(interactionDTO);
+        return ResponseEntity.ok(String.format("update interaction successfully with applicantId = %d and jobId = %d",
+                interactionDTO.getApplicantId(),
+                interactionDTO.getJobId()));
     }
 
     @PutMapping("/save/{applicantId}/{jobId}")

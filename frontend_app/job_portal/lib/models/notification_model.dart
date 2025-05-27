@@ -8,7 +8,7 @@ class Notification {
   String? title;
   String? content;
   Job? jobRelated;
-  Interaction? applicationId;
+  // Interaction? applicationId;
   String? categoryNotification;
   Notification(
       {this.createdAt,
@@ -17,7 +17,7 @@ class Notification {
       this.title,
       this.content,
       this.jobRelated,
-      this.applicationId,
+      // this.applicationId,
       this.categoryNotification});
 
   Notification.fromJson(Map<String, dynamic> json) {
@@ -29,9 +29,9 @@ class Notification {
     jobRelated = json['jobRelated'] != null
         ? new Job.fromJson(json['jobRelated'])
         : null;
-    applicationId = json['applicationId'] != null
-        ? new Interaction.fromJson(json['applicationId'])
-        : null;
+    // applicationId = json['applicationId'] != null
+    //     ? new Interaction.fromJson(json['applicationId'])
+    //     : null;
     categoryNotification = json['categoryNotification'];
   }
 
@@ -45,9 +45,9 @@ class Notification {
     if (this.jobRelated != null) {
       data['jobRelated'] = this.jobRelated!.toJson();
     }
-    if (this.applicationId != null) {
-      data['applicationId'] = this.applicationId!.toJson();
-    }
+    // if (this.applicationId != null) {
+    //   data['applicationId'] = this.applicationId!.toJson();
+    // }
     data['categoryNotification'] = this.categoryNotification;
     return data;
   }

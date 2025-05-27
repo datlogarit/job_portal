@@ -11,7 +11,7 @@ async function post(url, data) {
 
   if (!res.ok) {
     const errorData = await res.json();
-    throw new Error(errorData.message || "Có lỗi xảy ra");
+    throw new Error(errorData.message || "An error occurred");
   }
   return contentType && contentType.includes("application/json")
     ? await res.json()
@@ -28,7 +28,7 @@ async function get(url, data) {
 
   if (!res.ok) {
     const errorData = await res.json();
-    throw new Error(errorData.message || "Có lỗi xảy ra");
+    throw new Error(errorData.message || "An error occurred");
   }
   return contentType && contentType.includes("application/json")
     ? await res.json()

@@ -10,11 +10,11 @@ class TagList extends StatefulWidget {
 
 class _TagListState extends State<TagList> {
   final List<String> tagList = [
-    '💡Recommened',
-    'All',
-    '⚡Popular',
-    '🌟Featured',
-    '🔝 Top Company',
+    '💡Recommened For You',
+    // 'All',
+    // '⚡Popular',
+    // '🌟Featured',
+    // '🔝 Top Company',
   ];
   int selected = 0;
   @override
@@ -33,7 +33,7 @@ class _TagListState extends State<TagList> {
                       color: selected == index
                           ? Color.fromRGBO(67, 177, 183, .3)
                           : Colors.white,
-                      borderRadius: BorderRadius.circular(18),
+                      borderRadius: BorderRadius.circular(10), //18
                       border: Border.all(
                         color: selected == index
                             ? Color.fromRGBO(67, 177, 183, 1)

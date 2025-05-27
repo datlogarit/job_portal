@@ -4,9 +4,9 @@ class RecruiterVerification {
   String? createdAt;
   String? updatedAt;
   int? id;
-  Recruiter? recruiterId;
-  Null? authorizationLetterUrl;
-  Null? businessLicenseUrl;
+  // Recruiter? recruiterId;
+  String? authorizationLetterUrl;
+  String? businessLicenseUrl;
   int? status;
   String? rejectReason;
 
@@ -14,7 +14,7 @@ class RecruiterVerification {
       {this.createdAt,
       this.updatedAt,
       this.id,
-      this.recruiterId,
+      // this.recruiterId,
       this.authorizationLetterUrl,
       this.businessLicenseUrl,
       this.status,
@@ -24,9 +24,9 @@ class RecruiterVerification {
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     id = json['id'];
-    recruiterId = json['recruiterId'] != null
-        ? new Recruiter.fromJson(json['recruiterId'])
-        : null;
+    // recruiterId = json['recruiterId'] != null
+    //     ? new Recruiter.fromJson(json['recruiterId'])
+    //     : null;
     authorizationLetterUrl = json['authorizationLetterUrl'];
     businessLicenseUrl = json['businessLicenseUrl'];
     status = json['status'];
@@ -38,9 +38,9 @@ class RecruiterVerification {
     data['createdAt'] = this.createdAt;
     data['updatedAt'] = this.updatedAt;
     data['id'] = this.id;
-    if (this.recruiterId != null) {
-      data['recruiterId'] = this.recruiterId!.toJson();
-    }
+    // if (this.recruiterId != null) {
+    //   data['recruiterId'] = this.recruiterId!.toJson();
+    // }
     data['authorizationLetterUrl'] = this.authorizationLetterUrl;
     data['businessLicenseUrl'] = this.businessLicenseUrl;
     data['status'] = this.status;

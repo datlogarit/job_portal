@@ -44,6 +44,10 @@ dependencies:
   progress_tracker: ^0.0.16
   step_progress: ^2.1.0
   step_tracker: ^1.1.0
+  intl: ^0.18.1
+  group_radio_button: ^1.3.0
+  flutter_svg: ^2.0.7
+  multi_dropdown: ^3.0.1
 
 dev_dependencies:
   flutter_test:

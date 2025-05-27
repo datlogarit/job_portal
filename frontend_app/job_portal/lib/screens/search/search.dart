@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:job_portal/screens/search/widgets/catagory_list_search.dart';
+import 'package:job_portal/screens/search/widgets/tag_list.dart';
 import 'package:job_portal/screens/search/widgets/list_search.dart';
 
 import 'package:job_portal/screens/search/widgets/search_app_bar.dart';

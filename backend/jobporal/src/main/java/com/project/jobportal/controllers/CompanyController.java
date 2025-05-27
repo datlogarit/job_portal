@@ -7,8 +7,11 @@ import com.project.jobportal.models.Companies;
 import com.project.jobportal.services.CompanyService;
 
 import com.project.jobportal.utilities.HandleFile;
+import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import lombok.*;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
@@ -62,6 +66,7 @@ public class CompanyController {
         }
     }
 
+
     @PutMapping("/{id}")
     public ResponseEntity<?> updateCompany(@RequestBody @Valid CompanyDTO companyDTO,
                                            @PathVariable long id,
@@ -83,7 +88,6 @@ public class CompanyController {
         return ResponseEntity.ok("upload avt company successfully");
     }
 
-
     @GetMapping("/{id}")
     public ResponseEntity<Companies> getCompanyById(@PathVariable Long id) {
         Companies companies = companyService.getCompanyById(id);
@@ -94,6 +98,24 @@ public class CompanyController {
     public ResponseEntity<?> getAllCompany() {
         List<Companies> companies = companyService.getAllCompany();
         return ResponseEntity.ok(companies);
+    }
+
+    @GetMapping("/images/{imageName}")
+    public ResponseEntity<?> viewImage(@PathVariable String imageName) {
+        try {
+            java.nio.file.Path imagePath = Paths.get("avtCompany_uploads/" + imageName);
+            UrlResource resource = new UrlResource(imagePath.toUri());
+
+            if (resource.exists()) {
+                return ResponseEntity.ok()
+                        .contentType(MediaType.IMAGE_JPEG)
+                        .body(resource);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 

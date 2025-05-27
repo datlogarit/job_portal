@@ -20,6 +20,7 @@ public class RecruiterController {
         return ResponseEntity.ok(recruiterService.login(userDTO.getEmail(), userDTO.getPassword()));
     }
 
+    //register
     @PostMapping("")
     public ResponseEntity<?> createInfoRecruiter(@RequestBody User_RecruiterDTO userRecruiterDTO) {
         recruiterService.createRecruiter(userRecruiterDTO);
@@ -37,10 +38,17 @@ public class RecruiterController {
         return ResponseEntity.ok(recruiterService.getRecruiter(id));
     }
 
+    @GetMapping("/isVerify")
+    public ResponseEntity<?> getRecruiterVerifyStatus() {
+        return ResponseEntity.ok(recruiterService.findRecruiterVerified());
+    }
+
+    //getAllRecruiter
     @GetMapping("")
     public ResponseEntity<?> getAllRecruiter(@RequestParam("page") int page,
                                              @RequestParam("limit") int limit) {
         PageRequest pageRequest = PageRequest.of(page, limit, Sort.by("userId"));
         return ResponseEntity.ok(recruiterService.getAllRecruiters(pageRequest).getContent());
     }
+
 }

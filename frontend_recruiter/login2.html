@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Đăng nhập Nhà tuyển dụng</title>
+    <title>Recruiter login</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
-            background-image: url("./assets/images/wallpaperflare.com_wallpaper\ \(2\).jpg");
+            background-image: url("./assets/images/background_home.jpg");
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -25,9 +25,9 @@
         <div id="form_login" class="bg-white/90 flex flex-col shadow-lg rounded-2xl p-8 w-full max-w-md">
             <div class="mb-6 text-center">
                 <h1 class="text-xl font-bold text-gray-800 mb-2">
-                    Chào mừng Nhà tuyển dụng quay lại!
+                    Welcome back, recruiter!
                 </h1>
-                <p class="text-sm text-gray-600">Vui lòng đăng nhập để tiếp tục</p>
+                <p class="text-sm text-gray-600">Please login to use the service</p>
             </div>
 
             <form id="loginForm" action="#" method="POST" class="space-y-5">
@@ -42,7 +42,7 @@
 
                 <div>
                     <label for="password" class="block mb-1 text-sm font-medium text-gray-700">
-                        Mật khẩu
+                        Password
                     </label>
                     <input type="password" id="password" name="password" required
                         class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -50,20 +50,20 @@
                 </div>
                 <div class="flex items-center justify-between text-sm">
                     <label class="flex items-center">
-                        <input type="checkbox" class="mr-2" />
-                        Ghi nhớ đăng nhập
+                        <input type="checkbox" checked class="mr-2" />
+                        Rememberme
                     </label>
-                    <a href="#" class="text-blue-600 hover:underline">Quên mật khẩu?</a>
+                    <a href="#" class="text-blue-600 hover:underline">Forgot password?</a>
                 </div>
 
                 <button type="submit" id="login_button"
                     class="w-full bg-blue-600 text-white py-2 rounded-xl font-semibold hover:bg-blue-700 transition duration-200">
-                    Đăng nhập
+                    Login
                 </button>
 
                 <p class="text-center text-sm text-gray-600">
-                    Chưa có tài khoản?
-                    <a href="./registor2.html" class="text-blue-600 hover:underline">Đăng ký ngay</a>
+                    Don't have an account?
+                    <a href="./registor2.html" class="text-blue-600 hover:underline">Register now</a>
                 </p>
             </form>
         </div>
@@ -71,39 +71,26 @@
     <div id="modal"
         class="fixed inset-0 bg-gray-600 bg-opacity-50 flex hidden items-center justify-center  backdrop-closed">
         <div id="modalContent" class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md relative modal-closed">
-            <!-- Nút đóng modal -->
-            <!-- <button id="closeModalBtn" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
-                <i class="fas fa-times text-xl"></i>
-            </button> -->
-
-            <h1 id="name_text" class="text-xl font-bold text-gray-800 mb-2">Xin chào, Đạt Đoàn</h1>
+            <h1 id="name_text" class="text-xl font-bold text-gray-800 mb-2">Hello, Đạt Đoàn</h1>
             <p class="text-gray-600 mb-4">
-                Vui lòng chuẩn bị các giấy tờ, thông tin cần thiết và thực hiện các bước xác thực dưới đây để bắt đầu
-                đăng tin tuyển dụng.
+                <!-- Vui lòng chuẩn bị các giấy tờ, thông tin cần thiết và thực hiện các bước xác thực dưới đây để bắt đầu
+                đăng tin tuyển dụng. -->
+                Please prepare the necessary documents and information and follow the verification steps below to start
+                posting a job
+                ad.
             </p>
 
             <div class="flex justify-between items-center mb-4">
-                <h2 class="text-lg font-semibold text-gray-800">XÁC THỰC THÔNG TIN</h2>
-                <!-- <span class="text-[#2563eb] font-semibold">Hoàn thành <span>0</span>%</span> -->
+                <h2 class="text-lg font-semibold text-gray-800">VERIFY INFORMATION</h2>
             </div>
-
-            <!-- <div class="w-full bg-gray-200 rounded-full h-2.5 mb-6">
-                <div class="bg-[#2563eb] h-2.5 rounded-full" style="width: 0%"></div>
-            </div> -->
 
             <ul class="space-y-4">
                 <li class="flex items-center justify-between">
-                    <!-- <div class="flex items-center">
-                        <input type="radio" name="verification" class="hidden" checked>
-                        <span class="w-6 h-6 flex items-center justify-center mr-3">
-                            <i class="fas fa-check-circle text-[#2563eb] text-2xl"></i>
-                        </span>
-                        <span class="text-gray-700">Cập nhật thông tin công ty</span>
-                    </div> -->
+
                     <div class="flex items-center">
                         <input type="radio" name="verification" class="hidden" checked>
                         <span id="step_company" class="w-6 h-6 border-2 border-gray-300 rounded-full mr-3"></span>
-                        <span class="text-gray-700">Cập nhật thông tin công ty</span>
+                        <span class="text-gray-700">Create company information</span>
                     </div>
                     <a href="./init_company.html">
                         <div
@@ -116,7 +103,7 @@
                     <div class="flex items-center">
                         <input type="radio" name="verification" class="hidden">
                         <span id="step_verify" class="w-6 h-6 border-2 border-gray-300 rounded-full mr-3"></span>
-                        <span class="text-gray-700">Cập nhật Giấy đăng ký doanh nghiệp</span>
+                        <span class="text-gray-700">Authenticate information</span>
                     </div>
                     <a href="./verify_company.html">
                         <div
@@ -130,7 +117,7 @@
                     <div class="flex items-center">
                         <input type="radio" name="verification" class="hidden">
                         <span id="step_admin_review" class="w-6 h-6 border-2 border-gray-300 rounded-full mr-3"></span>
-                        <span id="step_admin_review_text" class="text-gray-700 mr-1">Admin xét duyệt </span>
+                        <span id="step_admin_review_text" class="text-gray-700 mr-1">Admin is reviewing </span>
                     </div>
                 </li>
 
@@ -138,12 +125,9 @@
                     <div class="flex items-center">
                         <input type="radio" name="verification" class="hidden">
                         <span class="w-6 h-6 border-2 border-gray-300 rounded-full mr-3"></span>
-                        <span class="text-gray-700">Đăng tin tuyển dụng đầu tiên</span>
+                        <span class="text-gray-700">Post your first job ad</span>
                     </div>
-                    <!-- <div
-                        class="w-[32px] h-[32px] rounded-[50%] text-gray-500 duration-300 hover:bg-[#2563eb] hover:text-white flex justify-center items-center">
-                        <ion-icon name="arrow-forward-outline" class="text-[26px] "></ion-icon>
-                    </div> -->
+
                 </li>
             </ul>
         </div>

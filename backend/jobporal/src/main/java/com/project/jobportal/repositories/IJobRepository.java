@@ -3,23 +3,29 @@ package com.project.jobportal.repositories;
 import com.project.jobportal.models.Categories;
 import com.project.jobportal.models.Jobs;
 
+import com.project.jobportal.models.Recruiters;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDate;
+import java.util.List;
+
 //tìm kiếm theo title
 public interface IJobRepository extends JpaRepository<Jobs, Long> {
-
     @Override
     Page<Jobs> findAll(Pageable pageable);// ghi đè phương thức để lấy job theo trang
 
     // truy vấn theo từ khóa tìm kiếm
-//    @Query("SELECT j FROM Jobs j WHERE LOWER(j.title) LIKE LOWER(CONCAT('%', :title, '%'))")
+    // @Query("SELECT j FROM Jobs j WHERE LOWER(j.title) LIKE LOWER(CONCAT('%', :title, '%'))")
     @Query("SELECT j FROM Jobs j " +
-            "WHERE LOWER(j.title) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
+            "WHERE (LOWER(j.title) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
             "OR LOWER(j.position) LIKE LOWER(CONCAT('%', :keyword, '%'))" +
-            "OR LOWER(j.postedBy.companyId.name) LIKE LOWER(CONCAT('%', :keyword, '%'))"
+            "OR LOWER(j.postedBy.companyId.name) LIKE LOWER(CONCAT('%', :keyword, '%')))" +
+            "AND j.status = 'Opening' " +
+            "AND j.isLock = 0 "
     )
     Page<Jobs> searchJob(@Param("keyword") String keyword, Pageable pageable);
 
@@ -29,6 +35,9 @@ public interface IJobRepository extends JpaRepository<Jobs, Long> {
      * chú ý truyền đúng tham số cho categoryId (có type là categories)
      */
     Page<Jobs> findByCategoryId(Categories categoryId, Pageable pageable);
+
+    //truy van theo người đăng
+    Page<Jobs> findByPostedBy(Recruiters recruiterId, Pageable pageable);
 
     /*
      * truy vấn theo companyid
@@ -52,4 +61,8 @@ public interface IJobRepository extends JpaRepository<Jobs, Long> {
                           @Param("maxSalary") Integer maxSalary,
                           Pageable pageable);
 
+    //truy van de thay doi trang thai job khi hêt han
+    @Modifying//truy vân danh dau thay doi du lieu
+    @Query("UPDATE Jobs j SET j.status = 'closed' WHERE j.status = 'opening' AND j.expDate < :today")
+    int closeExpiredJobs(@Param("today") LocalDate today);
 }

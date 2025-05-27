@@ -13,7 +13,6 @@ class InteractionRepository {
         {
           "applicant_id": applicantId,
           "job_id": jobId,
-          "status_apply": "not yet",
           "is_save": 1,
           "is_read": 0,
         },
@@ -72,24 +71,49 @@ class InteractionRepository {
   }
 
   static Future<List<Interaction>> fetchAllInteraction(int applicantId) async {
-    String url = 'http://10.0.2.2:8088/api/v1/interaction/$applicantId';
-    var respon = await http.get(Uri.parse(url));
-    var utf8Body = utf8.decode(respon.bodyBytes); //có dạng json utf8
-    //giải mã thành mảng string
-    List<dynamic> datas =
-        jsonDecode(utf8Body); //có dạng đối tượng Dart (như List, Map,...)
-    List<Interaction> dataObject = datas
-        .map((data) => Interaction.fromJson(data))
-        .toList(); //chuyển thành đối tượng application;
+    try {
+      String url = 'http://10.0.2.2:8088/api/v1/interaction/$applicantId';
+      var respon = await http.get(Uri.parse(url));
 
-    if (respon.statusCode == 200 || respon.statusCode == 201) {
-      print("length all interaction is: ${dataObject.length}");
+      if (respon.statusCode == 200 || respon.statusCode == 201) {
+        var utf8Body = utf8.decode(respon.bodyBytes);
+        List<dynamic> datas = jsonDecode(utf8Body);
+        List<Interaction> dataObject =
+            datas.map((data) => Interaction.fromJson(data)).toList();
+
+        print("length all interaction is: ${dataObject.length}");
+        return dataObject;
+      } else {
+        print('Fetch interaction failed: ${respon.statusCode}');
+        return [];
+      }
+    } catch (e) {
+      print('Exception in fetchAllInteraction: $e');
+      return [];
     }
-    print("in repo: fetch interaction is running");
-    return dataObject;
   }
 
-  static Future<void> updateRead() async {
-    ;
+  Future<bool> updateRead(int applicantId, int jobId) async {
+    //chuyển đổi trạng thái isRead mỗi khi nhấn
+    String url = 'http://10.0.2.2:8088/api/v1/interaction/read';
+    var respon = await http.put(
+      Uri.parse(url),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(
+        {
+          "applicant_id": applicantId,
+          "job_id": jobId,
+          "is_save": 0, //chỉ mang tính tượng trưng, chứ không được lưu.
+          "is_read": 1, //đánh dấu trạng thái đọc là 1
+        },
+      ),
+    );
+    if (respon.statusCode == 200 || respon.statusCode == 201) {
+      print(respon.body);
+      return true;
+    } else {
+      print("lỗi ${respon.statusCode} - ${respon.body}");
+      return false;
+    }
   }
 }

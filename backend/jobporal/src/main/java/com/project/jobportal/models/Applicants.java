@@ -28,9 +28,10 @@ public class Applicants {
 
     @Column(name = "working_time")
     private String workingTime;
-
-    @Column(name = "profession")
-    private String profession;
+    
+    @ManyToOne
+    @JoinColumn(name = "field")
+    private Categories field;
 
     @Column(name = "desired_position")
     private String desiredPosition;

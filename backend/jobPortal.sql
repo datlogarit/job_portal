@@ -78,6 +78,17 @@ CREATE TABLE jobs(
     FOREIGN KEY (posted_by) REFERENCES recruiters(id)
 );
 
+create TABLE invite (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    job_id BIGINT,
+    applicant_id BIGINT,
+    status TINYINT DEFAULT 0 COMMENT '0: chưa mời, 1: đã mời',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (job_id) REFERENCES jobs(id),
+    FOREIGN KEY (applicant_id) REFERENCES applicants(user_id)
+);
+
 CREATE TABLE reports(
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     reported_job BIGINT,

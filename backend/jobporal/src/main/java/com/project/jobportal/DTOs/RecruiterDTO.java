@@ -11,11 +11,11 @@ public class RecruiterDTO {
     @JsonProperty("company_id")
     private long companyId;
 
-    @JsonProperty("is_verify")
-    private int isVerify;
-
-    @JsonProperty("number_of_post")
-    private int numberOfPost;
+//    @JsonProperty("is_verify")
+//    private int isVerify;
+//
+//    @JsonProperty("number_of_post")
+//    private int numberOfPost;
 
     @JsonProperty("verify_id ")
     private int verifyId;

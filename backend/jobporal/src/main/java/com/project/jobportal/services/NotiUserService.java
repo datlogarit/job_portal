@@ -9,6 +9,7 @@ import com.project.jobportal.models.Users;
 import com.project.jobportal.repositories.INotiUserRepository;
 import com.project.jobportal.repositories.IUserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -47,6 +48,6 @@ public class NotiUserService implements INotiUserService {
     @Override
     public List<NotiUsers> getNotiByUserId(long userId) {
         Users users = iUserRepository.findById(userId).orElseThrow(() -> new RuntimeException("user not found"));
-        return iNotiUserRepository.findByIdUser(users);
+        return iNotiUserRepository.findByIdUser(users, Sort.by(Sort.Direction.DESC, "idNoti.createdAt"));
     }
 }

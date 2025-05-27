@@ -26,6 +26,17 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public void changePassword(long userId, String oldPassword, String newPassword) {
+        Users user = iUserRepository.findById(userId).orElseThrow(() -> new RuntimeException("use not found"));
+        if (!oldPassword.equals(user.getPassword())) {
+            throw new RuntimeException("Old password is not match!");
+        }
+
+        user.setPassword(newPassword);
+        iUserRepository.save(user);
+    }
+
+    @Override
     public Users getUserById(long id) {
         Users user = iUserRepository.findById(id).orElseThrow(() -> new RuntimeException("use not found"));
 
