@@ -21,4 +21,6 @@ public interface IRecruiterVerificationsService {
     RecruiterVerifications getRecruiterVerificationById(long id);
 
     List<RecruiterVerifications> getAllRecruiterVerification();
+
+    long countTotalAuthenticationPending();
 }

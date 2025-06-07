@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:job_portal/home.dart';
 
 class SearchAppBar extends StatelessWidget {
   @override
@@ -14,7 +15,10 @@ class SearchAppBar extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () {
-                  Navigator.of(context).pop();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Home()),
+                  );
                 },
                 child: Container(
                   padding: EdgeInsets.all(5),

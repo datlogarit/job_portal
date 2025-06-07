@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:job_portal/models/job_model.dart';
 import 'package:job_portal/providers/application_provider.dart';
-import 'package:job_portal/providers/user_provider.dart';
+import 'package:job_portal/providers/applicant_provider.dart';
 import 'package:job_portal/screens/application_page/application_page.dart';
 
 import 'package:job_portal/screens/report/report.dart';
@@ -165,10 +165,10 @@ class _JobDetailState extends State<JobDetail> {
 
   void getApplication() async {
     try {
-      final userProvider = context.read<UserProvider>();
+      final userProvider = context.read<ApplicantProvider>();
       final applicationProvider = context.read<ApplicationProvider>();
       await applicationProvider.fetchApplication(
-          userProvider.user.id!, widget.job.id!);
+          userProvider.applicant.userId!.id!, widget.job.id!);
       // print("ui: ${applicationProvider.application.statusApply}");
       setState(() {
         if (applicationProvider.application.statusApply == null) {

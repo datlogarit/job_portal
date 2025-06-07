@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ReportRepository {
-  static Future<bool> postJobApplication(
+  static Future<bool> sendReport(
       int reportedJob, int reporter, String reason) async {
     final url = Uri.parse('http://10.0.2.2:8088/api/v1/report');
 

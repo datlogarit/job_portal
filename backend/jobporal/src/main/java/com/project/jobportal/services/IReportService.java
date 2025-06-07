@@ -15,4 +15,6 @@ public interface IReportService {
     Reports getReportById(long id);
 
     void banUser(Long reportId);
+
+    long countTotalReportPending();
 }

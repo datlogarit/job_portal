@@ -4,7 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Applicants</title>
+    <title>Recruiter - application</title>
+    <link rel="icon" type="image/svg" href="./assets/images/vietnamworks_256x256.png" />
+
     <link rel="stylesheet" href="./assets/css/output.css">
     <link rel="stylesheet" href="./assets/css/navbar_addJob.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
@@ -99,7 +101,7 @@
             <li class="navbar-item flexbox-left">
                 <a class="navbar-item-inner flexbox-left text-white" href="./manager_job.html">
                     <div class="navbar-item-inner-icon-wrapper flexbox">
-                        <ion-icon name="briefcase-outline"></ion-icon>
+                        <ion-icon id="choosed" name="briefcase-outline"></ion-icon>
                     </div>
                     <span class="link-text">My Job</span>
                 </a>
@@ -117,17 +119,17 @@
                     <div class="navbar-item-inner-icon-wrapper flexbox">
                         <ion-icon name="log-out-outline"></ion-icon>
                     </div>
-                    <span class="link-text">Đăng xuất</span>
+                    <span class="link-text">Logout</span>
                 </a>
             </li>
         </ul>
     </nav>
 
     <div class="flex flex-col items-center ml-[80px] form_managerJob">
-        <div style="min-width: 900px; max-width: 1000px;" class="flex flex-col items-start w-full">
+        <div style="width: 950px;" class="flex flex-col items-start w-full">
             <h4 style="margin: 20px 0;" class="text-2xl font-bold text-center">My All Applicant</h4>
 
-            <div class="w-full flex flex-row md:flex-row justify-between gap-4">
+            <div class=" w-full flex flex-row md:flex-row justify-between gap-4">
                 <div class="flex flex-row !items-center">
                     <p style="margin-bottom: 0; margin-right: 4px; white-space: nowrap;" class="font-bold">Job title:
                     </p>
@@ -160,8 +162,7 @@
 
 
 
-        <div style="min-width: 900px; max-width: 1020px;"
-            class="bg-white my-4 mx-6  max-w-6xl p-6 rounded-xl shadow-md">
+        <div id="allView" style="width: 950px;" class="bg-white my-4 mx-6  max-w-6xl p-6 rounded-xl shadow-md">
             <!-- Table -->
             <div id="tableContent" class="overflow-x-auto">
                 <table class="w-full table-auto border-collapse">

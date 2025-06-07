@@ -8,10 +8,10 @@ class SearchCard extends StatelessWidget {
     return Container(
       height: 300,
       width: double.maxFinite,
-      margin: EdgeInsets.all(20),
+      margin: EdgeInsets.all(15),
       padding: EdgeInsets.symmetric(vertical: 35, horizontal: 25),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.elliptical(80, 28)),
+          borderRadius: BorderRadius.all(Radius.elliptical(50, 28)),
           image: DecorationImage(
               image: AssetImage("assets/images/search_bg.png"),
               fit: BoxFit.contain)),

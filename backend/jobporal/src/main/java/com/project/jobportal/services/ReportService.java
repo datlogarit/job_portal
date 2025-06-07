@@ -2,6 +2,9 @@ package com.project.jobportal.services;
 
 import java.util.List;
 
+import com.project.jobportal.repositories.IJobRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +23,7 @@ public class ReportService implements IReportService {
     private final IReportRepository iReportRepository;
     private final IApplicantRepository iApplicantRepository;
     private final JobService jobService;
+    private final IJobRepository iJobRepository;
     private final UserService userService;
 
     @Override
@@ -62,8 +66,15 @@ public class ReportService implements IReportService {
     @Override
     public void banUser(Long reportId) {
         Reports reports = iReportRepository.findById(reportId).orElseThrow(
-                () -> new RuntimeException("not foud"));
+                () -> new RuntimeException("report not found"));
         userService.updateStatusUser(reports.getReportedJob().getPostedBy().getId(), 0);//ban user
+        //ban cac job cua user tuong ung
+        Page<Jobs> jobs = jobService.getJobByRecruiterId(reports.getReportedJob().getPostedBy().getId()
+                , PageRequest.of(0, 100, Sort.by("createdAt").descending()));
+        for (Jobs job : jobs) {
+            job.setIsLock(1);
+            iJobRepository.save(job);
+        }
         updateStatusReport(reportId, 1);//update status
     }
 
@@ -74,5 +85,9 @@ public class ReportService implements IReportService {
         updateStatusReport(reportId, 1);//update status
     }
 
+    @Override
+    public long countTotalReportPending() {
+        return iReportRepository.countByIsSolve(0);
+    }
 
 }

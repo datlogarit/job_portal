@@ -20,10 +20,10 @@ public class CompanyService implements ICompanyService {
             throw new RuntimeException("Email already exists");
         }
         if (iCompanyRepository.existsByHotline(companyDTO.getHotline())) {
-            throw new RuntimeException("Hotline đã được sử dụng");
+            throw new RuntimeException("Hotline already exists");
         }
         if (iCompanyRepository.existsByName(companyDTO.getName())) {
-            throw new RuntimeException("Công ty này đã tồn tại");
+            throw new RuntimeException("Company already exists");
         }
         Companies newCompanies = Companies.builder()
                 .name(companyDTO.getName())

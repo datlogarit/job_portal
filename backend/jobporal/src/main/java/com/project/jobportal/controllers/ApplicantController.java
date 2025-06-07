@@ -50,17 +50,16 @@ public class ApplicantController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateInfoApplicant(@PathVariable long id,
-                                                 @RequestBody @Valid User_ApplicantDTO userApplicantDTO,
+                                                 @RequestBody User_ApplicantDTO userApplicantDTO,
                                                  BindingResult result) {
-        if (result.hasErrors()) {
-            List<String> listErr = result.getFieldErrors()
-                    .stream()
-                    .map(FieldError::getDefaultMessage)
-                    .toList();
-            return ResponseEntity.badRequest().body(listErr);
-        }
-        applicantService.updateApplicant(id, userApplicantDTO);
-        return ResponseEntity.ok("update info applicant successfully with id = " + id);
+//        if (result.hasErrors()) {
+//            List<String> listErr = result.getFieldErrors()
+//                    .stream()
+//                    .map(FieldError::getDefaultMessage)
+//                    .toList();
+//            return ResponseEntity.badRequest().body(listErr);
+//        }
+        return ResponseEntity.ok(applicantService.updateApplicant(id, userApplicantDTO));
     }
 
     @PutMapping(value = "resume/{applicantId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -121,5 +120,10 @@ public class ApplicantController {
     @GetMapping("/recommendApplicant/{jobId}")
     public ResponseEntity<?> recommendedApplicantByJobId(@PathVariable long jobId) throws Exception {
         return ResponseEntity.ok(applicantService.recommendApplicantByJobId(jobId));
+    }
+
+    @GetMapping("/numberApplicant")
+    public ResponseEntity<?> totalApplicant() throws Exception {
+        return ResponseEntity.ok(applicantService.countTotalApplicant());
     }
 }

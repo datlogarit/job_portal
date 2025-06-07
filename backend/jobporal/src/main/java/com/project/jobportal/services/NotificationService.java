@@ -55,8 +55,8 @@ public class NotificationService implements INotificationService {
             Jobs jobs = jobService.getJobById(interaction.getJobId().getId());// co job roi bay h check roi gui thong bao la xong
             if (jobs != null && jobs.getExpDate().compareTo(threeDaysLater) == 0) {
                 Notifications notifications = Notifications.builder()
-                        .title("Công việc sắp hết hạn")
-                        .content("Công việc " + jobs.getTitle() + " mà bạn đã lưu sắp hết hạn, nhanh tay ứng tuyển ngay")
+                        .title("Job posting is about to expire")
+                        .content("Job: " + jobs.getTitle() + " you saved is about to expire, apply now")
                         .jobRelated(jobs)
                         .categoryNotification("expired")
                         .build();

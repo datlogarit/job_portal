@@ -30,7 +30,7 @@ public class User_ApplicantDTO {
     private String urlAvatar;
 
     @JsonProperty("is_active")
-    private int isActive;
+    private Long isActive;
 
     private String resume;
 
@@ -39,7 +39,7 @@ public class User_ApplicantDTO {
     @JsonProperty("working_time")
     private String workingTime;
 
-    private long field;
+    private Long field;
 
     @JsonProperty("desired_position")
     private String desiredPosition;

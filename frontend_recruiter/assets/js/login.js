@@ -2,58 +2,73 @@
 import { loginRecruiter } from "./auth.js";
 
 const userOld = JSON.parse(localStorage.getItem("user"));
-
-if (userOld) {
-  await loginRecruiter(userOld.userId.email, userOld.userId.password);
-  const user = JSON.parse(localStorage.getItem("user"));
-
-  if (!user.companyId || !user.verifyId || user.verifyId?.status != 3) {
-    // Nếu chưa có công ty hoặc chưa xác thực
-    document.getElementById("modal").classList.remove("hidden");
-    document.getElementById("form_login").classList.add("hidden");
-    document.getElementById(
-      "name_text"
-    ).innerHTML = `Xin chào, ${user.userId.name}`;
-    if (user.companyId) {
-      document.getElementById(
-        "step_company"
-      ).outerHTML = `<span class="w-6 h-6 flex items-center justify-center mr-3">
-                            <i class="fas fa-check-circle text-[#2563eb] text-2xl"></i>
-                        </span>`;
+addEventListener("DOMContentLoaded", () => {
+  autoLogin();
+});
+async function autoLogin() {
+  if (userOld) {
+    try {
+      await loginRecruiter(userOld.userId.email, userOld.userId.password);
+    } catch (e) {
+      Swal.fire({
+        title: "Error",
+        text: `${e}`,
+        icon: "error",
+        showConfirmButton: true,
+        // timer: 1500,
+      });
+      return;
     }
-    if (user.verifyId) {
-      if (user.verifyId.status == 1) {
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if (!user.companyId || !user.verifyId || user.verifyId?.status != 3) {
+      // Nếu chưa có công ty hoặc chưa xác thực
+      document.getElementById("modal").classList.remove("hidden");
+      document.getElementById("form_login").classList.add("hidden");
+      document.getElementById(
+        "name_text"
+      ).innerHTML = `Hello, ${user.userId.name}`;
+      if (user.companyId) {
         document.getElementById(
-          "step_verify"
+          "step_company"
         ).outerHTML = `<span class="w-6 h-6 flex items-center justify-center mr-3">
                             <i class="fas fa-check-circle text-[#2563eb] text-2xl"></i>
                         </span>`;
-        document.getElementById(
-          "step_admin_review"
-        ).outerHTML = `<span class="w-6 h-6 flex items-center justify-center mr-3">
+      }
+      if (user.verifyId) {
+        if (user.verifyId.status == 1) {
+          document.getElementById(
+            "step_verify"
+          ).outerHTML = `<span class="w-6 h-6 flex items-center justify-center mr-3">
+                            <i class="fas fa-check-circle text-[#2563eb] text-2xl"></i>
+                        </span>`;
+          document.getElementById(
+            "step_admin_review"
+          ).outerHTML = `<span class="w-6 h-6 flex items-center justify-center mr-3">
                             <i class="fa-solid fa-clock text-[#2563eb] text-2xl"></i>
                         </span>`;
-      }
-      if (user.verifyId.status == 2) {
-        document.getElementById(
-          "step_verify"
-        ).outerHTML = `<span class="w-6 h-6 flex items-center justify-center mr-3">
+        }
+        if (user.verifyId.status == 2) {
+          document.getElementById(
+            "step_verify"
+          ).outerHTML = `<span class="w-6 h-6 flex items-center justify-center mr-3">
                             <i class="fas fa-check-circle text-[#2563eb] text-2xl"></i>
                         </span>`;
-        document.getElementById(
-          "step_admin_review"
-        ).outerHTML = `<span class="w-6 h-6 flex items-center justify-center mr-3">
+          document.getElementById(
+            "step_admin_review"
+          ).outerHTML = `<span class="w-6 h-6 flex items-center justify-center mr-3">
                             <i class="fa-solid fa-circle-xmark text-red-500 text-2xl"></i>
                         </span>`;
-        document.getElementById(
-          "step_admin_review_text"
-        ).outerHTML = `<span class="text-red-500 mr-1">Xét duyệt thất bại, bạn cần gửi lại thông tin xác minh</span>
+          document.getElementById(
+            "step_admin_review_text"
+          ).outerHTML = `<span class="text-red-500 mr-1">Authentication failed, please resend verification information</span>
 `;
+        }
       }
+    } else {
+      // Nếu đã đăng nhập → chuyển tới trang chính
+      window.location.href = "/index.html";
     }
-  } else {
-    // Nếu đã đăng nhập → chuyển tới trang chính
-    window.location.href = "/index.html";
   }
 }
 // Nếu chưa đăng nhập → ở lại trang login

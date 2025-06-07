@@ -59,4 +59,9 @@ public class ReportController {
         reportService.banPost(reportId);
         return ResponseEntity.ok("BAN post successfully");
     }
+
+    @GetMapping("/totalReportPending")
+    public ResponseEntity<?> totalReport() throws Exception {
+        return ResponseEntity.ok(reportService.countTotalReportPending());
+    }
 }

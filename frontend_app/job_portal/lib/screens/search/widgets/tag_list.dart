@@ -19,20 +19,6 @@ class _CatagoryListSearchState extends State<CatagoryListSearch> {
     getCategory();
   }
 
-  // void _scrollToCenter(int index) {
-  //   // Chiều rộng ước lượng mỗi tag
-  //   double itemWidth = 80;
-  //   double screenWidth = MediaQuery.of(context).size.width;
-
-  //   double offset = (index * itemWidth) - (screenWidth / 2) + (itemWidth / 2);
-
-  //   widget._scrollController.animateTo(
-  //     offset.clamp(0, widget._scrollController.position.maxScrollExtent),
-  //     duration: Duration(milliseconds: 300),
-  //     curve: Curves.easeInOut,
-  //   );
-  // }
-
   void getCategory() async {
     final categoryProvider = context.read<CategoryProvider>();
     await categoryProvider.getListCategory();
@@ -66,8 +52,6 @@ class _CatagoryListSearchState extends State<CatagoryListSearch> {
     'sản xuất',
     'thiết kế'
   ];
-  // int slectedItem = 0;
-  // final
   @override
   Widget build(BuildContext context) {
     final categoryProvider = context.watch<CategoryProvider>();
@@ -97,10 +81,7 @@ class _CatagoryListSearchState extends State<CatagoryListSearch> {
                     : Colors.white),
             child: Row(children: [
               Text(
-                formatText(
-                    // categoryProvider.listCategory[index].name!,
-                    listCategory[index],
-                    30),
+                formatText(listCategory[index], 30),
                 style: categoryProvider.selectedItem == index
                     ? TextStyle(color: Colors.white, fontSize: 13)
                     : TextStyle(color: Colors.black, fontSize: 13),

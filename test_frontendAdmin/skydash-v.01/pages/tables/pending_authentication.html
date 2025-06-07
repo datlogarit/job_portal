@@ -5,7 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Skydash Admin</title>
+    <title> Admin - Authentication</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="../../vendors/feather/feather.css">
     <link rel="stylesheet" href="../../vendors/ti-icons/css/themify-icons.css">
@@ -16,7 +16,7 @@
     <!-- inject:css -->
     <link rel="stylesheet" href="../../css/vertical-layout-light/style.css">
     <!-- endinject -->
-    <link rel="shortcut icon" href="../../images/favicon.png" />
+    <link rel="shortcut icon" href="../../images/vietnamworks_256x256.png" />
     <!-- ion-icon -->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
@@ -75,7 +75,7 @@
                 </button>
                 <ul class="navbar-nav mr-lg-2">
                     <li class="nav-item nav-search d-none d-lg-block">
-                        <div class="input-group">
+                        <!-- <div class="input-group">
                             <div class="input-group-prepend hover-cursor" id="navbar-search-icon">
                                 <span class="input-group-text" id="search">
                                     <i class="icon-search"></i>
@@ -83,7 +83,7 @@
                             </div>
                             <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now"
                                 aria-label="search" aria-describedby="search">
-                        </div>
+                        </div> -->
                     </li>
                 </ul>
                 <ul class="navbar-nav navbar-nav-right">
@@ -354,125 +354,56 @@
             </div>
             <!-- partial -->
             <!-- partial:../../partials/_sidebar.html -->
-            <nav class="sidebar sidebar-offcanvas" id="sidebar">
+            <div class="sidebar sidebar-offcanvas"></div>
+
+            <nav style="position: fixed;" class="sidebar sidebar-offcanvas" id="sidebar">
                 <ul class="nav">
                     <li class="nav-item">
                         <a class="nav-link" href="../../index.html">
-                            <i class="icon-grid menu-icon"></i>
+                            <ion-icon style="font-size: 19px;margin-right: 12px;" name="home-outline"></ion-icon>
                             <span class="menu-title">Home</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="collapse" href="#ui-verification" aria-expanded="false"
+                        <a class="nav-link" href="./pending_authentication.html" aria-expanded="false"
                             aria-controls="ui-verification">
                             <ion-icon style="font-size: 19px;margin-right: 12px;"
                                 name="shield-checkmark-outline"></ion-icon>
                             <span class="menu-title">Verification</span>
-                            <i class="menu-arrow"></i>
+                            <!-- <i class="menu-arrow"></i> -->
                         </a>
-                        <div class="collapse" id="ui-verification">
-                            <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link"
-                                        href="./pending_authentication.html">Pending</a>
-                                </li>
-                                <li class="nav-item"> <a class="nav-link"
-                                        href="./list_authenticated.html">Authenticated</a>
-                                </li>
-                            </ul>
-                        </div>
+
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="collapse" href="#report" aria-expanded="false"
-                            aria-controls="report">
+                        <a class="nav-link" href="./report-table.html" aria-expanded="false" aria-controls="report">
                             <!-- <i class="icon-layout menu-icon"></i> -->
                             <ion-icon style="font-size: 19px;margin-right: 12px;" name="flag-outline"></ion-icon>
                             <span class="menu-title">Reports</span>
-                            <i class="menu-arrow"></i>
+                            <!-- <i class="menu-arrow"></i> -->
                         </a>
-                        <div class="collapse" id="report">
-                            <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link" href="./report-table.html">All
-                                        report</a></li>
-                                <!-- <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdowns</a></li>
-                        <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li> -->
-                            </ul>
-                        </div>
+
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="collapse" href="#user" aria-expanded="false"
-                            aria-controls="user">
+                        <a class="nav-link" href="./user-manager.html" aria-expanded="false" aria-controls="user">
                             <!-- <i class="icon-layout menu-icon"></i> -->
                             <ion-icon style="font-size: 19px;margin-right: 12px;" name="people-outline"></ion-icon>
-                            <span class="menu-title">User</span>
-                            <i class="menu-arrow"></i>
+                            <span class="menu-title">Users management</span>
+                            <!-- <i class="menu-arrow"></i> -->
                         </a>
-                        <div class="collapse" id="user">
-                            <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link" href="./user-manager.html">All
-                                        user</a></li>
-                                <!-- <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdowns</a></li>
-                                  <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li> -->
-                            </ul>
-                        </div>
+
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="collapse" href="#post" aria-expanded="false"
-                            aria-controls="post">
+                        <a class="nav-link" href="./job-manager.html" aria-expanded="false" aria-controls="post">
                             <!-- <i class="icon-layout menu-icon"></i> -->
                             <ion-icon style="font-size: 19px;margin-right: 12px;"
                                 name="document-text-outline"></ion-icon>
-                            <span class="menu-title">Posted</span>
-                            <i class="menu-arrow"></i>
+                            <span class="menu-title">Jobs management</span>
+                            <!-- <i class="menu-arrow"></i> -->
                         </a>
-                        <div class="collapse" id="post">
-                            <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link" href="./job-manager.html">All
-                                        posted</a></li>
-                                <!-- <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdowns</a></li>
-                                            <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li> -->
-                            </ul>
-                        </div>
+
                     </li>
+
                     <!-- <li class="nav-item">
-                    <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                      <i class="icon-layout menu-icon"></i>
-                      <span class="menu-title">UI Elements</span>
-                      <i class="menu-arrow"></i>
-                    </a>
-                    <div class="collapse" id="ui-basic">
-                      <ul class="nav flex-column sub-menu">
-                        <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a></li>
-                        <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdowns</a></li>
-                        <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li>
-                      </ul>
-                    </div>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false"
-                      aria-controls="form-elements">
-                      <i class="icon-columns menu-icon"></i>
-                      <span class="menu-title">Form elements</span>
-                      <i class="menu-arrow"></i>
-                    </a>
-                    <div class="collapse" id="form-elements">
-                      <ul class="nav flex-column sub-menu">
-                        <li class="nav-item"><a class="nav-link" href="pages/forms/basic_elements.html">Basic Elements</a></li>
-                      </ul>
-                    </div>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
-                      <i class="icon-bar-graph menu-icon"></i>
-                      <span class="menu-title">Charts</span>
-                      <i class="menu-arrow"></i>
-                    </a>
-                    <div class="collapse" id="charts">
-                      <ul class="nav flex-column sub-menu">
-                        <li class="nav-item"> <a class="nav-link" href="pages/charts/chartjs.html">ChartJs</a></li>
-                      </ul>
-                    </div>
-                  </li> -->
-                    <li class="nav-item">
                         <a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false"
                             aria-controls="tables">
                             <i class="icon-grid-2 menu-icon"></i>
@@ -481,11 +412,11 @@
                         </a>
                         <div class="collapse" id="tables">
                             <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link" href="pages/tables/basic-table.html">Basic
+                                <li class="nav-item"> <a class="nav-link" href="./basic-table.html">Basic
                                         table</a></li>
                             </ul>
                         </div>
-                    </li>
+                    </li> -->
 
                 </ul>
             </nav>
@@ -537,251 +468,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody id="bodyTable">
-                                                <tr>
-                                                    <td class="py-1">
-                                                        <img style="border-radius: unset; width: 40px;height: fit-content;"
-                                                            src="https://www.vietnamworks.com/_next/image?url=https%3A%2F%2Fimages.vietnamworks.com%2Fpictureofcompany%2Fea%2F10374972.png&w=256&q=75"
-                                                            alt="image" />
-                                                    </td>
-                                                    <td>
-                                                        FPT Software
-                                                    </td>
-                                                    <td>
-                                                        10022001
-                                                    </td>
-                                                    <td>
-                                                        May 15, 2015
-                                                    </td>
-                                                    <td>
-                                                        Click here
-                                                    </td>
-                                                    <td>
-                                                        Click here
-                                                    </td>
-
-                                                    <td>
-                                                        <button type="button" class="btn btn-inverse-success btn-icon">
-                                                            <!-- <i class="ti-location-pin"></i> -->
-                                                            <ion-icon style="font-size: 18px;"
-                                                                name="checkmark-outline"></ion-icon>
-                                                        </button>
-                                                        <button type="button" class="btn btn-inverse-danger btn-icon">
-                                                            <!-- <i class="ti-email"></i> -->
-                                                            <ion-icon style="font-size: 18px;"
-                                                                name="close-outline"></ion-icon>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="py-1">
-                                                        <img style="border-radius: unset; width: 40px;height: fit-content;"
-                                                            src="https://www.vietnamworks.com/_next/image?url=https%3A%2F%2Fimages.vietnamworks.com%2Fpictureofcompany%2Fea%2F10374972.png&w=256&q=75"
-                                                            alt="image" />
-                                                    </td>
-                                                    <td>
-                                                        FPT Software
-                                                    </td>
-                                                    <td>
-                                                        10022001
-                                                    </td>
-                                                    <td>
-                                                        May 15, 2015
-                                                    </td>
-                                                    <td>
-                                                        Click here
-                                                    </td>
-                                                    <td>
-                                                        Click here
-                                                    </td>
-
-                                                    <td>
-                                                        <button type="button" class="btn btn-inverse-success btn-icon">
-                                                            <!-- <i class="ti-location-pin"></i> -->
-                                                            <ion-icon style="font-size: 18px;"
-                                                                name="checkmark-outline"></ion-icon>
-                                                        </button>
-                                                        <button type="button" class="btn btn-inverse-danger btn-icon">
-                                                            <!-- <i class="ti-email"></i> -->
-                                                            <ion-icon style="font-size: 18px;"
-                                                                name="close-outline"></ion-icon>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="py-1">
-                                                        <img style="border-radius: unset; width: 40px;height: fit-content;"
-                                                            src="https://www.vietnamworks.com/_next/image?url=https%3A%2F%2Fimages.vietnamworks.com%2Fpictureofcompany%2Fea%2F10374972.png&w=256&q=75"
-                                                            alt="image" />
-                                                    </td>
-                                                    <td>
-                                                        FPT Software
-                                                    </td>
-                                                    <td>
-                                                        10022001
-                                                    </td>
-                                                    <td>
-                                                        May 15, 2015
-                                                    </td>
-                                                    <td>
-                                                        Click here
-                                                    </td>
-                                                    <td>
-                                                        Click here
-                                                    </td>
-
-                                                    <td>
-                                                        <button type="button" class="btn btn-inverse-success btn-icon">
-                                                            <!-- <i class="ti-location-pin"></i> -->
-                                                            <ion-icon style="font-size: 18px;"
-                                                                name="checkmark-outline"></ion-icon>
-                                                        </button>
-                                                        <button type="button" class="btn btn-inverse-danger btn-icon">
-                                                            <!-- <i class="ti-email"></i> -->
-                                                            <ion-icon style="font-size: 18px;"
-                                                                name="close-outline"></ion-icon>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="py-1">
-                                                        <img style="border-radius: unset; width: 40px;height: fit-content;"
-                                                            src="https://www.vietnamworks.com/_next/image?url=https%3A%2F%2Fimages.vietnamworks.com%2Fpictureofcompany%2Fea%2F10374972.png&w=256&q=75"
-                                                            alt="image" />
-                                                    </td>
-                                                    <td>
-                                                        FPT Software
-                                                    </td>
-                                                    <td>
-                                                        10022001
-                                                    </td>
-                                                    <td>
-                                                        May 15, 2015
-                                                    </td>
-                                                    <td>
-                                                        Click here
-                                                    </td>
-                                                    <td>
-                                                        Click here
-                                                    </td>
-
-                                                    <td>
-                                                        <button type="button" class="btn btn-inverse-success btn-icon">
-                                                            <!-- <i class="ti-location-pin"></i> -->
-                                                            <ion-icon style="font-size: 18px;"
-                                                                name="checkmark-outline"></ion-icon>
-                                                        </button>
-                                                        <button type="button" class="btn btn-inverse-danger btn-icon">
-                                                            <!-- <i class="ti-email"></i> -->
-                                                            <ion-icon style="font-size: 18px;"
-                                                                name="close-outline"></ion-icon>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="py-1">
-                                                        <img style="border-radius: unset; width: 40px;height: fit-content;"
-                                                            src="https://www.vietnamworks.com/_next/image?url=https%3A%2F%2Fimages.vietnamworks.com%2Fpictureofcompany%2Fea%2F10374972.png&w=256&q=75"
-                                                            alt="image" />
-                                                    </td>
-                                                    <td>
-                                                        FPT Software
-                                                    </td>
-                                                    <td>
-                                                        10022001
-                                                    </td>
-                                                    <td>
-                                                        May 15, 2015
-                                                    </td>
-                                                    <td>
-                                                        Click here
-                                                    </td>
-                                                    <td>
-                                                        Click here
-                                                    </td>
-
-                                                    <td>
-                                                        <button type="button" class="btn btn-inverse-success btn-icon">
-                                                            <!-- <i class="ti-location-pin"></i> -->
-                                                            <ion-icon style="font-size: 18px;"
-                                                                name="checkmark-outline"></ion-icon>
-                                                        </button>
-                                                        <button type="button" class="btn btn-inverse-danger btn-icon">
-                                                            <!-- <i class="ti-email"></i> -->
-                                                            <ion-icon style="font-size: 18px;"
-                                                                name="close-outline"></ion-icon>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="py-1">
-                                                        <img style="border-radius: unset; width: 40px;height: fit-content;"
-                                                            src="https://www.vietnamworks.com/_next/image?url=https%3A%2F%2Fimages.vietnamworks.com%2Fpictureofcompany%2Fea%2F10374972.png&w=256&q=75"
-                                                            alt="image" />
-                                                    </td>
-                                                    <td>
-                                                        FPT Software
-                                                    </td>
-                                                    <td>
-                                                        10022001
-                                                    </td>
-                                                    <td>
-                                                        May 15, 2015
-                                                    </td>
-                                                    <td>
-                                                        Click here
-                                                    </td>
-                                                    <td>
-                                                        Click here
-                                                    </td>
-
-                                                    <td>
-                                                        <button type="button" class="btn btn-inverse-success btn-icon">
-                                                            <!-- <i class="ti-location-pin"></i> -->
-                                                            <ion-icon style="font-size: 18px;"
-                                                                name="checkmark-outline"></ion-icon>
-                                                        </button>
-                                                        <button type="button" class="btn btn-inverse-danger btn-icon">
-                                                            <!-- <i class="ti-email"></i> -->
-                                                            <ion-icon style="font-size: 18px;"
-                                                                name="close-outline"></ion-icon>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="py-1">
-                                                        <img style="border-radius: unset; width: 40px;height: fit-content;"
-                                                            src="https://www.vietnamworks.com/_next/image?url=https%3A%2F%2Fimages.vietnamworks.com%2Fpictureofcompany%2Fea%2F10374972.png&w=256&q=75"
-                                                            alt="image" />
-                                                    </td>
-                                                    <td>
-                                                        FPT Software
-                                                    </td>
-                                                    <td>
-                                                        10022001
-                                                    </td>
-                                                    <td>
-                                                        May 15, 2015
-                                                    </td>
-                                                    <td>
-                                                        Click here
-                                                    </td>
-                                                    <td>
-                                                        Click here
-                                                    </td>
-
-                                                    <td>
-                                                        <button type="button" class="btn btn-inverse-success btn-icon">
-                                                            <!-- <i class="ti-location-pin"></i> -->
-                                                            <ion-icon style="font-size: 18px;"
-                                                                name="checkmark-outline"></ion-icon>
-                                                        </button>
-                                                        <button type="button" class="btn btn-inverse-danger btn-icon">
-                                                            <!-- <i class="ti-email"></i> -->
-                                                            <ion-icon style="font-size: 18px;"
-                                                                name="close-outline"></ion-icon>
-                                                        </button>
-                                                    </td>
-                                                </tr>
+                                                <!-- render with js -->
                                             </tbody>
                                         </table>
                                     </div>

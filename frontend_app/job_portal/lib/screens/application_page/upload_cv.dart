@@ -106,7 +106,7 @@ class _UploadCvState extends State<UploadCv> {
                         SizedBox(
                           width: 5,
                         ),
-                        Text("Tải lên CV của bạn",
+                        Text("Upload your CV",
                             style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold))
@@ -116,7 +116,7 @@ class _UploadCvState extends State<UploadCv> {
                       height: 3,
                     ),
                     Text(
-                      "(Hỗ trợ *.pdf, *.doc, *.docx và < 5MB)",
+                      "(Support *.pdf, *.doc, *.docx and has size < 5MB)",
                       style: TextStyle(
                           fontSize: 13,
                           color: const Color.fromRGBO(0, 0, 0, .5)),
@@ -138,7 +138,7 @@ class _UploadCvState extends State<UploadCv> {
         height: 15,
       ),
       Text(
-        "Hồ sơ ứng tuyển",
+        "Application infomation",
         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
       ),
       _buildFileInfo()

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 public class RecruiterController {
     private final RecruiterService recruiterService;
 
-    @PostMapping("login/recruiter")
+    @PostMapping("login")
     public ResponseEntity<?> login(@RequestBody UserDTO userDTO) {
         return ResponseEntity.ok(recruiterService.login(userDTO.getEmail(), userDTO.getPassword()));
     }
@@ -51,4 +51,8 @@ public class RecruiterController {
         return ResponseEntity.ok(recruiterService.getAllRecruiters(pageRequest).getContent());
     }
 
+    @GetMapping("/numberRecruiter")
+    public ResponseEntity<?> totalRecruiter() throws Exception {
+        return ResponseEntity.ok(recruiterService.countTotalRecruiter());
+    }
 }

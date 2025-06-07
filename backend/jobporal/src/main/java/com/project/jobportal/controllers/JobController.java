@@ -71,6 +71,40 @@ public class JobController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/allJobAdmin")
+    public ResponseEntity<?> getAllJobAdmin(
+            @RequestParam("page") int page,
+            @RequestParam("limit") int limit
+    ) {
+        Page<Jobs> jobsPage;
+
+        PageRequest pageRequest = PageRequest.of(page, limit, Sort.by("id").ascending());
+        jobsPage = jobService.getAllJobAdmin(pageRequest);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("job", jobsPage.getContent());
+        response.put("total Page", jobsPage.getTotalPages());
+        response.put("total Element", jobsPage.getTotalElements());
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/searchJobAdmin")
+    public ResponseEntity<?> getJobsAdmin(
+            @RequestParam("page") int page,
+            @RequestParam("limit") int limit,
+            @RequestParam(value = "search_keyword", required = false) String SearchKeyword
+    ) {
+        Page<Jobs> jobsPage;
+        if (SearchKeyword != null && !SearchKeyword.isEmpty()) {
+            PageRequest pageRequest = PageRequest.of(page, limit, Sort.by("id").ascending());
+            jobsPage = jobService.searchJobAdmin(SearchKeyword, pageRequest);
+        } else {
+            PageRequest pageRequest = PageRequest.of(page, limit, Sort.by("id").ascending());
+            jobsPage = jobService.getAllJob(pageRequest);
+        }
+        return ResponseEntity.ok(jobsPage.getContent());
+    }
+
     // ứng với chức năng tìm kiếm, chia job theo category, hiển thị job theo company
     @GetMapping("") // http:localhost:8088/api/v1/job?page=1&limit=10&keyword=frontend
     public ResponseEntity<?> getJobs(
@@ -96,8 +130,7 @@ public class JobController {
         int totalPage = jobsPage.getTotalPages();// lấy ra số trang để bắn cho frontend
         return ResponseEntity.ok(jobsPage.getContent());
     }
-
-
+    
     @GetMapping("filter")
     public ResponseEntity<?> getJobsByFilter(
             @RequestParam("page") int page,
@@ -123,6 +156,17 @@ public class JobController {
     @PostMapping("/recommendation")
     public ResponseEntity<?> getRecommendationJob(@RequestBody RecommenInputDTO recommenInputDTO) throws Exception {
         return ResponseEntity.ok(jobService.getRecommendedJob(recommenInputDTO));
+    }
+
+    @PostMapping("/recommendation/split")
+    public ResponseEntity<?> getRecommendationJobSplit(@RequestBody RecommenInputDTO recommenInputDTO) throws Exception {
+        return ResponseEntity.ok(jobService.getRecommendedJobSplit(recommenInputDTO));
+    }
+
+    @PutMapping("/lock/{jobId}")
+    public ResponseEntity<?> changeLockJob(@PathVariable("jobId") Long jobId, @RequestParam("isLock") Long isLock) throws Exception {
+        jobService.updateLockJob(jobId, isLock);
+        return ResponseEntity.ok("update successfully");
     }
 
     //Xóa job

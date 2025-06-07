@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:job_portal/providers/user_provider.dart';
+import 'package:job_portal/providers/applicant_provider.dart';
 import 'package:provider/provider.dart';
 
 class RadioList extends StatefulWidget {
@@ -14,20 +14,20 @@ class _RadioListState extends State<RadioList> {
   final TextEditingController //dùng quản lý văn bản nhập vào, lấy nội dung
       _controller = TextEditingController();
   String _selectedValue =
-      'Việc làm có dấu hiệu lừa đảo'; //các biến quản lý trạng thái của wiget, hiển thị UI
+      ''; //các biến quản lý trạng thái của wiget, hiển thị UI
   bool visibleTextField = false;
   @override
   Widget build(BuildContext context) {
-    final userProvider = context.watch<UserProvider>();
+    final userProvider = context.watch<ApplicantProvider>();
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         RadioListTile(
-          title: Text("Việc làm có dấu hiệu lừa đảo"),
+          title: Text("Jobs with signs of fraud"),
           activeColor: Theme.of(context).primaryColor,
-          value: 'Việc làm có dấu hiệu lừa đảo', //là giá trị của lựa chọn
+          value: 'Jobs with signs of fraud', //là giá trị của lựa chọn
           groupValue: _selectedValue, // biến kiểm tra radio nào đang được chọn
           onChanged: (value) {
             //onChanged sẽ lấy giá trị value bên trên
@@ -45,9 +45,9 @@ class _RadioListState extends State<RadioList> {
               vertical: -4), // Giảm khoảng cách giữa các RadioListTile
         ),
         RadioListTile(
-          title: Text("Thông tin không chính xác"),
+          title: Text("Incorrect job posting information"),
           activeColor: Theme.of(context).primaryColor,
-          value: 'Thông tin không chính xác',
+          value: 'Incorrect job posting information',
           groupValue: _selectedValue,
           onChanged: (value) {
             setState(
@@ -64,8 +64,8 @@ class _RadioListState extends State<RadioList> {
               vertical: -4), // Giảm khoảng cách giữa các RadioListTile
         ),
         RadioListTile(
-          title: Text("Lý do khác"),
-          value: "Lý do khác",
+          title: Text("Other reasons"),
+          value: "Other reasons",
           groupValue: _selectedValue,
           activeColor: Theme.of(context).primaryColor,
           contentPadding: EdgeInsets.zero,
@@ -96,8 +96,8 @@ class _RadioListState extends State<RadioList> {
                       widget.controller.text = _controller.text;
                     });
                   },
-                  minLines: 4, // Tăng số dòng tối thiểu (chiều cao tăng)
-                  maxLines: 4, // Giới hạn số dòng tối đa
+                  minLines: 5, // Tăng số dòng tối thiểu (chiều cao tăng)
+                  maxLines: 5, // Giới hạn số dòng tối đa
                   textAlignVertical: TextAlignVertical.center,
                   decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
@@ -111,7 +111,7 @@ class _RadioListState extends State<RadioList> {
                           color: Theme.of(context).primaryColor, width: 1),
                     ),
                     // hintText: "Nhập lý do khác của bạn",
-                    hintText: "Nhập lý do khác của bạn",
+                    hintText: "Enter your reason",
                     hintStyle: TextStyle(
                         color: const Color.fromRGBO(158, 158, 158, .9),
                         fontSize: 15),

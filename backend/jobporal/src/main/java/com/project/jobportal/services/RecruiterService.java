@@ -4,6 +4,7 @@ import com.project.jobportal.DTOs.User_RecruiterDTO;
 import com.project.jobportal.models.RecruiterVerifications;
 import com.project.jobportal.repositories.ICompanyRepository;
 import com.project.jobportal.repositories.IRecruiterVerificationRepository;
+import com.project.jobportal.security.PasswordUtil;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -29,29 +30,43 @@ public class RecruiterService implements IRecruiterService {
 
     @Override
     public Recruiters login(String email, String password) {
-        Recruiters recruiters = iRecruiterRepository.login(email, password);
+        Recruiters recruiters = iRecruiterRepository.findByEmail(email);
         if (recruiters == null) {
-            throw new RuntimeException("Tài khoản hoặc mật khẩu không đúng");
+            throw new RuntimeException("Email or password not match");
         }
-
+        if (!PasswordUtil.matchPassword(password, recruiters.getUserId().getPassword())) {
+            throw new RuntimeException("Email or password not match");
+        }
+        if (recruiters.getUserId().getIsActive() == 0) {
+            throw new RuntimeException("This account has been locked");
+        }
         return recruiters;
+//        PasswordUtil.matchPassword(password, user.getPassword());
+//        Recruiters recruiters = iRecruiterRepository.login(email, password);
+//        if (recruiters == null) {
+//            throw new RuntimeException("Email or password not match");
+//        }
+//        if (recruiters.getUserId().getIsActive() == 0) {
+//            throw new RuntimeException("This account has been locked");
+//        }
+//        return recruiters;
     }
 
     @Override
     public void createRecruiter(User_RecruiterDTO userRecruiter) {
-
+        String hashedPassword = PasswordUtil.hashPassword(userRecruiter.getPassword());
         if (iRecruiterRepository.findByEmail(userRecruiter.getEmail()) != null) {
             throw new RuntimeException("Email đã tồn tại");
         }
         Users newUser = Users.builder()
                 .email(userRecruiter.getEmail())
-                .password(userRecruiter.getPassword())
+                .password(hashedPassword)
                 .name(userRecruiter.getName())
                 .phoneNumber(userRecruiter.getPhoneNumber())
                 .dob(userRecruiter.getDob())
                 .role("recruiter")
                 .urlAvatar("11651387_recruiter_avt.png")
-                .isActive(userRecruiter.getIsActive())
+                .isActive(1)
                 .build();
 
         Recruiters recruiters = Recruiters.builder()
@@ -145,5 +160,10 @@ public class RecruiterService implements IRecruiterService {
 
     public List<Recruiters> findRecruiterVerified() {
         return iRecruiterRepository.findByVerifyIdIsNotNullAndVerifyIdStatus(1, Sort.by(Sort.Direction.DESC, "verifyId.createdAt"));
+    }
+
+    @Override
+    public long countTotalRecruiter() {
+        return iRecruiterRepository.count();
     }
 }

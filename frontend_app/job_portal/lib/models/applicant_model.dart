@@ -1,3 +1,4 @@
+import 'package:job_portal/models/category_model.dart';
 import 'package:job_portal/models/user_model.dart';
 
 class Applicant {
@@ -6,7 +7,7 @@ class Applicant {
   String? resume;
   String? gender;
   String? workingTime;
-  String? profession;
+  Category? field;
   String? desiredPosition;
   String? desiredLocation;
   String? workExperience;
@@ -17,7 +18,7 @@ class Applicant {
       this.resume,
       this.gender,
       this.workingTime,
-      this.profession,
+      this.field,
       this.desiredPosition,
       this.desiredLocation,
       this.workExperience});
@@ -28,7 +29,7 @@ class Applicant {
     resume = json['resume'];
     gender = json['gender'];
     workingTime = json['workingTime'];
-    profession = json['profession'];
+    field = json['field'] != null ? new Category.fromJson(json['field']) : null;
     desiredPosition = json['desiredPosition'];
     desiredLocation = json['desiredLocation'];
     workExperience = json['workExperience'];
@@ -43,7 +44,9 @@ class Applicant {
     data['resume'] = this.resume;
     data['gender'] = this.gender;
     data['workingTime'] = this.workingTime;
-    data['profession'] = this.profession;
+    if (this.field != null) {
+      data['field'] = this.field!.toJson();
+    }
     data['desiredPosition'] = this.desiredPosition;
     data['desiredLocation'] = this.desiredLocation;
     data['workExperience'] = this.workExperience;

@@ -25,4 +25,6 @@ public interface IRecruiterService {
     Recruiters getRecruiter(long id);
 
     Page<Recruiters> getAllRecruiters(PageRequest pageRequest);
+
+    long countTotalRecruiter();
 }

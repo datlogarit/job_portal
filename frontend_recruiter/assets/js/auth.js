@@ -2,7 +2,7 @@
 import { post } from "./api.js";
 
 export async function loginRecruiter(email, password) {
-  const user = await post("/recruiter/login/recruiter", { email, password });
+  const user = await post("/recruiter/login", { email, password });
   localStorage.setItem("user", JSON.stringify(user));
   return user;
 }

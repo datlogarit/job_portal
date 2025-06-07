@@ -55,5 +55,5 @@ String formatLocation(String location) {
 
 String convertDate(String rawDate) {
   DateTime date = DateTime.parse(rawDate);
-  return DateFormat('dd/MM/yyyy').format(date);
+  return DateFormat('dd/MM/yyyy HH:mm').format(date);
 }

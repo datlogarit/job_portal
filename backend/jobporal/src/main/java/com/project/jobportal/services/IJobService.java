@@ -5,6 +5,7 @@ import com.project.jobportal.DTOs.RecommenInputDTO;
 import com.project.jobportal.models.Applicants;
 import com.project.jobportal.models.Jobs;
 
+import com.project.jobportal.response.SplitRcmResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +30,11 @@ public interface IJobService {
 
     Page<Jobs> getAllJob(PageRequest pageRequest);
 
+    Page<Jobs> getAllJobAdmin(PageRequest pageRequest);
+
     Page<Jobs> searchJob(String search_title, PageRequest pageRequest);
+
+    Page<Jobs> searchJobAdmin(String SearchKeyword, PageRequest pageRequest);
 
     Page<Jobs> searchJobByCategory(Long categoryId, PageRequest pageRequest);
 
@@ -43,4 +48,6 @@ public interface IJobService {
 //    List<Applicants> searchSameApplicantByJobId(long jobId) throws Exception;
 
     List<Jobs> getRecommendedJob(RecommenInputDTO recommenInputDTO) throws Exception;
+
+    SplitRcmResponse getRecommendedJobSplit(RecommenInputDTO recommenInputDTO) throws Exception;
 }

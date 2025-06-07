@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:job_portal/models/user_model.dart';
-import 'package:job_portal/providers/user_provider.dart';
+import 'package:job_portal/providers/applicant_provider.dart';
 import 'package:job_portal/screens/job_interaction/job_interaction.dart';
 import 'package:job_portal/screens/home/widgets/home_app_bar.dart';
 import 'package:job_portal/screens/home/widgets/job_list.dart';

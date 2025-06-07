@@ -14,11 +14,13 @@ public interface IApplicantService {
 
     void crateApplicant(User_ApplicantDTO applicantDTO);
 
-    void updateApplicant(long id, User_ApplicantDTO applicantDTO);
+    Applicants updateApplicant(long id, User_ApplicantDTO applicantDTO);
 
     Applicants getApplicantById(long id);
 
     List<RecommendApplicantResponse> recommendApplicantByJobId(long jobId) throws Exception;
 
     Page<Applicants> getAllApplicant(PageRequest pageRequest);
+
+    long countTotalApplicant();
 }

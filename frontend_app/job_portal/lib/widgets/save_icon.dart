@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:job_portal/models/job_model.dart';
 import 'package:job_portal/providers/interaction_provider.dart';
-import 'package:job_portal/providers/user_provider.dart';
+import 'package:job_portal/providers/applicant_provider.dart';
 import 'package:provider/provider.dart';
 
 class SaveIcon extends StatefulWidget {
@@ -22,12 +22,12 @@ class _SaveIconState extends State<SaveIcon> {
   }
 
   void getInteraction() async {
-    final userProvider = context.read<UserProvider>();
+    final userProvider = context.read<ApplicantProvider>();
     final interactionProvider = context.read<InteractionProvider>();
 
     try {
       await interactionProvider.fetchInteraction(
-        userProvider.user.id!,
+        userProvider.applicant.userId!.id!,
         widget.job.id!,
       );
 
@@ -48,14 +48,14 @@ class _SaveIconState extends State<SaveIcon> {
     setState(() {
       isSave = !isSave;
       final interactionProvider = context.read<InteractionProvider>();
-      final userProvider = context.read<UserProvider>();
+      final userProvider = context.read<ApplicantProvider>();
 
       interactionProvider.toggleIsSave(
-          userProvider.user.id!, widget.job.id!, isSave);
+          userProvider.applicant.userId!.id!, widget.job.id!, isSave);
     });
 
     Fluttertoast.showToast(
-      msg: isSave ? "Lưu tin thành công" : "Đã bỏ lưu tin",
+      msg: isSave ? "Successfully saved" : "Unsaved",
       toastLength: Toast.LENGTH_LONG,
       gravity: ToastGravity.BOTTOM,
       timeInSecForIosWeb: 1,

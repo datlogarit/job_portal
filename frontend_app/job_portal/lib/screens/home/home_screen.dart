@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:job_portal/screens/home/widgets/home_app_bar.dart';
 import 'package:job_portal/screens/home/widgets/job_list.dart';
 import 'package:job_portal/screens/home/widgets/search_card.dart';
@@ -32,9 +31,26 @@ class HomePage extends StatelessWidget {
             child: Column(
               children: [
                 HomeAppBar(),
+                // Expanded(
+                //   child: SingleChildScrollView(
+                //     child: Column(
+                // children: [
                 SearchCard(),
+                SizedBox(
+                  height: 15,
+                ),
                 TagList(),
                 JobList(),
+                // ContentBasedJob(),
+                // CfJob()
+                //       ],
+                //     ),
+                //   ),
+                // )
+                //       ],
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           )

@@ -2,10 +2,14 @@ package com.project.jobportal.controllers;
 
 
 import com.project.jobportal.DTOs.UserDTO;
+import com.project.jobportal.models.Users;
 import com.project.jobportal.services.UserService;
 import com.project.jobportal.utilities.HandleFile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.UrlResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -107,6 +112,36 @@ public class UserController {
     public ResponseEntity<?> getUserById(@PathVariable long id) {
 
         return ResponseEntity.ok(userService.getUserById(id));
+    }
+
+    @GetMapping("/findByEmail/{email}")
+    public ResponseEntity<?> getUserByEmail(@PathVariable String email) {
+        return ResponseEntity.ok(userService.getUserByEmail(email));
+    }
+
+    @GetMapping("")
+    public ResponseEntity<?> getAllUser(
+            @RequestParam("page") int page,
+            @RequestParam("limit") int limit) {
+        PageRequest pageRequest = PageRequest.of(page, limit, Sort.by("id").ascending());
+        Page<Users> usersPage = userService.getAllUser(pageRequest);
+        Map<String, Object> response = new HashMap<>();
+        response.put("users", usersPage.getContent());
+        response.put("total Page", usersPage.getTotalPages());
+        response.put("total Element", usersPage.getTotalElements());
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("BanUser/{userId}")
+    public ResponseEntity<?> BanUser(@PathVariable("userId") long userId) {
+        userService.BANUser(userId);
+        return ResponseEntity.ok("Ban successfully");
+    }
+
+    @PutMapping("UNBanUser/{userId}")
+    public ResponseEntity<?> UnBanUser(@PathVariable("userId") long userId) {
+        userService.UnBANUser(userId);
+        return ResponseEntity.ok("Ban successfully");
     }
 }
 

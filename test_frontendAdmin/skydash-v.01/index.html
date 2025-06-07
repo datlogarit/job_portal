@@ -5,7 +5,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Skydash Admin</title>
+  <title>Admin - Home</title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="vendors/feather/feather.css">
   <link rel="stylesheet" href="vendors/ti-icons/css/themify-icons.css">
@@ -19,7 +19,7 @@
   <!-- inject:css -->
   <link rel="stylesheet" href="css/vertical-layout-light/style.css">
   <!-- endinject -->
-  <link rel="shortcut icon" href="images/favicon.png" />
+  <link rel="shortcut icon" href="images/vietnamworks_256x256.png" />
   <!-- ion icon -->
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
@@ -41,13 +41,13 @@
         <ul class="navbar-nav mr-lg-2">
           <li class="nav-item nav-search d-none d-lg-block">
             <div class="input-group">
-              <div class="input-group-prepend hover-cursor" id="navbar-search-icon">
+              <!-- <div class="input-group-prepend hover-cursor" id="navbar-search-icon">
                 <span class="input-group-text" id="search">
                   <i class="icon-search"></i>
                 </span>
-              </div>
-              <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now"
-                aria-label="search" aria-describedby="search">
+              </div> -->
+              <!-- <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now"
+                aria-label="search" aria-describedby="search"> -->
             </div>
           </li>
         </ul>
@@ -106,7 +106,7 @@
             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
               <img src="images/faces/face0.png" alt="profile" />
             </a>
-            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+            <!-- <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
               <a class="dropdown-item">
                 <i class="ti-settings text-primary"></i>
                 Settings
@@ -115,7 +115,7 @@
                 <i class="ti-power-off text-primary"></i>
                 Logout
               </a>
-            </div>
+            </div> -->
           </li>
           <!-- <li class="nav-item nav-settings d-none d-lg-flex">
             <a class="nav-link" href="#">
@@ -314,70 +314,43 @@
         <ul class="nav">
           <li class="nav-item">
             <a class="nav-link" href="index.html">
-              <i class="icon-grid menu-icon"></i>
+              <ion-icon style="font-size: 19px;margin-right: 12px;" name="home-outline"></ion-icon>
               <span class="menu-title">Home</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-verification" aria-expanded="false"
+            <a class="nav-link" href="./pages/tables/pending_authentication.html" aria-expanded="false"
               aria-controls="ui-verification">
               <ion-icon style="font-size: 19px;margin-right: 12px;" name="shield-checkmark-outline"></ion-icon>
               <span class="menu-title">Verification</span>
-              <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="ui-verification">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/tables/pending_authentication.html">Pending</a>
-                </li>
-                <li class="nav-item"> <a class="nav-link" href="pages/tables/list_authenticated.html">Authenticated</a>
-                </li>
-              </ul>
-            </div>
+
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#report" aria-expanded="false" aria-controls="report">
+            <a class="nav-link" href="./pages/tables/report-table.html" aria-expanded="false" aria-controls="report">
               <!-- <i class="icon-layout menu-icon"></i> -->
               <ion-icon style="font-size: 19px;margin-right: 12px;" name="flag-outline"></ion-icon>
               <span class="menu-title">Reports</span>
-              <i class="menu-arrow"></i>
+              <!-- <i class="menu-arrow"></i> -->
             </a>
-            <div class="collapse" id="report">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/tables/report-table.html">All report</a></li>
-                <!-- <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdowns</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li> -->
-              </ul>
-            </div>
+
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#user" aria-expanded="false" aria-controls="user">
+            <a class="nav-link" href="pages/tables/user-manager.html" aria-expanded="false" aria-controls="user">
               <!-- <i class="icon-layout menu-icon"></i> -->
               <ion-icon style="font-size: 19px;margin-right: 12px;" name="people-outline"></ion-icon>
-              <span class="menu-title">User</span>
-              <i class="menu-arrow"></i>
+              <span class="menu-title">Users management</span>
+              <!-- <i class="menu-arrow"></i> -->
             </a>
-            <div class="collapse" id="user">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/tables/user-manager.html">All user</a></li>
-                <!-- <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdowns</a></li>
-                          <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li> -->
-              </ul>
-            </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#post" aria-expanded="false" aria-controls="post">
+            <a class="nav-link" href="pages/tables/job-manager.html" aria-expanded="false" aria-controls="post">
               <!-- <i class="icon-layout menu-icon"></i> -->
               <ion-icon style="font-size: 19px;margin-right: 12px;" name="document-text-outline"></ion-icon>
-              <span class="menu-title">Posted</span>
-              <i class="menu-arrow"></i>
+              <span class="menu-title">Jobs management</span>
+              <!-- <i class="menu-arrow"></i> -->
             </a>
-            <div class="collapse" id="post">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/tables/job-manager.html">All posted</a></li>
-                <!-- <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdowns</a></li>
-                                    <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li> -->
-              </ul>
-            </div>
+
           </li>
           <!-- <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
@@ -418,7 +391,7 @@
               </ul>
             </div>
           </li> -->
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
               <i class="icon-grid-2 menu-icon"></i>
               <span class="menu-title">Tables</span>
@@ -429,7 +402,7 @@
                 <li class="nav-item"> <a class="nav-link" href="pages/tables/basic-table.html">Basic table</a></li>
               </ul>
             </div>
-          </li>
+          </li> -->
 
         </ul>
       </nav>
@@ -462,18 +435,18 @@
                 <div class="col-md-6 mb-4 stretch-card transparent">
                   <div class="card card-tale">
                     <div class="card-body">
-                      <p class="mb-4">Today’s Bookings</p>
-                      <p class="fs-30 mb-2">4006</p>
-                      <p>10.00% (30 days)</p>
+                      <p class="mb-4">Total applicant</p>
+                      <p id="numberApplicant" class="fs-30 mb-2"></p>
+                      <p id="percentApplicant">10.00%</p>
                     </div>
                   </div>
                 </div>
                 <div class="col-md-6 mb-4 stretch-card transparent">
                   <div class="card card-dark-blue">
                     <div class="card-body">
-                      <p class="mb-4">Total Bookings</p>
-                      <p class="fs-30 mb-2">61344</p>
-                      <p>22.00% (30 days)</p>
+                      <p class="mb-4">Total recruiter</p>
+                      <p id="numberReruiter" class="fs-30 mb-2"></p>
+                      <p id="percentRecruiter">22.00% </p>
                     </div>
                   </div>
                 </div>
@@ -482,18 +455,18 @@
                 <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
                   <div class="card card-light-blue">
                     <div class="card-body">
-                      <p class="mb-4">Number of Meetings</p>
-                      <p class="fs-30 mb-2">34040</p>
-                      <p>2.00% (30 days)</p>
+                      <p class="mb-4">Authentication requests</p>
+                      <p id="numberAuthentication" class="fs-30 mb-2"></p>
+
                     </div>
                   </div>
                 </div>
                 <div class="col-md-6 stretch-card transparent">
                   <div class="card card-light-danger">
                     <div class="card-body">
-                      <p class="mb-4">Number of Clients</p>
-                      <p class="fs-30 mb-2">47033</p>
-                      <p>0.22% (30 days)</p>
+                      <p class="mb-4">Number of reports</p>
+                      <p id="numberReport" class="fs-30 mb-2"></p>
+
                     </div>
                   </div>
                 </div>
@@ -532,6 +505,46 @@
   <script src="js/dashboard.js"></script>
   <script src="js/Chart.roundedBarCharts.js"></script>
   <!-- End custom js for this page-->
+  <script>
+    async function loadData() {
+      let numberApplicant = document.getElementById("numberApplicant");
+      let numberRecruiter = document.getElementById("numberReruiter");
+      let numberAuthentication = document.getElementById("numberAuthentication");
+      let numberReport = document.getElementById("numberReport");
+      let percentApplicant = document.getElementById("percentApplicant");
+      let percentRecruiter = document.getElementById("percentRecruiter");
+
+      try {
+        const [resApplicant, resRecruiter, resAuth, resReport] = await Promise.all([
+          fetch("http://localhost:8088/api/v1/applicant/numberApplicant"),
+          fetch("http://localhost:8088/api/v1/recruiter/numberRecruiter"),
+          fetch("http://localhost:8088/api/v1/recruiterVerification/totalAuthenticationPending"),
+          fetch("http://localhost:8088/api/v1/report/totalReportPending")
+        ]);
+
+        const totalApplicant = parseInt(await resApplicant.text());
+        const totalRecruiter = parseInt(await resRecruiter.text());
+        const totalAuth = await resAuth.text();
+        const totalReport = await resReport.text();
+
+        numberApplicant.innerHTML = totalApplicant;
+        numberRecruiter.innerHTML = totalRecruiter;
+        numberAuthentication.innerHTML = totalAuth;
+        numberReport.innerHTML = totalReport;
+
+        const percentApp = ((totalApplicant / (totalApplicant + totalRecruiter)) * 100).toFixed(2);
+        percentApplicant.innerHTML = percentApp + "%";
+        const percentRe = ((totalRecruiter / (totalApplicant + totalRecruiter)) * 100).toFixed(2);
+        percentRecruiter.innerHTML = percentRe + "%";
+      } catch (error) {
+        console.error("Lỗi khi fetch dữ liệu:", error);
+      }
+    }
+
+    loadData();
+  </script>
+
+
 </body>
 
 </html>

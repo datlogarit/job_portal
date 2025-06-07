@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:job_portal/providers/job_provider.dart';
-import 'package:job_portal/providers/user_provider.dart';
+import 'package:job_portal/providers/applicant_provider.dart';
 import 'package:job_portal/repositories/interaction_repository.dart';
-import 'package:job_portal/repositories/job_repository.dart';
 import 'package:job_portal/screens/home/widgets/job_card.dart';
 import 'package:job_portal/screens/home/widgets/detailpage.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +13,13 @@ class JobList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final jobProvider = context.watch<JobProvider>();
-    final user = context.watch<UserProvider>();
+    final user = context.watch<ApplicantProvider>();
+    if (jobProvider.isLoadingRcmJob) {
+      return Padding(
+        padding: const EdgeInsets.only(top: 50.0),
+        child: Center(child: CircularProgressIndicator()),
+      );
+    }
     if (jobProvider.recommendedJobs.isEmpty) {
       return Padding(
         padding: const EdgeInsets.only(top: 40.0),
@@ -26,14 +30,11 @@ class JobList extends StatelessWidget {
         )),
       ); // Không có job
     }
-    if (jobProvider.isLoading) {
-      return Center(child: CircularProgressIndicator());
-    }
 
     return Container(
       // height: 175,
-      height: 180,
-      margin: EdgeInsets.symmetric(vertical: 28, horizontal: 28),
+      height: 190,
+      margin: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) => GestureDetector(
@@ -44,7 +45,8 @@ class JobList extends StatelessWidget {
                     )));
             //gửi thông tin ở đây
             bool result = await interactionRepo.updateRead(
-                user.user.id!, jobProvider.recommendedJobs[index].id!);
+                user.applicant.userId!.id!,
+                jobProvider.recommendedJobs[index].id!);
             // result
             //     ? Fluttertoast.showToast(msg: "thanh cong")
             //     : Fluttertoast.showToast(msg: "that bai");

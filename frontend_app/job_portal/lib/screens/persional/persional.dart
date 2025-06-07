@@ -1,10 +1,54 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:job_portal/home.dart';
+import 'package:job_portal/providers/applicant_provider.dart';
+import 'package:job_portal/repositories/applicant_repository.dart';
+import 'package:job_portal/screens/authenticate/login/login.dart';
 import 'package:job_portal/screens/persional/widget/change_pass.dart';
 import 'package:job_portal/screens/persional/widget/suggestion_setting.dart';
+import 'package:provider/provider.dart';
 
-class ProfileScreen extends StatelessWidget {
+// class ProfileScreen extends StatelessWidget {
+
+// }
+
+class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key});
+  // ApplicantRepository applicantRepository = ApplicantRepository();
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
+    final userProvider = context.read<ApplicantProvider>();
+    Future<void> pickFile() async {
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        allowMultiple: false,
+        type: FileType.custom,
+        allowedExtensions: ['jpg', 'png'],
+      );
+
+      if (result != null && result.files.single.path != null) {
+        //lấy file, xử lý và gửi lên cho backend
+        //cập nhật giao ảnh đại diện bên dưới là file đó
+
+        File file = File(result.files.single.path!); // nếu cần xử lý file
+        await ApplicantRepository.updateAvt(userProvider.applicant.id!, file);
+        await context.read<ApplicantProvider>().getApplicant(
+            userProvider.applicant.userId!.email!,
+            userProvider.applicant.userId!.password!);
+        setState(() {});
+      } else {
+        // Người dùng hủy
+        print("Nothing happen");
+      }
+    }
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -18,12 +62,20 @@ class ProfileScreen extends StatelessWidget {
                   children: [
                     IconButton(
                       icon: const Icon(Icons.arrow_back),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Home()),
+                        );
+                      },
+                    ),
+                    SizedBox(
+                      width: 15,
                     ),
                     const Text(
                       "Profile",
                       style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
@@ -41,10 +93,10 @@ class ProfileScreen extends StatelessWidget {
                             width: 1, // độ dày viền
                           ),
                         ),
-                        child: const CircleAvatar(
+                        child: CircleAvatar(
                           radius: 50,
-                          backgroundImage:
-                              AssetImage('assets/images/vietnamwork_avt.png'),
+                          backgroundImage: NetworkImage(
+                              'http://10.0.2.2:8088/api/v1/user/images/${userProvider.applicant.userId!.urlAvatar}'),
                         ),
                       ),
                       Container(
@@ -54,22 +106,28 @@ class ProfileScreen extends StatelessWidget {
                           border: Border.all(color: Colors.white, width: 2),
                         ),
                         padding: const EdgeInsets.all(4),
-                        child: const Icon(
-                          Icons.check_circle,
-                          color: Colors.white,
-                          size: 16,
+                        child: GestureDetector(
+                          onTap: () {
+                            pickFile();
+                            print("say goodbey");
+                          },
+                          child: Icon(
+                            Icons.camera_alt,
+                            color: Colors.white,
+                            size: 16,
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ),
                 const SizedBox(height: 12),
-                const Text(
-                  'Jack William',
+                Text(
+                  '${userProvider.applicant.userId!.name}',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
-                const Text(
-                  'jackwilliam1704@gmail.com',
+                Text(
+                  '${userProvider.applicant.userId!.email}',
                   style: TextStyle(fontSize: 14, color: Colors.grey),
                 ),
                 _grap,
@@ -116,6 +174,19 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     onPressed: () {
                       // TODO: logout logic
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Login(),
+                        ),
+                        (rount) => false,
+                      );
+                      Fluttertoast.showToast(
+                        msg: "Logged out",
+                        fontSize: 18,
+                        backgroundColor: Theme.of(context).primaryColor,
+                        gravity: ToastGravity.CENTER,
+                      );
                     },
                     child: const Text(
                       "Logout",

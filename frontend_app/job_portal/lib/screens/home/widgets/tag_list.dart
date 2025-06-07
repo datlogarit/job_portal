@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:job_portal/screens/home/widgets/recommend_detail.dart';
 
 class TagList extends StatefulWidget {
   @override
@@ -9,51 +10,40 @@ class TagList extends StatefulWidget {
 }
 
 class _TagListState extends State<TagList> {
-  final List<String> tagList = [
-    '💡Recommened For You',
-    // 'All',
-    // '⚡Popular',
-    // '🌟Featured',
-    // '🔝 Top Company',
-  ];
-  int selected = 0;
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20),
+      padding: EdgeInsets.symmetric(horizontal: 18),
       height: 43,
-      child: ListView.separated(
-          scrollDirection: Axis.horizontal,
-          itemBuilder: (_, index) => GestureDetector(
-                //gesture: điệu bộ, cử chỉ
-                child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 20),
-                  decoration: BoxDecoration(
-                      color: selected == index
-                          ? Color.fromRGBO(67, 177, 183, .3)
-                          : Colors.white,
-                      borderRadius: BorderRadius.circular(10), //18
-                      border: Border.all(
-                        color: selected == index
-                            ? Color.fromRGBO(67, 177, 183, 1)
-                            : Color.fromRGBO(67, 177, 183, .3),
-                      )),
-                  child: Text(
-                    tagList[index],
-                    style: TextStyle(fontSize: 17),
-                  ),
-                ),
-                onTap: () {
-                  setState(() {
-                    selected = index;
-                  });
-                },
-              ),
-          separatorBuilder: (_, index) => SizedBox(
-                width: 15,
-              ),
-          itemCount: tagList.length),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+            decoration: BoxDecoration(
+              color: Color.fromRGBO(67, 177, 183, .3),
+              borderRadius: BorderRadius.circular(10), //18
+              border: Border.all(color: Color.fromRGBO(67, 177, 183, 1)),
+            ),
+            child: Text(
+              "Recommended for you",
+              style: TextStyle(fontSize: 16),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => RecommendDetail()),
+              );
+            },
+            child: Text(
+              "Detail",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w900),
+            ),
+          )
+        ],
+      ),
     );
   }
 }

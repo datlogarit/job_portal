@@ -3,8 +3,10 @@
 
 <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg" href="./assets/images/vietnamworks_256x256.png" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home</title>
+    <title>Recruiter - Home</title>
     <!-- ion-icon -->
     <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
     <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
@@ -34,6 +36,7 @@
             },
         };
     </script>
+
 </head>
 
 <body style="position: relative;
@@ -52,7 +55,7 @@
             <li class="navbar-item flexbox-left">
                 <a class="navbar-item-inner flexbox-left text-white" href="./index.html">
                     <div class="navbar-item-inner-icon-wrapper flexbox">
-                        <ion-icon name="home-outline"></ion-icon>
+                        <ion-icon id="choosed" name="home-outline"></ion-icon>
                     </div>
                     <span class="link-text">Home</span>
                 </a>
@@ -91,6 +94,11 @@
 
                     <div id="offcan_body_job">
                     </div>
+                    <!-- <div class="flex flex-col items-center">
+                        <img src="./assets/images/Mailbox-bro.svg" alt="">
+                        <h4 class="text-[20px] font-bold">No notifications</h4>
+                    </div> -->
+
                 </div>
             </div>
 
@@ -131,7 +139,7 @@
                     <div class="navbar-item-inner-icon-wrapper flexbox">
                         <ion-icon name="log-out-outline"></ion-icon>
                     </div>
-                    <span class="link-text">Đăng xuất</span>
+                    <span class="link-text">Logout</span>
                 </a>
             </li>
         </ul>

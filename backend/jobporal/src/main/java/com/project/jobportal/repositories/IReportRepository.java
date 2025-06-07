@@ -10,5 +10,7 @@ import java.util.List;
 
 @Repository
 public interface IReportRepository extends JpaRepository<Reports, Long> {
+    long countByIsSolve(int isSolve);
+
     List<Reports> findAllByIsSolve(Integer statusSolve, Sort sort);
 }

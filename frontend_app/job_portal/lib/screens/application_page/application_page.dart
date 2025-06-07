@@ -6,7 +6,7 @@ import 'package:job_portal/screens/home/widgets/job_detail2.dart';
 import 'package:quickalert/quickalert.dart';
 import 'package:flutter/material.dart';
 import 'package:job_portal/models/job_model.dart';
-import 'package:job_portal/providers/user_provider.dart';
+import 'package:job_portal/providers/applicant_provider.dart';
 import 'package:job_portal/repositories/application_repository.dart';
 import 'package:job_portal/screens/application_page/upload_cv.dart';
 import 'package:provider/provider.dart';
@@ -23,11 +23,11 @@ class ApplicationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userProvider = context.read<UserProvider>();
+    final userProvider = context.read<ApplicantProvider>();
     final TextEditingController nameController =
-        TextEditingController(text: userProvider.user.name);
+        TextEditingController(text: userProvider.applicant.userId!.name);
     final TextEditingController emailController =
-        TextEditingController(text: userProvider.user.email);
+        TextEditingController(text: userProvider.applicant.userId!.email);
     final TextEditingController phoneNumberController = TextEditingController();
     final TextEditingController messageController = TextEditingController();
     return Scaffold(
@@ -47,7 +47,7 @@ class ApplicationPage extends StatelessWidget {
               ),
             ),
             Text(
-              "Ứng tuyển công việc",
+              "Apply the job",
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
@@ -87,19 +87,17 @@ class ApplicationPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Ứng tuyển vào công việc",
+                        "Apply the job",
                         style: TextStyle(
                             fontSize: 14, fontWeight: FontWeight.w600),
                       ),
                       SizedBox(
                         height: 15,
                       ),
-                      Text("Hãy đọc kỹ thông tin về thông tin tuyển "
-                          "dụng trước khi ứng tuyển"
-                          "nếu đã chắc chắn, vui lòng điền thông tin vào form bên"
-                          "dưới và nhấn nút xác nhận"
-                          "Khi bạn ứng tuyển các "
-                          "thông tin bên dưới sẽ được gửi cho nhà tuyển dụng")
+                      Text('Please read the recruitment information carefully '
+                          'before applying. If you are sure, please fill in the '
+                          'information in the form below and click the "confirm"'
+                          ' button. When you apply, the information below will be sent to the employer.')
                     ],
                   ),
                 ),
@@ -120,7 +118,7 @@ class ApplicationPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Tin tuyển dụng",
+                        "Job post",
                         style: TextStyle(
                             fontSize: 15, fontWeight: FontWeight.w600),
                       ),
@@ -142,7 +140,10 @@ class ApplicationPage extends StatelessWidget {
                               height: 60,
                               width: 60,
                               child: CachedNetworkImage(
-                                imageUrl: job.postedBy!.companyId!.urlAvt!,
+                                imageUrl: job.postedBy!.companyId!.urlAvt!
+                                        .startsWith("http")
+                                    ? job.postedBy!.companyId!.urlAvt!
+                                    : 'http://10.0.2.2:8088/api/v1/company/images/${job.postedBy!.companyId!.urlAvt!}',
                                 fit: BoxFit.cover,
                                 placeholder: (context, url) =>
                                     Center(child: CircularProgressIndicator()),
@@ -204,7 +205,7 @@ class ApplicationPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            "Họ và tên",
+                            "Full name",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 15),
                           ),
@@ -301,7 +302,7 @@ class ApplicationPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
-                              "Số điện thoại",
+                              "Phone number",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 15),
                             ),
@@ -322,12 +323,12 @@ class ApplicationPage extends StatelessWidget {
                       enabled: true,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Không được bỏ trống trường này';
+                          return "This field cann't left empty";
                         }
                       },
                       decoration: InputDecoration(
                         isDense: true,
-                        hintText: "Nhập số điện thoại",
+                        hintText: "Enter the phone number",
                         hintStyle: TextStyle(color: Colors.grey, fontSize: 15),
                         contentPadding:
                             EdgeInsets.symmetric(vertical: 8, horizontal: 8),
@@ -362,7 +363,7 @@ class ApplicationPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
-                              "Lời nhắn",
+                              "Message",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 15),
                             ),
@@ -382,16 +383,15 @@ class ApplicationPage extends StatelessWidget {
                       controller: messageController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Không được bỏ trống trường này';
+                          return 'This field cannot be left empty.';
                         }
                       },
                       enabled: true,
                       minLines: 5,
                       maxLines: 6,
                       decoration: InputDecoration(
-                        hintText:
-                            "Viết giới thiệu ngắn gọn về bản thân (điểm mạnh, điểm yếu) và nêu "
-                            "rõ mong muốn, lý do ứng tuyển vào công việc này",
+                        hintText: "Write a brief introduction about yourself "
+                            "(strengths, weaknesses and reasons for applying for the job)",
                         hintStyle: TextStyle(color: Colors.grey, fontSize: 15),
                         contentPadding:
                             EdgeInsets.symmetric(vertical: 8, horizontal: 8),
@@ -428,7 +428,7 @@ class ApplicationPage extends StatelessWidget {
                             if (_formKey.currentState?.validate() ?? false) {
                               if (fileByUser == null) {
                                 Fluttertoast.showToast(
-                                  msg: "Hãy tải lên CV của bạn!",
+                                  msg: "Please upload your CV file!",
                                   toastLength: Toast.LENGTH_SHORT,
                                   gravity: ToastGravity.BOTTOM,
                                   backgroundColor: Colors.redAccent,
@@ -439,10 +439,10 @@ class ApplicationPage extends StatelessWidget {
                               }
                               bool isSuccess =
                                   await ApplicationRepository.createApplication(
-                                      userProvider.user.id!,
+                                      userProvider.applicant.id!,
                                       job.id!,
-                                      userProvider.user.name!,
-                                      userProvider.user.email!,
+                                      userProvider.applicant.userId!.name!,
+                                      userProvider.applicant.userId!.email!,
                                       phoneNumberController.text,
                                       fileByUser!,
                                       messageController.text);
@@ -450,12 +450,15 @@ class ApplicationPage extends StatelessWidget {
                                   ? QuickAlert.show(
                                       context: context,
                                       type: QuickAlertType.success,
-                                      text: 'Ứng tuyển thành công!',
+                                      text: 'Apply successfully!',
                                       // barrierColor: Colors.redAccent,
-                                      autoCloseDuration:
-                                          const Duration(seconds: 3),
-                                      showConfirmBtn: false,
-                                    )
+                                      // autoCloseDuration:
+                                      //     const Duration(seconds: 3),
+                                      showConfirmBtn: true,
+                                      onConfirmBtnTap: () {
+                                        Navigator.of(context).pop();
+                                        Navigator.pop(context, 'Pending');
+                                      })
                                   : QuickAlert.show(
                                       context: context,
                                       type: QuickAlertType.error,
@@ -465,10 +468,6 @@ class ApplicationPage extends StatelessWidget {
                                       titleColor: Colors.white,
                                       textColor: Colors.white,
                                     );
-                              await Future.delayed(Duration(
-                                milliseconds: 3500,
-                              ));
-                              Navigator.pop(context, 'Pending');
                             }
                           },
                           style: ElevatedButton.styleFrom(
@@ -480,7 +479,7 @@ class ApplicationPage extends StatelessWidget {
                             ),
                           ),
                           child: Text(
-                            "Xác nhận",
+                            "Confirm",
                             style: TextStyle(
                                 fontSize: 17,
                                 fontWeight: FontWeight.w900,
@@ -500,37 +499,37 @@ class ApplicationPage extends StatelessWidget {
   }
 }
 
-class Stringhelper {
-  static String formatText(String title, int character) {
-    // Viết hoa chữ cái đầu mỗi từ
-    String capitalizedTitle = title
-        .split(' ')
-        .map((word) => word.isNotEmpty
-            ? word[0].toUpperCase() + word.substring(1).toLowerCase()
-            : '')
-        .join(' ');
-    // Giới hạn 15 ký tự, thêm "..." nếu quá dài
-    return capitalizedTitle.length > character
-        ? "${capitalizedTitle.substring(0, character)}..."
-        : capitalizedTitle;
-  }
+// class Stringhelper {
+//   static String formatText(String title, int character) {
+//     // Viết hoa chữ cái đầu mỗi từ
+//     String capitalizedTitle = title
+//         .split(' ')
+//         .map((word) => word.isNotEmpty
+//             ? word[0].toUpperCase() + word.substring(1).toLowerCase()
+//             : '')
+//         .join(' ');
+//     // Giới hạn 15 ký tự, thêm "..." nếu quá dài
+//     return capitalizedTitle.length > character
+//         ? "${capitalizedTitle.substring(0, character)}..."
+//         : capitalizedTitle;
+//   }
 
-  static String formatLocation(String location) {
-    return location.contains(',')
-        ? location
-            .split(',')[0]
-            .trim() // Lấy phần trước dấu ',' và loại bỏ khoảng trắng
-        : location.trim(); // Nếu không có dấu ',', giữ nguyên
-  }
+//   static String formatLocation(String location) {
+//     return location.contains(',')
+//         ? location
+//             .split(',')[0]
+//             .trim() // Lấy phần trước dấu ',' và loại bỏ khoảng trắng
+//         : location.trim(); // Nếu không có dấu ',', giữ nguyên
+//   }
 
-  static String formatSalary(int? salary) {
-    String salaryStr = salary.toString();
-    List<String> parts = [];
-    while (salaryStr.length > 3) {
-      parts.insert(0, salaryStr.substring(salaryStr.length - 3));
-      salaryStr = salaryStr.substring(0, salaryStr.length - 3);
-    }
-    parts.insert(0, salaryStr);
-    return parts.join('.');
-  }
-}
+//   static String formatSalary(int? salary) {
+//     String salaryStr = salary.toString();
+//     List<String> parts = [];
+//     while (salaryStr.length > 3) {
+//       parts.insert(0, salaryStr.substring(salaryStr.length - 3));
+//       salaryStr = salaryStr.substring(0, salaryStr.length - 3);
+//     }
+//     parts.insert(0, salaryStr);
+//     return parts.join('.');
+//   }
+// }

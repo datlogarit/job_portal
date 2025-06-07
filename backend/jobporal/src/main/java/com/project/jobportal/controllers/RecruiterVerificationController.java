@@ -195,4 +195,9 @@ public class RecruiterVerificationController {
                 .contentLength(fileContent.length)
                 .body(fileContent);
     }
+
+    @GetMapping("/totalAuthenticationPending")
+    public ResponseEntity<?> totalAuthentication() throws Exception {
+        return ResponseEntity.ok(recruiterVerificationService.countTotalAuthenticationPending());
+    }
 }

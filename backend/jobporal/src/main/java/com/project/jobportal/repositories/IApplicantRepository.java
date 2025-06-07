@@ -16,9 +16,10 @@ public interface IApplicantRepository extends JpaRepository<Applicants, Long> {
     @Override
     Page<Applicants> findAll(Pageable pageable);
 
-    @Query("SELECT u FROM Users u WHERE u.email = :email")
-    Users findByEmail(@Param("email") String email);
+    @Query("SELECT a FROM Applicants a WHERE a.userId.email = :email")
+    Applicants findByEmail(@Param("email") String email);
 
-    @Query("SELECT a FROM Applicants a WHERE a.userId.email = :email AND a.userId.password = :password")
+    @Query("SELECT a FROM Applicants a WHERE a.userId.email = :email AND a.userId.password = :password" +
+            " AND a.userId.role = 'applicant'")
     Applicants login(@Param("email") String email, @Param("password") String password);
 }

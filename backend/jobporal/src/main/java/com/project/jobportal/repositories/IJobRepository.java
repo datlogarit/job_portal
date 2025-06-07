@@ -15,8 +15,12 @@ import java.util.List;
 
 //tìm kiếm theo title
 public interface IJobRepository extends JpaRepository<Jobs, Long> {
+    //    @Override
+    @Query("SELECT j FROM Jobs j WHERE (j.status = :status AND j.isLock = :isLock)")
+    Page<Jobs> findAllJob(Pageable pageable, @Param("status") String status, @Param("isLock") int isLock);
+
     @Override
-    Page<Jobs> findAll(Pageable pageable);// ghi đè phương thức để lấy job theo trang
+    Page<Jobs> findAll(Pageable pageable);
 
     // truy vấn theo từ khóa tìm kiếm
     // @Query("SELECT j FROM Jobs j WHERE LOWER(j.title) LIKE LOWER(CONCAT('%', :title, '%'))")
@@ -28,6 +32,11 @@ public interface IJobRepository extends JpaRepository<Jobs, Long> {
             "AND j.isLock = 0 "
     )
     Page<Jobs> searchJob(@Param("keyword") String keyword, Pageable pageable);
+
+    @Query("SELECT j FROM Jobs j " +
+            "WHERE (LOWER(j.title) LIKE LOWER(CONCAT('%', :keyword, '%'))) "
+    )
+    Page<Jobs> searchJobAdmin(@Param("keyword") String keyword, Pageable pageable);
 
     /*
      * truy vấn theo category
@@ -63,6 +72,6 @@ public interface IJobRepository extends JpaRepository<Jobs, Long> {
 
     //truy van de thay doi trang thai job khi hêt han
     @Modifying//truy vân danh dau thay doi du lieu
-    @Query("UPDATE Jobs j SET j.status = 'closed' WHERE j.status = 'opening' AND j.expDate < :today")
+    @Query("UPDATE Jobs j SET j.status = 'Closed' WHERE j.status = 'Opening' AND j.expDate < :today")
     int closeExpiredJobs(@Param("today") LocalDate today);
 }

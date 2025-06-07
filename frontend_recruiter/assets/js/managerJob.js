@@ -105,16 +105,34 @@ function renderJobTable(jobs) {
       <td class="p-3">${formatDate(job.expDate)}</td>
       <td class="p-3">
       ${
-        job.status === "Opening"
+        job.isLock == 1
+          ? "<div></div>"
+          : job.status === "Opening"
           ? ' <div class="w-2.5 h-2.5 inline-block rounded-full mr-0.5 bg-[#4eba19]"></div>'
           : ' <div class="w-2.5 h-2.5 inline-block rounded-full mr-0.5 bg-[#ff4d4f]"></div>'
       }
-      ${formatText(job.status)}
+      ${
+        job.isLock == 1
+          ? `<div class = "text-red-600">BANED</div>`
+          : formatText(job.status)
+      }
       </td>
-      <td class="p-2 text-green-600 hover:underline cursor-pointer" onclick="viewApplicant(${
-        job.id
-      }, '${job.title}')">Applicant</td>
-      ${job.status === "Opening" ? renderActionButtons(job.id) : ""}
+      ${
+        job.isLock === 1
+          ? "<div></div>"
+          : ` <td
+            class="p-2 text-green-600 hover:underline cursor-pointer"
+            onclick="viewApplicant(${job.id}, '${job.title}')"
+          >
+            Applicant
+          </td>`
+      }
+
+      ${
+        job.status === "Closed" || job.isLock == 1
+          ? ""
+          : renderActionButtons(job.id)
+      }
     `;
     tableBody.appendChild(row);
   });
@@ -364,9 +382,16 @@ function fetchNotify() {
 function renderNotify(notys) {
   const offcan_body_job = document.getElementById("offcan_body_job");
   offcan_body_job.innerHTML = "";
-  notys.forEach((noty) => {
-    const body_noty = document.createElement("div");
-    body_noty.innerHTML = `
+  if (notys.length == 0) {
+    const offcan_body = document.getElementById("offcan_body");
+    offcan_body.innerHTML = ` <div class="flex flex-col items-center">
+                        <img src="./assets/images/Mailbox-bro.svg" alt="">
+                        <h4 class="text-[20px] font-bold">No notifications</h4>
+                    </div>`;
+  } else {
+    notys.forEach((noty) => {
+      const body_noty = document.createElement("div");
+      body_noty.innerHTML = `
       ${
         noty.isRead
           ? `<div class="bg-gray-100 mt-1 p-3 rounded-md shadow-sm">
@@ -375,9 +400,23 @@ function renderNotify(notys) {
             }</h4>
             <p class="text-gray-800 mb-2">${noty.idNoti.content}
             </p>
-            <p class="text-sm text-gray-500">${formatDateTime(
-              noty.idNoti.createdAt
-            )}</p>
+            ${
+              noty.idNoti.jobRelated && noty.idNoti.jobRelated.isLock == 0
+                ? `<div class="flex flex-row justify-between items-center">
+                        <p class="text-sm text-gray-500">${formatDateTime(
+                          noty.idNoti.createdAt
+                        )}</p>
+                        <button class="bg-blue-600 rounded-md text-white px-2 py-1" onclick="viewDetailJob(${
+                          noty.idNoti.jobRelated.id
+                        }, '${noty.idNoti.jobRelated.title}')">View</button>
+                    </div>`
+                : `<div class="flex flex-row justify-between items-center">
+                        <p class="text-sm text-gray-500">${formatDateTime(
+                          noty.idNoti.createdAt
+                        )}</p>
+                        <div></div>
+                    </div>`
+            }
           </div>`
           : `<div onclick="readNotify(this, ${
               noty.id.idNoti
@@ -387,14 +426,29 @@ function renderNotify(notys) {
             }</h4>
             <p class="text-gray-800 mb-2">${noty.idNoti.content}
             </p>
-            <p class="text-sm text-gray-500">${formatDateTime(
-              noty.idNoti.createdAt
-            )}</p>
+            ${
+              noty.idNoti.jobRelated && noty.idNoti.jobRelated.isLock == 0
+                ? `<div class="flex flex-row justify-between items-center">
+                        <p class="text-sm text-gray-500">${formatDateTime(
+                          noty.idNoti.createdAt
+                        )}</p>
+                        <button class="bg-blue-600 rounded-md text-white px-2 py-1" onclick="viewDetailJob(${
+                          noty.idNoti.jobRelated.id
+                        }, '${noty.idNoti.jobRelated.title}')">View</button>
+                    </div>`
+                : `<div class="flex flex-row justify-between items-center">
+                        <p class="text-sm text-gray-500">${formatDateTime(
+                          noty.idNoti.createdAt
+                        )}</p>
+                        <div></div>
+                    </div>`
+            }
           </div>`
       }
     `;
-    offcan_body_job.appendChild(body_noty);
-  });
+      offcan_body_job.appendChild(body_noty);
+    });
+  }
 }
 function readNotify(element, notiId) {
   fetch(`http://localhost:8088/api/v1/notiuser`, {
@@ -423,4 +477,8 @@ function formatDateTime(isoDateTimeStr) {
   const minutes = String(date.getMinutes()).padStart(2, "0");
 
   return `${day}/${month}/${year} ${hours}:${minutes}`;
+}
+function viewDetailJob(jobId, title) {
+  //chuyển đến trang detail kèm theo id với title
+  window.location.href = `../../application.html?jobId=${jobId}&jobTitle=${title}`;
 }

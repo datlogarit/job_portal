@@ -38,7 +38,7 @@ public class InviteService implements IInviteService {
                 .title("Invitation to apply")
                 .categoryNotification("invite apply")
                 .jobRelated(job)
-                .content("You are invited to apply for a job, check it out now!")
+                .content("You are invited to apply for a job: " + "\"" + job.getTitle() + "\"" + " check it out now!")
                 .build();
         iNotificationRepository.save(notifications);
         //assign notification for user

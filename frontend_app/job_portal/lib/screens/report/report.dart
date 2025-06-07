@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:job_portal/models/job_model.dart';
+import 'package:job_portal/providers/applicant_provider.dart';
 import 'package:job_portal/repositories/report_repository.dart';
 import 'package:job_portal/screens/report/widgets/radio_list.dart';
+import 'package:provider/provider.dart';
+import 'package:quickalert/quickalert.dart';
 
 class Report extends StatelessWidget {
   Job job = Job();
@@ -11,6 +14,7 @@ class Report extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = context.read<ApplicantProvider>();
     return Scaffold(
       // resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -29,7 +33,7 @@ class Report extends StatelessWidget {
               ),
             ),
             Text(
-              "Báo Cáo",
+              "Report",
               style: TextStyle(
                 // fontFamily: "Roboto",
                 color: Colors.white,
@@ -37,13 +41,14 @@ class Report extends StatelessWidget {
                 fontSize: 20,
               ),
             ),
-            SizedBox(width: 16)
+            SizedBox(width: 20)
           ],
         ),
         centerTitle: true,
         backgroundColor: Color.fromRGBO(67, 177, 183, .8),
       ),
-      body: SingleChildScrollView(
+      body: Container(
+        height: 800,
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 20, horizontal: 12),
           child: Column(
@@ -66,15 +71,15 @@ class Report extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Báo cáo tin tuyển dụng không chính xác",
+                        "Job posting report",
                         style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.w600),
+                            fontSize: 15, fontWeight: FontWeight.w600),
                       ),
                       SizedBox(
                         height: 15,
                       ),
                       Text(
-                          "Hãy tìm hiểu kỹ về nhà tuyển dụng và công việc bạn ứng tuyển. Bạn nên cẩn trọng với những công việc yêu cầu nộp phí, hoặc những hợp đồng mập mờ, không rõ ràng. Nếu bạn thấy rằng tin tuyển dụng này không đúng, hãy phản ánh với chúng tôi")
+                          "Research the employer and the job you are applying for. Be wary of jobs that require a fee or offer unclear, ambiguous contracts. If you think a job posting is incorrect, please report it to us.")
                     ],
                   ),
                 ),
@@ -95,7 +100,7 @@ class Report extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Tin tuyển dụng",
+                        "Recruitment post",
                         style: TextStyle(
                             fontSize: 15, fontWeight: FontWeight.w600),
                       ),
@@ -127,7 +132,7 @@ class Report extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            "Lý do báo cáo  ",
+                            "Reason  ",
                             style: TextStyle(
                                 fontSize: 15, fontWeight: FontWeight.w600),
                           ),
@@ -150,30 +155,30 @@ class Report extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
+              Spacer(),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 4.0),
                 child: SizedBox(
+                  height: 52,
                   width: double.maxFinite,
                   child: ElevatedButton(
                     onPressed: () async {
-                      bool isSuccess =
-                          await ReportRepository.postJobApplication(
-                              60, 738, reasonController.text);
-                      Fluttertoast.showToast(
-                        msg: isSuccess
-                            ? "Báo cáo đã được ghi lại!"
-                            : "Lỗi! Vui lòng thử lại",
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.BOTTOM,
-                        fontSize: 16,
-                        backgroundColor: isSuccess
-                            ? Theme.of(context).primaryColor
-                            : Colors.redAccent,
-                        textColor: Colors.white,
-                      );
-                      await Future.delayed(Duration(milliseconds: 1000));
-
-                      Navigator.of(context).pop();
+                      bool isSuccess = await ReportRepository.sendReport(
+                          job.id!,
+                          userProvider.applicant.id!,
+                          reasonController.text);
+                      isSuccess
+                          ? QuickAlert.show(
+                              context: context,
+                              type: QuickAlertType.success,
+                              text: 'Report successfully!',
+                              // autoCloseDuration: const Duration(seconds: 3),
+                              showConfirmBtn: true,
+                              onConfirmBtnTap: () {
+                                Navigator.of(context).pop();
+                                Navigator.of(context).pop();
+                              })
+                          : Fluttertoast.showToast(msg: "An error occurrred");
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.red,
@@ -183,9 +188,9 @@ class Report extends StatelessWidget {
                       ),
                     ),
                     child: Text(
-                      "Gửi",
+                      "Submit",
                       style: TextStyle(
-                          fontSize: 17,
+                          fontSize: 18,
                           fontWeight: FontWeight.w900,
                           color: Colors.white),
                     ),

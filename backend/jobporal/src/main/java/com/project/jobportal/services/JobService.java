@@ -8,6 +8,7 @@ import com.project.jobportal.models.*;
 import com.project.jobportal.repositories.IJobRepository;
 import com.project.jobportal.repositories.IRecruiterRepository;
 
+import com.project.jobportal.response.SplitRcmResponse;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.data.domain.Page;
@@ -186,12 +187,23 @@ public class JobService implements IJobService {
 
     @Override
     public Page<Jobs> getAllJob(PageRequest pageRequest) {
+        return iJobRepository.findAllJob(pageRequest, "Opening", 0);
+    }
+
+    @Override
+    public Page<Jobs> getAllJobAdmin(PageRequest pageRequest) {
         return iJobRepository.findAll(pageRequest);
     }
 
     @Override
     public Page<Jobs> searchJob(String SearchKeyword, PageRequest pageRequest) {
+
         return iJobRepository.searchJob(SearchKeyword, pageRequest);
+    }
+
+    @Override
+    public Page<Jobs> searchJobAdmin(String SearchKeyword, PageRequest pageRequest) {
+        return iJobRepository.searchJobAdmin(SearchKeyword, pageRequest);
     }
 
     @Override
@@ -255,13 +267,46 @@ public class JobService implements IJobService {
         List<Jobs> recommended = new ArrayList<>();
         for (JsonNode job : cbJobs) {
             long id = job.asLong();
-            recommended.add(getJobById(id)); // hàm tự viết lấy từ DB
+            recommended.add(getJobById(id));
         }
         for (JsonNode job : cfJobs) {
             long id = job.asLong();
             recommended.add(getJobById(id));
         }
         return recommended;
+    }
+
+    @Override
+    public SplitRcmResponse getRecommendedJobSplit(RecommenInputDTO recommenInputDTO) throws Exception {
+        RestTemplate restTemplate = new RestTemplate();
+        String url = "http://localhost:8000/api/v1/hybrid_recommend_jobs";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<RecommenInputDTO> requestEntity = new HttpEntity<>(recommenInputDTO, headers);
+
+        // Gọi Python API
+        ResponseEntity<String> response = restTemplate.postForEntity(url, requestEntity, String.class);
+
+        // Xử lý JSON trả về
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode root = mapper.readTree(response.getBody());
+        JsonNode cbJobs = root.get("content_based_jobs");
+        JsonNode cfJobs = root.get("collaborative_filtering_jobs");
+
+        List<Jobs> cbJobList = new ArrayList<>();
+        List<Jobs> cfJobList = new ArrayList<>();
+
+        for (JsonNode job : cbJobs) {
+            long id = job.asLong();
+            cbJobList.add(getJobById(id));
+        }
+        for (JsonNode job : cfJobs) {
+            long id = job.asLong();
+            cfJobList.add(getJobById(id));
+        }
+        return new SplitRcmResponse(cbJobList.size(), cbJobList, cfJobList.size(), cfJobList);
     }
 
     public void updateLockJob(long jobId, long status) {

@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface IRecruiterVerificationRepository extends
         JpaRepository<RecruiterVerifications, Long> {
+    long countByStatus(int status);
 //    @Query("SELECT r FROM RecruiterVerifications r WHERE r.recruiterId.userId.email = :email")
 //    RecruiterVerifications findByEmail(@Param("email") String email);
 }

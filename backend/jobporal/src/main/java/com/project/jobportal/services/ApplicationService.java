@@ -4,6 +4,7 @@ import com.project.jobportal.DTOs.ApplicationDTO;
 import com.project.jobportal.models.*;
 import com.project.jobportal.repositories.*;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,16 +34,37 @@ public class ApplicationService implements IApplicationService {
                 .message(applicationDTO.getMessage())
                 .build();
         iApplicationRepository.save(newApplication);
+        Jobs job = jobService.getJobById(newApplication.getJobId().getId());
+        Notifications notifications = Notifications.builder()
+                .title("New candidates have applied")
+                .content("A new candidate has applied for your job " + "\"" + newApplication.getJobId().getTitle() + "\""
+                        + " Check now")
+                .jobRelated(job)
+                .categoryNotification("apply")
+                .build();
+        iNotificationRepository.save(notifications);
+        Users user = iUserRepository.findById(job.getPostedBy().getId()).orElseThrow(() -> new RuntimeException("User not found"));
+        NotiUserKey notiUserKey = new NotiUserKey(notifications.getId(), job.getPostedBy().getId());
+        NotiUsers notiUsers = NotiUsers
+                .builder()
+                .id(notiUserKey)
+                .idNoti(notifications)
+                .idUser(user)
+                .isRead(0)
+                .build();
+        iNotiUserRepository.save(notiUsers);
     }
 
     public void updateStatusApplication(long id, ApplicationDTO applicationDTO) {
         Applications applications = iApplicationRepository.findById(id).orElseThrow(()
                 -> new RuntimeException("Application not found"));
         applications.setStatusApply(applicationDTO.getStatusApply());
-        if (applicationDTO.getStatusApply().equals("approved")) {
+        if (applicationDTO.getStatusApply().equals("Approved")) {
             Notifications newNotification = Notifications.builder()
-                    .title("Có sự thay đổi trạng thái công việc")
-                    .content("Xin chúc mừng, đơn ứng tuyển vào công việc " + applications.getJobId().getTitle() + "đã được chấp nhận, nhà tuyển dụng sẽ sớm liên hệ với bạn để trao đổi những bước tiếp theo")
+                    .title("There is a change in job status")
+                    .content("Congratulations, your application for the job " + "\"" + applications.getJobId().getTitle() + "\""
+                            + " has been accepted" +
+                            ", the employer will contact you soon.")
                     .jobRelated(applications.getJobId())
                     .categoryNotification("status change")
                     .build();
@@ -59,10 +81,11 @@ public class ApplicationService implements IApplicationService {
                     .build();
             iNotiUserRepository.save(notiUsers);
         }
-        if (applicationDTO.getStatusApply().equals("rejected")) {
+        if (applicationDTO.getStatusApply().equals("Rejected")) {
             Notifications newNotification = Notifications.builder()
-                    .title("Có sự thay đổi trạng thái công việc")
-                    .content("Đơn ứng tuyển vào công việc " + applications.getJobId().getTitle() + "đã bị từ chối, hãy khám phá thêm các công việc phù hợp nhé")
+                    .title("There is a change in job status")
+                    .content("Your application for the job: " + "\"" + applications.getJobId().getTitle() + "\"" + " has been rejected," +
+                            " explore other jobs")
                     .jobRelated(applications.getJobId())
                     .categoryNotification("status change")
                     .build();

@@ -4,7 +4,7 @@ import 'package:job_portal/helper.dart';
 import 'package:job_portal/models/job_model.dart';
 import 'package:job_portal/providers/application_provider.dart';
 import 'package:job_portal/providers/job_provider.dart';
-import 'package:job_portal/providers/user_provider.dart';
+import 'package:job_portal/providers/applicant_provider.dart';
 import 'package:job_portal/repositories/interaction_repository.dart';
 import 'package:job_portal/screens/application_page/application_page.dart';
 import 'package:job_portal/screens/home/widgets/job_card.dart';
@@ -174,10 +174,10 @@ class _JobDetailPageState extends State<JobDetailPage> {
 
   void getApplication() async {
     try {
-      final userProvider = context.read<UserProvider>();
+      final userProvider = context.read<ApplicantProvider>();
       final applicationProvider = context.read<ApplicationProvider>();
       await applicationProvider.fetchApplication(
-          userProvider.user.id!, widget.job.id!);
+          userProvider.applicant.userId!.id!, widget.job.id!);
       // print("ui: ${applicationProvider.application.statusApply}");
       setState(() {
         if (applicationProvider.application.statusApply == null) {
@@ -199,7 +199,7 @@ class _JobDetailPageState extends State<JobDetailPage> {
 
   Widget build(BuildContext context) {
     final jobProvider = context.watch<JobProvider>();
-    final userProvier = context.watch<UserProvider>();
+    final userProvier = context.watch<ApplicantProvider>();
     // final sameJobs = jobProvider.sameJobs;
     return Scaffold(
       backgroundColor: const Color(0xFFF9FAFB),
@@ -247,12 +247,15 @@ class _JobDetailPageState extends State<JobDetailPage> {
                       child: Padding(
                         padding: const EdgeInsets.all(3.0),
                         child: CachedNetworkImage(
-                          imageUrl: widget.job.postedBy!.companyId!.urlAvt!,
+                          imageUrl: widget.job.postedBy!.companyId!.urlAvt!
+                                  .startsWith("https")
+                              ? widget.job.postedBy!.companyId!.urlAvt!
+                              : 'http://10.0.2.2:8088/api/v1/company/images/${widget.job.postedBy!.companyId!.urlAvt!}',
                           fit: BoxFit.cover,
                           placeholder: (context, url) =>
                               Center(child: CircularProgressIndicator()),
                           errorWidget: (context, url, error) => Image.asset(
-                            'assets/images/vietnamwork_avt.png',
+                            "assets/images/vietnamwork_avt.png",
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -372,7 +375,7 @@ class _JobDetailPageState extends State<JobDetailPage> {
                         ),
                         const SizedBox(height: 12),
                         SizedBox(
-                          height: 180,
+                          height: 184,
                           child: ListView.separated(
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (context, index) => GestureDetector(
@@ -385,7 +388,7 @@ class _JobDetailPageState extends State<JobDetailPage> {
                                   ),
                                 );
                                 await widget.interactionRepo.updateRead(
-                                    userProvier.user.id!,
+                                    userProvier.applicant.userId!.id!,
                                     jobProvider.sameJobs[index].id!);
                                 // result
                                 //     ? Fluttertoast.showToast(msg: "thanh cong")
@@ -412,38 +415,17 @@ class _JobDetailPageState extends State<JobDetailPage> {
             ),
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Container(
-                decoration: BoxDecoration(
-                    // boxShadow: [
-                    //   BoxShadow(
-                    //     color: const Color.fromRGBO(158, 158, 158, .5),
-                    //     spreadRadius: 1,
-                    //     blurRadius: 7,
-                    //     offset: const Offset(0, -2), // Đổ bóng xuống dưới
-                    //   ),
-                    // ],
-                    ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(bottom: 1),
-                      child: statusApply,
-                    ),
-                    // const SizedBox(width: 10),
-                    // Container(
-                    //   padding: const EdgeInsets.all(12),
-                    //   decoration: BoxDecoration(
-                    //     color: Colors.white,
-                    //     border: Border.all(color: Colors.grey.shade300),
-                    //     borderRadius: BorderRadius.circular(12),
-                    //   ),
-                    //   child: SaveIcon(job: widget.job),
-                    // )
-                  ],
-                ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(bottom: 1),
+                    child: statusApply,
+                  ),
+                ],
               ),
+              // ),
             )
           ],
         ),

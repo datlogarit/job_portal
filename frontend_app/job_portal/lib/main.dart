@@ -6,11 +6,9 @@ import 'package:job_portal/providers/category_provider.dart';
 import 'package:job_portal/providers/job_provider.dart';
 import 'package:job_portal/providers/merged_interaction_provider.dart';
 import 'package:job_portal/providers/notification_provider.dart';
-import 'package:job_portal/providers/user_provider.dart';
-import 'package:job_portal/screens/start/login/login.dart';
-import 'package:job_portal/test/test_form_res_noty.dart';
-import 'package:job_portal/test/test_profile_page.dart';
-import 'package:job_portal/test/test_steper.dart';
+import 'package:job_portal/providers/applicant_provider.dart';
+import 'package:job_portal/screens/authenticate/login/login.dart';
+import 'package:job_portal/screens/collect_info_recommend/form_res_noty.dart';
 
 import 'package:provider/provider.dart';
 
@@ -34,16 +32,14 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           //giúp wiget lắng nghe sự thay đổi của dữ liệu
-          create: (_) => JobProvider()
-            ..getRecommendedJobs(1142, "frontend developer", 13,
-                "Hà Nội"), //tạo ra 1 instance của JobProvider
+          create: (_) => JobProvider(), //tạo ra 1 instance của JobProvider
           // ..fetchJobs(), //..cascade notation (ký hiệu xếp tầng), dùng để khởi tạo nay phương thức khi class được gọi
         ),
         ChangeNotifierProvider(
             create: (_) => CategoryProvider()), //ở đây các instance là duy nhất
         ChangeNotifierProvider(create: (_) => InteractionProvider()),
         ChangeNotifierProvider(create: (_) => ApplicationProvider()),
-        ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => ApplicantProvider()),
         ChangeNotifierProvider(create: (_) => NotificationProvider()),
         ChangeNotifierProvider(create: (_) => MergedInteractionProvider()),
       ],
@@ -56,7 +52,10 @@ class MyApp extends StatelessWidget {
             secondary: Color(0xFFFED408),
           ),
         ),
-        home: FormResNoty(),
+        //job hết hạn --> không thể tìm thấy, vẫn được hiển thị trong phần đã lưu (myJob) + không thể ứng tuyển nếu người dùng click vào
+        //job bị ban --> ẩn hết trên mọi api, kể cả người dùng đã lưu, đã ứng tuyển hay thoog báo
+
+        home: Login(),
         debugShowCheckedModeBanner: false,
       ),
     );

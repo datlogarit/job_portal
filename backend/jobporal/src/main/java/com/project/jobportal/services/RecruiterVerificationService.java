@@ -79,4 +79,8 @@ public class RecruiterVerificationService implements
         return recruiterVerificationRepository.findAll();
     }
 
+    @Override
+    public long countTotalAuthenticationPending() {
+        return recruiterVerificationRepository.countByStatus(1);
+    }
 }

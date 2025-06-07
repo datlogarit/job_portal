@@ -12,6 +12,7 @@ import com.project.jobportal.repositories.ICategoryRepository;
 import com.project.jobportal.repositories.IInviteRepository;
 import com.project.jobportal.repositories.IUserRepository;
 import com.project.jobportal.response.RecommendApplicantResponse;
+import com.project.jobportal.security.PasswordUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -38,24 +39,31 @@ public class ApplicantService implements IApplicantService {
 
     @Override
     public Applicants login(String email, String password) {
-        return iApplicantRepository.login(email, password);
+        Applicants applicants = iApplicantRepository.findByEmail(email);
+        if (applicants == null || !PasswordUtil.matchPassword(password, applicants.getUserId().getPassword())) {
+            throw new RuntimeException("Email or password not match");
+        }
+        if (applicants.getUserId().getIsActive() == 0) {
+            throw new RuntimeException("This account has been locked");
+        }
+        return applicants;
     }
 
     @Override
     public void crateApplicant(User_ApplicantDTO userApplicantDTO) {
-
+        String hashedPassword = PasswordUtil.hashPassword(userApplicantDTO.getPassword());
         if (iApplicantRepository.findByEmail(userApplicantDTO.getEmail()) != null) {
-            throw new RuntimeException("Email đã đã được sử dụng");
+            throw new RuntimeException("Email already exists");
         }
-        Categories categories = iCategoryRepository.findById(userApplicantDTO.getField()).orElseThrow(()
-                -> new RuntimeException("Category not found"));
+//        Categories categories = iCategoryRepository.findById(userApplicantDTO.getField()).orElseThrow(()
+//                -> new RuntimeException("Category not found"));
         Users newUser = Users.builder()
                 .email(userApplicantDTO.getEmail())
-                .password(userApplicantDTO.getPassword())
+                .password(hashedPassword)
                 .name(userApplicantDTO.getName())
                 .dob(LocalDate.of(1, 1, 1))
                 .role("applicant")
-                .urlAvatar("5726568_avtUser.png")
+                .urlAvatar("default-avatar-profile-icon-vector-social-media-user-photo-700-205577532.jpg")
                 .isActive(1)
                 .build();
         Applicants newApplicant = Applicants.builder()
@@ -63,7 +71,7 @@ public class ApplicantService implements IApplicantService {
                 .resume("")
                 .gender("")
                 .workingTime("")
-                .field(categories)
+//                .field(categories)
                 .desiredLocation("")
                 .desiredPosition("")
                 .workExperience("")
@@ -72,25 +80,54 @@ public class ApplicantService implements IApplicantService {
     }
 
     @Override
-    public void updateApplicant(long id, User_ApplicantDTO applicantDTO) {
-        Users existUser = iUserRepository.findById(id).orElseThrow(() -> new RuntimeException("user not found"));
-        Categories categories = iCategoryRepository.findById(applicantDTO.getField()).orElseThrow(()
-                -> new RuntimeException("Category not found"));
-        existUser.setPassword(applicantDTO.getPassword());
-        existUser.setName(applicantDTO.getName());
-        existUser.setPhoneNumber(applicantDTO.getPhoneNumber());
-        existUser.setDob(applicantDTO.getDob());
-        existUser.setUrlAvatar(applicantDTO.getUrlAvatar());
+    public Applicants updateApplicant(long id, User_ApplicantDTO applicantDTO) {
+        Users existUser = iUserRepository.findById(id).orElseThrow(() -> new RuntimeException("applicant not found"));
+
+        if (applicantDTO.getPassword() != null && !applicantDTO.getPassword().isEmpty()) {
+            existUser.setPassword(applicantDTO.getPassword());
+        }
+        if (applicantDTO.getName() != null && !applicantDTO.getName().isEmpty()) {
+            existUser.setName(applicantDTO.getName());
+        }
+        if (applicantDTO.getPhoneNumber() != null && !applicantDTO.getPhoneNumber().isEmpty()) {
+            existUser.setPhoneNumber(applicantDTO.getPhoneNumber());
+        }
+        if (applicantDTO.getDob() != null) {
+            existUser.setDob(applicantDTO.getDob());
+        }
+        iUserRepository.save(existUser);
+//        existUser.setUrlAvatar(applicantDTO.getUrlAvatar());
         Applicants existApplicant = getApplicantById(id);
+
         existApplicant.setUserId(existUser);
-        existApplicant.setResume(applicantDTO.getResume());
-        existApplicant.setGender(applicantDTO.getGender());
-        existApplicant.setWorkingTime(applicantDTO.getWorkingTime());
-        existApplicant.setField(categories);
-        existApplicant.setDesiredLocation(applicantDTO.getDesiredLocation());
-        existApplicant.setDesiredPosition(applicantDTO.getDesiredPosition());
-        existApplicant.setWorkExperience(applicantDTO.getWorkExperience());
+//        existApplicant.setResume(applicantDTO.getResume());
+        if (applicantDTO.getGender() != null && !applicantDTO.getGender().isEmpty()) {
+            existApplicant.setGender(applicantDTO.getGender());
+        }
+        if (applicantDTO.getWorkingTime() != null && !applicantDTO.getWorkingTime().isEmpty()) {
+            existApplicant.setWorkingTime(applicantDTO.getWorkingTime());
+        }
+
+        if (applicantDTO.getField() != null) {
+            Categories categories = iCategoryRepository.findById(applicantDTO.getField()).orElseThrow(()
+                    -> new RuntimeException("Category not found"));
+            existApplicant.setField(categories);
+        }
+
+        if (applicantDTO.getDesiredLocation() != null && !applicantDTO.getDesiredLocation().isEmpty()) {
+            existApplicant.setDesiredLocation(applicantDTO.getDesiredLocation());
+        }
+
+        if (applicantDTO.getDesiredPosition() != null && !applicantDTO.getDesiredPosition().isEmpty()) {
+            existApplicant.setDesiredPosition(applicantDTO.getDesiredPosition());
+        }
+
+        if (applicantDTO.getWorkExperience() != null && !applicantDTO.getWorkExperience().isEmpty()) {
+            existApplicant.setWorkExperience(applicantDTO.getWorkExperience());
+        }
+
         iApplicantRepository.save(existApplicant);
+        return existApplicant;
     }
 
     public void uploadResume(long applicantId, String fileName) throws IOException {
@@ -150,4 +187,10 @@ public class ApplicantService implements IApplicantService {
     public Page<Applicants> getAllApplicant(PageRequest pageRequest) {
         return iApplicantRepository.findAll(pageRequest);
     }
+
+    @Override
+    public long countTotalApplicant() {
+        return iApplicantRepository.count();
+    }
+
 }

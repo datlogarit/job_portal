@@ -24,7 +24,7 @@ class JobCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 290,
+      width: 310,
       padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
@@ -51,7 +51,10 @@ class JobCard extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8),
                           color: const Color.fromRGBO(158, 158, 158, .2)),
                       child: CachedNetworkImage(
-                        imageUrl: job.postedBy!.companyId!.urlAvt!,
+                        imageUrl: job.postedBy!.companyId!.urlAvt!
+                                .startsWith("https")
+                            ? job.postedBy!.companyId!.urlAvt!
+                            : 'http://10.0.2.2:8088/api/v1/company/images/${job.postedBy!.companyId!.urlAvt!}',
                         fit: BoxFit.cover,
                         placeholder: (context, url) =>
                             Center(child: CircularProgressIndicator()),
@@ -84,7 +87,7 @@ class JobCard extends StatelessWidget {
             height: 15,
           ),
           SizedBox(
-            height: 55,
+            height: 60,
             child: Text(
               formatText(job.title!, titleNumChar),
               style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
