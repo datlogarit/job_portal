@@ -11,4 +11,7 @@ import java.util.List;
 public interface INotiUserRepository extends JpaRepository<NotiUsers, NotiUserKey> {
 
     List<NotiUsers> findByIdUser(Users userId, Sort sort);
+
+    int countByIdUserAndIsReadFalse(Users userId);
+
 }

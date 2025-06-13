@@ -4,7 +4,6 @@ import 'package:job_portal/models/job_model.dart';
 import 'package:job_portal/providers/applicant_provider.dart';
 import 'package:job_portal/providers/category_provider.dart';
 import 'package:job_portal/providers/job_provider.dart';
-// import 'package:job_portal/providers/user_provider.dart';
 import 'package:job_portal/repositories/interaction_repository.dart';
 import 'package:job_portal/screens/home/widgets/job_card.dart';
 import 'package:job_portal/screens/home/widgets/detailpage.dart';
@@ -85,28 +84,29 @@ class ListSearch extends StatelessWidget {
               itemCount: jobFilted.length);
     }
 
-    return Container(
-        height: 450,
-        margin: EdgeInsets.symmetric(horizontal: 22),
+    return Expanded(
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 22, vertical: 10),
         child: jobProvider.jobsBySearch.isEmpty
             ? Center(
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SvgPicture.asset(
                       "assets/images/Job hunt-cuate.svg",
                       height: 340,
                     ),
-                    SizedBox(
-                      height: 5,
-                    ),
+                    SizedBox(height: 5),
                     Text(
                       "Search job here",
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                    )
+                    ),
                   ],
                 ),
               )
-            : jobResult());
+            : jobResult(),
+      ),
+    );
   }
 }

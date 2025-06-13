@@ -3,6 +3,8 @@ package com.project.jobportal.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "applicants")
 @Data // toString
@@ -28,7 +30,7 @@ public class Applicants {
 
     @Column(name = "working_time")
     private String workingTime;
-    
+
     @ManyToOne
     @JoinColumn(name = "field")
     private Categories field;
@@ -39,7 +41,12 @@ public class Applicants {
     @Column(name = "desired_location")
     private String desiredLocation;
 
+    @Column(name = "current_position")
+    private String currentPosition;
+
     @Column(name = "work_experience")
     private String workExperience;
 
+    @Column(name = "skills")
+    private String skills;
 }

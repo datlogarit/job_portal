@@ -113,6 +113,11 @@ document.getElementById("login_button").addEventListener("click", async (e) => {
           ).outerHTML = `<span class="w-6 h-6 flex items-center justify-center mr-3">
                             <i class="fas fa-check-circle text-[#2563eb] text-2xl"></i>
                         </span>`;
+          document.getElementById(
+            "step_admin_review"
+          ).outerHTML = `<span class="w-6 h-6 flex items-center justify-center mr-3">
+                            <i class="fa-solid fa-clock text-[#2563eb] text-2xl"></i>
+                        </span>`;
         }
         if (user.verifyId.status == 2) {
           document.getElementById(

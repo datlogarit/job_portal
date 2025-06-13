@@ -8,7 +8,8 @@ import 'package:job_portal/providers/merged_interaction_provider.dart';
 import 'package:job_portal/providers/notification_provider.dart';
 import 'package:job_portal/providers/applicant_provider.dart';
 import 'package:job_portal/screens/authenticate/login/login.dart';
-import 'package:job_portal/screens/collect_info_recommend/form_res_noty.dart';
+import 'package:job_portal/screens/collect_info_recommend/form_survey.dart';
+import 'package:job_portal/screens/persional/widget/suggestion_setting.dart';
 
 import 'package:provider/provider.dart';
 
@@ -52,9 +53,6 @@ class MyApp extends StatelessWidget {
             secondary: Color(0xFFFED408),
           ),
         ),
-        //job hết hạn --> không thể tìm thấy, vẫn được hiển thị trong phần đã lưu (myJob) + không thể ứng tuyển nếu người dùng click vào
-        //job bị ban --> ẩn hết trên mọi api, kể cả người dùng đã lưu, đã ứng tuyển hay thoog báo
-
         home: Login(),
         debugShowCheckedModeBanner: false,
       ),

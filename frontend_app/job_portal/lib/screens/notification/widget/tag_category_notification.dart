@@ -18,8 +18,8 @@ class _TagListNotificationState extends State<TagListNotification> {
     'Invited',
     'Expired',
     'Status change',
-    'Response report',
-    'General notice',
+    // 'Response report',
+    // 'General notice',
   ];
   int selected = 0;
 

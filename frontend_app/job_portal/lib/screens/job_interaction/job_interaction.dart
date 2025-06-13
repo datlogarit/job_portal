@@ -88,34 +88,126 @@ class _JobInteractionPageState extends State<JobInteractionPage> {
         centerTitle: true,
         backgroundColor: Color.fromRGBO(67, 177, 183, .8),
       ),
-      body: mergedIneractionProvider.allInteraction.isEmpty
-          ? Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+      body: jobFilted.isEmpty
+          ?
+          // Column(
+          //     mainAxisAlignment: MainAxisAlignment.center,
+          //     crossAxisAlignment: CrossAxisAlignment.center,
+          //     children: [
+          // Center(
+          //   child:
+          Column(
               children: [
-                Center(
-                  child: Column(
-                    children: [
-                      SvgPicture.asset(
-                        "assets/images/Job hunt-cuate.svg",
-                        height: 340,
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        "No job to display.",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 24,
-                        ),
-                        textAlign: TextAlign.center,
-                      )
-                    ],
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 15.0),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 15),
+                    height: 43,
+                    child: ListView.separated(
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (_, index) => GestureDetector(
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 8, horizontal: 15),
+                                decoration: BoxDecoration(
+                                    color: selected == index
+                                        ? Color.fromRGBO(67, 177, 183, .3)
+                                        : Colors.white,
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(
+                                      color: selected == index
+                                          ? Color.fromRGBO(67, 177, 183, 1)
+                                          : Color.fromRGBO(67, 177, 183, .3),
+                                    )),
+                                child: Text(
+                                  widget.tagList[index],
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                              ),
+                              onTap: () {
+                                setState(() {
+                                  selected = index;
+                                  print("selected = $selected");
+                                  if (selected == 0) {
+                                    jobFilted = mergedIneractionProvider
+                                        .allInteraction
+                                        .where((application) =>
+                                            application.statusApply !=
+                                            null) // lọc trước
+                                        .map((application) => application
+                                            .jobId) // rồi mới lấy jobId
+                                        .toList();
+                                  } else if (selected == 1) {
+                                    jobFilted = mergedIneractionProvider
+                                        .allInteraction
+                                        .where((application) =>
+                                            application.isSave ==
+                                            1) // lọc trước
+                                        .map((application) => application
+                                            .jobId) // rồi mới lấy jobId
+                                        .toList();
+                                  } else if (selected == 2) {
+                                    jobFilted = mergedIneractionProvider
+                                        .allInteraction
+                                        .where((application) =>
+                                            application.isRead ==
+                                            1) // lọc trước
+                                        .map((application) => application
+                                            .jobId) // rồi mới lấy jobId
+                                        .toList();
+                                  } else if (selected == 3) {
+                                    jobFilted = mergedIneractionProvider
+                                        .allInteraction
+                                        .where((application) =>
+                                            application.statusApply ==
+                                            "Approved") // lọc trước
+                                        .map((application) => application
+                                            .jobId) // rồi mới lấy jobId
+                                        .toList();
+                                  } else if (selected == 4) {
+                                    jobFilted = mergedIneractionProvider
+                                        .allInteraction
+                                        .where((application) =>
+                                            application.statusApply ==
+                                            "Rejected") // lọc trước
+                                        .map((application) => application
+                                            .jobId) // rồi mới lấy jobId
+                                        .toList();
+                                  }
+                                });
+                              },
+                            ),
+                        separatorBuilder: (_, index) => SizedBox(
+                              width: 15,
+                            ),
+                        itemCount: widget.tagList.length),
                   ),
                 ),
+                Container(
+                  width: double.maxFinite,
+                  height: 1,
+                  color: const Color.fromRGBO(158, 158, 158, .5),
+                ),
+                SvgPicture.asset(
+                  "assets/images/Job hunt-cuate.svg",
+                  height: 340,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  "No job to display.",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24,
+                  ),
+                  textAlign: TextAlign.center,
+                )
               ],
             )
+          // ),
+          //   ],
+          // )
           : Column(
               children: [
                 Padding(

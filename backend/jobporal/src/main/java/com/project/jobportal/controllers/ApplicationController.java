@@ -82,7 +82,7 @@ public class ApplicationController {
         return ResponseEntity.ok(applicationService.getAllApplicationByApplicantId(userId));
     }
 
-    @GetMapping("/job/{jobId}")//lấy ra thong tin tất ca cac application theo userId
+    @GetMapping("/job/{jobId}")//lấy ra thong tin tất ca cac application theo jobId
     public ResponseEntity<?> getApplicationByJobId(@PathVariable(name = "jobId") long jobId) {
         return ResponseEntity.ok(applicationService.getApplicationByJobId(jobId));
     }

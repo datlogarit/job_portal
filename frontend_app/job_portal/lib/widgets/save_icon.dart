@@ -38,9 +38,9 @@ class _SaveIconState extends State<SaveIcon> {
     } catch (e) {
       // Fluttertoast.showToast(msg: e.toString());
       // Bắt lỗi và gán isSave = false nếu có exception
-      setState(() {
-        isSave = false;
-      });
+      // setState(() {
+      //   isSave = false;
+      // });
     }
   }
 

@@ -93,9 +93,9 @@ function changePassword() {
             icon: "error",
             showConfirmButton: true,
           });
-           document.getElementById("oldPassword").value = "";
-           document.getElementById("newPassword").value = "";
-           document.getElementById("retypePassword").value = "";
+          document.getElementById("oldPassword").value = "";
+          document.getElementById("newPassword").value = "";
+          document.getElementById("retypePassword").value = "";
         }
       });
   }
@@ -180,7 +180,12 @@ function renderNotify(notys) {
     });
   }
 }
-function readNotify(element, notiId) {
+async function readNotify(element, notiId) {
+  let totalUnRead = await checkUnreadNoti();
+  totalUnRead = totalUnRead - 1;
+  if (!totalUnRead) {
+    notificationItem.querySelector(".red-dot").classList.add("hidden");
+  }
   fetch(`http://localhost:8088/api/v1/notiuser`, {
     method: "PUT",
     headers: { "Content-type": "application/json" },
@@ -218,4 +223,43 @@ logout_button.addEventListener("click", () => {
 function viewDetailJob(jobId, title) {
   //chuyển đến trang detail kèm theo id với title
   window.location.href = `../../application.html?jobId=${jobId}&jobTitle=${title}`;
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+  await checkUnreadNoti();
+});
+const notificationItem = document.getElementById("notification_item");
+async function checkUnreadNoti() {
+  try {
+    const response = await fetch(
+      `http://localhost:8088/api/v1/notiuser/totalUnread/${user.userId.id}`
+    );
+    const data = await response.text(); // Hoặc response.json() nếu API trả JSON
+
+    const totalUnread = parseInt(data, 10); // Đảm bảo data là số
+
+    const notificationItem = document.getElementById("notification_item");
+
+    if (totalUnread > 0) {
+      if (!notificationItem.querySelector(".red-dot")) {
+        let redDot = document.createElement("div");
+        redDot.classList.add(
+          "absolute",
+          "w-2.5",
+          "h-2.5",
+          "bg-red-600",
+          "rounded-[50%]",
+          "top-2.5",
+          "right-3.5",
+          "red-dot"
+        );
+        notificationItem.appendChild(redDot);
+      }
+    }
+
+    return totalUnread; // ✅ Giá trị trả về chính xác
+  } catch (error) {
+    console.error("Error fetching notifications:", error);
+    return 0; // hoặc null tùy ý, nhưng nên có để tránh undefined
+  }
 }

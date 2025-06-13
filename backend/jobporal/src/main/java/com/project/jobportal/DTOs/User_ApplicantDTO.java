@@ -6,6 +6,7 @@ import lombok.Data;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class User_ApplicantDTO {
@@ -47,6 +48,11 @@ public class User_ApplicantDTO {
     @JsonProperty("desired_location")
     private String desiredLocation;
 
+    @JsonProperty("current_position")
+    private String currentPosition;
+
     @JsonProperty("work_experience")
     private String workExperience;
+
+    private String skills;
 }

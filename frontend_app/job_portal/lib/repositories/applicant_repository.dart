@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
-import 'package:job_portal/models/user_model.dart';
 
 class ApplicantRepository {
   // final Map<String, dynamic> content;
@@ -78,17 +77,21 @@ class ApplicantRepository {
   }
 
   static dynamic updateApplicantById(
-      int applicantId,
-      String? name,
-      String? password,
-      String? phoneNumber,
-      String? birthDay,
-      String? gender,
-      String? workingTime,
-      int? field,
-      String? desiredPosition,
-      String? desiredLocation,
-      String? workExperience) async {
+    int applicantId,
+    String? name,
+    String? password,
+    String? phoneNumber,
+    String? birthDay,
+
+    // String? gender,
+    // String? workingTime,
+    int? field,
+    String? desiredJob,
+    String? desiredLocation,
+    String? currentJob,
+    String? workExperience,
+    List<String>? skills,
+  ) async {
     String url = 'http://10.0.2.2:8088/api/v1/applicant/$applicantId';
     var data = await http.put(Uri.parse(url),
         headers: {'Content-type': 'application/json'},
@@ -97,12 +100,14 @@ class ApplicantRepository {
           "password": password,
           "phone_number": phoneNumber,
           "dob": birthDay,
-          "gender": gender,
-          "working_time": workingTime,
+          // "gender": gender,
+          // "working_time": workingTime,
           "field": field,
-          "desired_position": desiredPosition,
+          "desired_position": desiredJob,
           "desired_location": desiredLocation,
-          "work_experience": workExperience
+          "current_position": currentJob,
+          "work_experience": workExperience,
+          "skills": skills?.join(", ")
         })); //json
     if (data.statusCode == 200 || data.statusCode == 201) {
       var formatUtf8 = utf8.decode(data.bodyBytes); //

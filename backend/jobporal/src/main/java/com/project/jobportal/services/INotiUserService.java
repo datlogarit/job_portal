@@ -11,4 +11,6 @@ public interface INotiUserService {
     void updateUserNoti(NotiUserDTO notiUserDTO);
 
     List<NotiUsers> getNotiByUserId(long userId);
+
+    int getTotalUnReadNotiByUserId(long userId);
 }

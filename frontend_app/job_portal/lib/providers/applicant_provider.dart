@@ -4,6 +4,14 @@ import 'package:job_portal/models/applicant_model.dart';
 import 'package:job_portal/repositories/applicant_repository.dart';
 
 class ApplicantProvider extends ChangeNotifier {
+  String? password;
+  Future<void> setPassword(String newPassword) async {
+    password = newPassword;
+    notifyListeners();
+    // thông báo UI cập nhật
+  }
+
+  // String? get pasword => _password;
   Applicant _applicant = Applicant(); //khởi tạo biến private
   bool _isLoading = true;
   Applicant get applicant =>
@@ -25,17 +33,20 @@ class ApplicantProvider extends ChangeNotifier {
   // }
 
   Future<bool> updateUser(
-      int id,
-      String? name,
-      String? password,
-      String? phoneNumber,
-      String? birthDay,
-      String? gender,
-      String? workingTime,
-      int? field,
-      String? desiredPosition,
-      String? desiredLocation,
-      String? workExperience) async {
+    int id,
+    String? name,
+    String? password,
+    String? phoneNumber,
+    String? birthDay,
+    // String? gender,
+    // String? workingTime,
+    int? field,
+    String? desiredPosition,
+    String? desiredLocation,
+    String? currentPosition,
+    String? workExperience,
+    List<String>? skills,
+  ) async {
     Map<String, dynamic> applicant =
         await ApplicantRepository.updateApplicantById(
             id,
@@ -43,12 +54,14 @@ class ApplicantProvider extends ChangeNotifier {
             password,
             phoneNumber,
             birthDay,
-            gender,
-            workingTime,
+            // gender,
+            // workingTime,
             field,
             desiredPosition,
             desiredLocation,
-            workExperience);
+            currentPosition,
+            workExperience,
+            skills);
     _applicant = Applicant.fromJson(applicant);
     notifyListeners();
     return true;

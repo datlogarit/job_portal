@@ -8,10 +8,11 @@ class Applicant {
   String? gender;
   String? workingTime;
   Category? field;
+  String? currentPosition;
   String? desiredPosition;
   String? desiredLocation;
   String? workExperience;
-
+  String? skills;
   Applicant(
       {this.id,
       this.userId,
@@ -21,7 +22,8 @@ class Applicant {
       this.field,
       this.desiredPosition,
       this.desiredLocation,
-      this.workExperience});
+      this.workExperience,
+      this.skills});
 
   Applicant.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -31,8 +33,10 @@ class Applicant {
     workingTime = json['workingTime'];
     field = json['field'] != null ? new Category.fromJson(json['field']) : null;
     desiredPosition = json['desiredPosition'];
+    currentPosition = json['currentPosition'];
     desiredLocation = json['desiredLocation'];
     workExperience = json['workExperience'];
+    skills = json['skills'];
   }
 
   Map<String, dynamic> toJson() {
@@ -48,8 +52,10 @@ class Applicant {
       data['field'] = this.field!.toJson();
     }
     data['desiredPosition'] = this.desiredPosition;
+    data['currentPosition'] = this.currentPosition;
     data['desiredLocation'] = this.desiredLocation;
     data['workExperience'] = this.workExperience;
+    data['skills'] = this.skills;
     return data;
   }
 }

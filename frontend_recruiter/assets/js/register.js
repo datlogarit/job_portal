@@ -8,7 +8,15 @@ document
     const name = document.getElementById("fullName").value;
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
-
+    const retypePassword = document.getElementById("retypePassword").value;
+    if (password != retypePassword) {
+      Swal.fire({
+        title: "Password mismatch",
+        text: "Password and Retype Password do not match.",
+        icon: "error",
+      });
+      return;
+    }
     try {
       await registerRecruiter(name, email, password);
       //   localStorage.setItem("user", JSON.stringify(user));

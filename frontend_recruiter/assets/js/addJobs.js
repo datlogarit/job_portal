@@ -22,14 +22,23 @@ function postJob() {
   var locationValue = document.getElementById("locationValue").value;
   var minSalaryValue = document.getElementById("minSalaryValue").value;
   var maxSalaryValue = document.getElementById("maxSalaryValue").value;
-  var genderSelected = document.getElementById("genderSelected").value;
-  var positionSelected = document.getElementById("positionSelected").value;
+  // var genderSelected = document.getElementById("genderSelected").value;
+  // var positionSelected = document.getElementById("positionSelected").value;
   var experienceValue = document.getElementById("experienceValue").value;
   var quantityValue = document.getElementById("quantityValue").value;
   var datepicker = document.getElementById("datepicker").value;
   var descriptionValue = document.getElementById("descriptionValue").value;
   var requirementValue = document.getElementById("requirementValue").value;
   var benefitValue = document.getElementById("benefitValue").value;
+
+  const selectElement = document.getElementById("mySelect");
+
+  const selectedTextString = Array.from(selectElement.selectedOptions)
+    .map((option) => option.text)
+    .join(", ");
+
+  console.log(selectedTextString); // Ví dụ: "Chart.JS, VueJS, Laravel"
+
   // alert(user.userId.id);
   fetch("http://localhost:8088/api/v1/job", {
     method: "POST",
@@ -43,8 +52,8 @@ function postJob() {
       experience: experienceValue,
       working_time: workTimeChoosed,
       number_recruitment: quantityValue,
-      gender: genderSelected,
-      position: positionSelected,
+      gender: "",
+      position: "",
       exp_date: datepicker,
       requirement: requirementValue,
       description: descriptionValue,
@@ -52,6 +61,7 @@ function postJob() {
       work_location: locationValue,
       posted_by: user.userId.id,
       category_id: categoryChoosed,
+      required_skill: selectedTextString,
     }),
   }).then((response) => {
     if (!response.ok) {
@@ -157,7 +167,12 @@ function renderNotify(notys) {
     });
   }
 }
-function readNotify(element, notiId) {
+async function readNotify(element, notiId) {
+  let totalUnRead = await checkUnreadNoti();
+  totalUnRead = totalUnRead - 1;
+  if (!totalUnRead) {
+    notificationItem.querySelector(".red-dot").classList.add("hidden");
+  }
   fetch(`http://localhost:8088/api/v1/notiuser`, {
     method: "PUT",
     headers: { "Content-type": "application/json" },
@@ -190,3 +205,41 @@ function viewDetailJob(jobId, title) {
   window.location.href = `../../application.html?jobId=${jobId}&jobTitle=${title}`;
 }
 
+document.addEventListener("DOMContentLoaded", async () => {
+  await checkUnreadNoti();
+});
+const notificationItem = document.getElementById("notification_item");
+async function checkUnreadNoti() {
+  try {
+    const response = await fetch(
+      `http://localhost:8088/api/v1/notiuser/totalUnread/${user.userId.id}`
+    );
+    const data = await response.text(); // Hoặc response.json() nếu API trả JSON
+
+    const totalUnread = parseInt(data, 10); // Đảm bảo data là số
+
+    const notificationItem = document.getElementById("notification_item");
+
+    if (totalUnread > 0) {
+      if (!notificationItem.querySelector(".red-dot")) {
+        let redDot = document.createElement("div");
+        redDot.classList.add(
+          "absolute",
+          "w-2.5",
+          "h-2.5",
+          "bg-red-600",
+          "rounded-[50%]",
+          "top-2.5",
+          "right-3.5",
+          "red-dot"
+        );
+        notificationItem.appendChild(redDot);
+      }
+    }
+
+    return totalUnread; // ✅ Giá trị trả về chính xác
+  } catch (error) {
+    console.error("Error fetching notifications:", error);
+    return 0; // hoặc null tùy ý, nhưng nên có để tránh undefined
+  }
+}

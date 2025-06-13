@@ -28,4 +28,9 @@ public class NotiUserController {
     public ResponseEntity<?> getNotiByUser(@PathVariable long id) {
         return ResponseEntity.ok(notiUserService.getNotiByUserId(id));
     }
+
+    @GetMapping("/totalUnread/{userId}")//lay ds thong bao theo userId
+    public ResponseEntity<?> getCountUnReadNotiByUser(@PathVariable long userId) {
+        return ResponseEntity.ok(notiUserService.getTotalUnReadNotiByUserId(userId));
+    }
 }

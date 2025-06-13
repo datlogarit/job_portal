@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:job_portal/helper.dart';
+import 'package:job_portal/home.dart';
 import 'package:job_portal/models/noti_user_model.dart';
 import 'package:job_portal/providers/notification_provider.dart';
 import 'package:job_portal/providers/applicant_provider.dart';
@@ -59,7 +60,8 @@ class _CustomNotificationState extends State<CustomNotification> {
             children: [
               GestureDetector(
                 onTap: () {
-                  Navigator.of(context).pop();
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) => Home()));
                 },
                 child: Icon(
                   Icons.close_rounded,

@@ -41,7 +41,7 @@ class SearchPage extends StatelessWidget {
                 ),
                 CatagoryListSearch(),
                 SizedBox(
-                  height: 25,
+                  height: 15,
                 ),
                 ListSearch(),
               ],

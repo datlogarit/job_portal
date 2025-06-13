@@ -181,6 +181,7 @@ class __FormContentState extends State<FormContent> {
                   if (_formKey.currentState?.validate() ?? false) {
                     // do something
                     try {
+                      await userProvider.setPassword(_passwordController.text);
                       await userProvider.getApplicant(
                         _emailController.text,
                         _passwordController.text,

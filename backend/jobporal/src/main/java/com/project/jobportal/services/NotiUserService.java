@@ -50,4 +50,10 @@ public class NotiUserService implements INotiUserService {
         Users users = iUserRepository.findById(userId).orElseThrow(() -> new RuntimeException("user not found"));
         return iNotiUserRepository.findByIdUser(users, Sort.by(Sort.Direction.DESC, "idNoti.createdAt"));
     }
+
+    @Override
+    public int getTotalUnReadNotiByUserId(long userId) {
+        Users users = iUserRepository.findById(userId).orElseThrow(() -> new RuntimeException("user not found"));
+        return iNotiUserRepository.countByIdUserAndIsReadFalse(users);
+    }
 }

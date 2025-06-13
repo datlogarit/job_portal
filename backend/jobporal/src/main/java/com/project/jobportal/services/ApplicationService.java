@@ -3,10 +3,12 @@ package com.project.jobportal.services;
 import com.project.jobportal.DTOs.ApplicationDTO;
 import com.project.jobportal.models.*;
 import com.project.jobportal.repositories.*;
+import com.project.jobportal.response.ApplicationResponse;
 import lombok.RequiredArgsConstructor;
 import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,6 +20,7 @@ public class ApplicationService implements IApplicationService {
     private final IUserRepository iUserRepository;
     private final ApplicantService applicantService;
     private final JobService jobService;
+    private final IInviteRepository iInviteRepository;
 
     @Override
     public void createApplication(ApplicationDTO applicationDTO, String fileName) {
@@ -107,8 +110,12 @@ public class ApplicationService implements IApplicationService {
 
     @Override
     public Applications getApplicationByApplicantIdAndJobId(long applicantId, long jobId) {
+//        ApplicationResponse applicationResponse = new ApplicationResponse();
+
         Applications applications = iApplicationRepository.finByApplicantIdAndJobId(applicantId, jobId).orElseThrow(()
                 -> new RuntimeException("Application not found"));
+//        applicationResponse.applications = applications;
+//        iInviteRepository.existsByJobIdAndApplicantId(applications.getJobId(), applications.getApplicantId());
         return applications;
     }
 
@@ -120,10 +127,20 @@ public class ApplicationService implements IApplicationService {
     }
 
     @Override
-    public List<Applications> getApplicationByJobId(long jobId) {
+    public List<ApplicationResponse> getApplicationByJobId(long jobId) {
         List<Applications> applications = iApplicationRepository.findByJobId(jobId).orElseThrow(()
                 -> new RuntimeException("Application not found"));
-        return applications;
+        List<ApplicationResponse> applicationResponses = new ArrayList<ApplicationResponse>();
+        for (Applications application : applications) {
+            ApplicationResponse applicationResponse = new ApplicationResponse();
+            applicationResponse.applications = application;
+
+            applicationResponse.is_invite = iInviteRepository.existsByJobIdAndApplicantId(
+                    application.getJobId(),
+                    application.getApplicantId());
+            applicationResponses.add(applicationResponse);
+        }
+        return applicationResponses;
     }
 
 

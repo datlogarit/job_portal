@@ -26,15 +26,15 @@ async function fetApplication(jobId) {
   const result = await fetch(
     `http://localhost:8088/api/v1/application/job/${jobId}`
   );
-  let applications = await result.json();
+  let applicationsResponse = await result.json();
+
   jobName.innerHTML = jobTitle;
-  applications.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-  renderApplicationTable(applications);
+  renderApplicationTable(applicationsResponse);
 }
-function renderApplicationTable(applications) {
+function renderApplicationTable(applicationResponses) {
   const applicationBody = document.getElementById("tableBody");
   applicationBody.innerHTML = "";
-  if (!applications.length) {
+  if (!applicationResponses.length) {
     const allView = document.getElementById("allView");
     allView.innerHTML = "";
     const div = document.createElement("div");
@@ -45,10 +45,15 @@ function renderApplicationTable(applications) {
     </div>`;
     allView.append(div);
   } else {
-    applications.forEach((application) => {
+    applicationResponses.forEach((applicationReponse) => {
+      let application = applicationReponse.applications;
+      // applications.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      let is_invite = applicationReponse.is_invite;
       const row = document.createElement("tr");
       row.innerHTML = `
-      <td class="p-2.5">${application.applicantId.userId.name}</td>
+      <td class="p-2.5 min-w-fit whitespace-nowrap">${
+        application.applicantId.userId.name
+      } ${is_invite ? `⭐` : ``}</td>
       <td class="p-2.5">${application.applicantId.userId.email}</td>
       <td class="p-2.5">${application.applicantId.userId.phoneNumber}</td>
       <td class="p-2.5">${application.message}</td>
@@ -246,7 +251,12 @@ function renderNotify(notys) {
     });
   }
 }
-function readNotify(element, notiId) {
+async function readNotify(element, notiId) {
+  let totalUnRead = await checkUnreadNoti();
+  totalUnRead = totalUnRead - 1;
+  if (!totalUnRead) {
+    notificationItem.querySelector(".red-dot").classList.add("hidden");
+  }
   fetch(`http://localhost:8088/api/v1/notiuser`, {
     method: "PUT",
     headers: { "Content-type": "application/json" },
@@ -277,4 +287,43 @@ function formatDateTime(isoDateTimeStr) {
 function viewDetailJob(jobId, title) {
   //chuyển đến trang detail kèm theo id với title
   window.location.href = `../../application.html?jobId=${jobId}&jobTitle=${title}`;
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+  await checkUnreadNoti();
+});
+const notificationItem = document.getElementById("notification_item");
+async function checkUnreadNoti() {
+  try {
+    const response = await fetch(
+      `http://localhost:8088/api/v1/notiuser/totalUnread/${user.userId.id}`
+    );
+    const data = await response.text(); // Hoặc response.json() nếu API trả JSON
+
+    const totalUnread = parseInt(data, 10); // Đảm bảo data là số
+
+    const notificationItem = document.getElementById("notification_item");
+
+    if (totalUnread > 0) {
+      if (!notificationItem.querySelector(".red-dot")) {
+        let redDot = document.createElement("div");
+        redDot.classList.add(
+          "absolute",
+          "w-2.5",
+          "h-2.5",
+          "bg-red-600",
+          "rounded-[50%]",
+          "top-2.5",
+          "right-3.5",
+          "red-dot"
+        );
+        notificationItem.appendChild(redDot);
+      }
+    }
+
+    return totalUnread; // ✅ Giá trị trả về chính xác
+  } catch (error) {
+    console.error("Error fetching notifications:", error);
+    return 0; // hoặc null tùy ý, nhưng nên có để tránh undefined
+  }
 }

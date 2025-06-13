@@ -40,6 +40,8 @@ class InteractionRepository {
 
     if (respon.statusCode == 200 || respon.statusCode == 201) {
       print(dataObject);
+    } else {
+      throw Exception("not found");
     }
     return dataObject;
   }
@@ -61,12 +63,9 @@ class InteractionRepository {
     if (respon.statusCode == 200 || respon.statusCode == 201) {
       print(respon.body);
       return true;
-    }
-    if (respon.statusCode == 500) {
-      throw Exception("in repo:interaction not found");
     } else {
       print("lỗi ${respon.statusCode} - ${respon.body}");
-      return false;
+      throw Exception("in repo:interaction not found");
     }
   }
 

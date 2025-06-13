@@ -57,6 +57,9 @@ public class Jobs extends BaseEntity {
     @Column(name = "work_location")
     private String workLocation;
 
+    @Column(name = "required_skill")
+    private String requiredSkill;
+
     @ManyToOne
     @JoinColumn(name = "posted_by")
     private Recruiters postedBy;
@@ -73,6 +76,9 @@ public class Jobs extends BaseEntity {
 
     @Column(name = "is_lock")
     private long isLock;
+
+//    @Column(name = "required_skill")
+//    private long requiredSkill;
 
 //    @Column(name = "is_active")
 //    private int isActive;

@@ -40,8 +40,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         File file = File(result.files.single.path!); // nếu cần xử lý file
         await ApplicantRepository.updateAvt(userProvider.applicant.id!, file);
         await context.read<ApplicantProvider>().getApplicant(
-            userProvider.applicant.userId!.email!,
-            userProvider.applicant.userId!.password!);
+            userProvider.applicant.userId!.email!, userProvider.password!);
         setState(() {});
       } else {
         // Người dùng hủy
@@ -140,13 +139,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     // Xử lý sự kiện khi click
                   },
                 ),
-                CustomProfileOption(
-                  icon: Icons.person,
-                  label: "Edit Profile",
-                  onTap: () {
-                    // Xử lý sự kiện khi click
-                  },
-                ),
+                // CustomProfileOption(
+                //   icon: Icons.person,
+                //   label: "Edit Profile",
+                //   onTap: () {
+                //     // Xử lý sự kiện khi click
+                //   },
+                // ),
                 CustomProfileOption(
                   icon: Icons.lock,
                   label: "Change Password",
@@ -173,7 +172,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       foregroundColor: Colors.black,
                     ),
                     onPressed: () {
-                      // TODO: logout logic
                       Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(

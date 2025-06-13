@@ -58,7 +58,9 @@ public class JobDTO {
     @JsonProperty("posted_by")
     private Long postedBy;
 
-    //    @NotNull(message = "category is required")
+    @JsonProperty("required_skill")
+    private String requiredSkill;
+
     @JsonProperty("category_id")
     private Long categoryId;
 

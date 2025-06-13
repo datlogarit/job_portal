@@ -4,6 +4,7 @@ import com.project.jobportal.DTOs.ApplicationDTO;
 import com.project.jobportal.DTOs.InteractionDTO;
 import com.project.jobportal.models.Applications;
 import com.project.jobportal.models.Interactions;
+import com.project.jobportal.response.ApplicationResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
@@ -18,5 +19,5 @@ public interface IApplicationService {
 
     List<Applications> getAllApplicationByApplicantId(long id);
 
-    List<Applications> getApplicationByJobId(long applicantId);
+    List<ApplicationResponse> getApplicationByJobId(long applicantId);
 }

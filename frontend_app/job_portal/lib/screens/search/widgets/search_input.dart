@@ -4,13 +4,6 @@ import 'package:job_portal/providers/job_provider.dart';
 import 'package:provider/provider.dart';
 
 class SearchInput extends StatelessWidget {
-  final List<String> items = [
-    "Tài chính/Ngân hàng",
-    "Công nghệ thông tin",
-    "Giáo dục",
-    "Y tế"
-  ];
-  String selectedValue = 'Chọn địa điểm';
   @override
   Widget build(BuildContext context) {
     final jobProvider = context.watch<JobProvider>();
@@ -64,103 +57,103 @@ class SearchInput extends StatelessWidget {
               },
             ),
           ),
-          SizedBox(
-            width: 10,
-          ),
-          Container(
-            height: 42,
-            width: 42,
-            padding: EdgeInsets.all(10),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                color: Color.fromRGBO(254, 212, 8, .9)),
-            child: GestureDetector(
-              onTap: () {
-                showModalBottomSheet(
-                    shape: RoundedRectangleBorder(),
-                    context: context,
-                    builder: (context) => SizedBox(
-                          height: 350,
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 13.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Center(
-                                  child: Container(
-                                    width: 60,
-                                    height: 4,
-                                    margin: EdgeInsets.only(top: 20),
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(8),
-                                        color: const Color.fromRGBO(
-                                            158, 158, 158, .4)),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 15,
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      "Lọc nâng cao",
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    GestureDetector(
-                                      child: Icon(Icons.close_sharp),
-                                      onTap: () {
-                                        Navigator.pop(context);
-                                      },
-                                    )
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                Text(
-                                  "Location",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w300),
-                                ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                DropdownButton<String>(
-                                  // value: selectedValue,
-                                  hint: Text("Chọn category"),
-                                  items: items.map((String item) {
-                                    return DropdownMenuItem<String>(
-                                      value: item,
-                                      child: Text(item),
-                                    );
-                                  }).toList(),
-                                  onChanged: (String? newValue) {
-                                    // setState(() {
-                                    //   selectedValue = newValue;
-                                    // });
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                        ));
-              },
-              child: Image.asset(
-                "assets/images/filter.png",
-                color: Colors.white,
-                // width: 1,
-              ),
-            ),
-          ),
-          Row()
+          // SizedBox(
+          //   width: 10,
+          // ),
+          // Container(
+          //   height: 42,
+          //   width: 42,
+          //   padding: EdgeInsets.all(10),
+          //   decoration: BoxDecoration(
+          //       borderRadius: BorderRadius.circular(16),
+          //       color: Color.fromRGBO(254, 212, 8, .9)),
+          //   child: GestureDetector(
+          //     onTap: () {
+          //       showModalBottomSheet(
+          //           shape: RoundedRectangleBorder(),
+          //           context: context,
+          //           builder: (context) => SizedBox(
+          //                 height: 350,
+          //                 child: Padding(
+          //                   padding:
+          //                       const EdgeInsets.symmetric(horizontal: 13.0),
+          //                   child: Column(
+          //                     mainAxisAlignment: MainAxisAlignment.start,
+          //                     crossAxisAlignment: CrossAxisAlignment.start,
+          //                     children: [
+          //                       Center(
+          //                         child: Container(
+          //                           width: 60,
+          //                           height: 4,
+          //                           margin: EdgeInsets.only(top: 20),
+          //                           decoration: BoxDecoration(
+          //                               borderRadius: BorderRadius.circular(8),
+          //                               color: const Color.fromRGBO(
+          //                                   158, 158, 158, .4)),
+          //                         ),
+          //                       ),
+          //                       SizedBox(
+          //                         height: 15,
+          //                       ),
+          //                       Row(
+          //                         mainAxisAlignment:
+          //                             MainAxisAlignment.spaceBetween,
+          //                         children: [
+          //                           Text(
+          //                             "Lọc nâng cao",
+          //                             style: TextStyle(
+          //                                 color: Colors.black,
+          //                                 fontSize: 20,
+          //                                 fontWeight: FontWeight.bold),
+          //                           ),
+          //                           GestureDetector(
+          //                             child: Icon(Icons.close_sharp),
+          //                             onTap: () {
+          //                               Navigator.pop(context);
+          //                             },
+          //                           )
+          //                         ],
+          //                       ),
+          //                       SizedBox(
+          //                         height: 20,
+          //                       ),
+          //                       Text(
+          //                         "Location",
+          //                         style: TextStyle(
+          //                             fontSize: 16,
+          //                             fontWeight: FontWeight.w300),
+          //                       ),
+          //                       SizedBox(
+          //                         height: 8,
+          //                       ),
+          //                       DropdownButton<String>(
+          //                         // value: selectedValue,
+          //                         hint: Text("Chọn category"),
+          //                         items: items.map((String item) {
+          //                           return DropdownMenuItem<String>(
+          //                             value: item,
+          //                             child: Text(item),
+          //                           );
+          //                         }).toList(),
+          //                         onChanged: (String? newValue) {
+          //                           // setState(() {
+          //                           //   selectedValue = newValue;
+          //                           // });
+          //                         },
+          //                       ),
+          //                     ],
+          //                   ),
+          //                 ),
+          //               ));
+          //     },
+          //     child: Image.asset(
+          //       "assets/images/filter.png",
+          //       color: Colors.white,
+          //       // width: 1,
+          //     ),
+          //   ),
+          // ),
+          // Row()
         ],
       ),
     );

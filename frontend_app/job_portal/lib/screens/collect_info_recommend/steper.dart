@@ -58,7 +58,7 @@ class OnboardingScreen extends StatelessWidget {
                   // Điều hướng sang trang tiếp theo
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                        builder: (context) => PersonalDetailsForm()),
+                        builder: (context) => CollectInfoRecommend()),
                   );
                 },
                 style: ElevatedButton.styleFrom(

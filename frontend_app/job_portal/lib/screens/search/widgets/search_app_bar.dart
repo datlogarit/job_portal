@@ -7,7 +7,7 @@ class SearchAppBar extends StatelessWidget {
     // TODO: implement build
     return Container(
         child: Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
       child: Column(
         children: [
           Row(
@@ -32,42 +32,45 @@ class SearchAppBar extends StatelessWidget {
                   ),
                 ),
               ),
-              Row(
-                children: [
-                  Container(
-                    transform: Matrix4.rotationZ(100),
-                    padding: EdgeInsets.only(top: 30, right: 15),
-                    child: Stack(
-                      children: [
-                        Icon(
-                          Icons.notifications_none_outlined,
-                          size: 30,
-                          color: Colors.grey,
-                        ),
-                        Positioned(
-                            top: 0,
-                            right: 0,
-                            child: Container(
-                              padding: EdgeInsets.all(4),
-                              decoration: BoxDecoration(
-                                  color: Colors.red,
-                                  borderRadius: BorderRadius.circular(10)),
-                            ))
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    width: 25,
-                  ),
-                  Icon(
-                    Icons.more_horiz,
-                    size: 30,
-                  )
-                ],
+              Icon(
+                Icons.more_horiz,
+                size: 30,
+                color: Colors.grey,
               ),
               // Row(
-              //   children: [],
-              // )
+              //   children: [
+              //     Container(
+              //       transform: Matrix4.rotationZ(100),
+              //       padding: EdgeInsets.only(top: 30, right: 15),
+              //       child: Stack(
+              //         children: [
+              //           Icon(
+              //             Icons.notifications_none_outlined,
+              //             size: 30,
+              //             color: Colors.grey,
+              //           ),
+              //           Positioned(
+              //             top: 0,
+              //             right: 0,
+              //             child: Container(
+              //               padding: EdgeInsets.all(4),
+              //               decoration: BoxDecoration(
+              //                   color: Colors.red,
+              //                   borderRadius: BorderRadius.circular(10)),
+              //             ),
+              //           )
+              //         ],
+              //       ),
+              //     ),
+              //     SizedBox(
+              //       width: 12,
+              //     ),
+              //     Icon(
+              //       Icons.more_horiz,
+              //       size: 30,
+              //     )
+              //   ],
+              // ),
             ],
           )
         ],

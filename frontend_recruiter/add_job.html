@@ -152,12 +152,81 @@
                         </div>
 
                         <!-- Job Location -->
-                        <div>
-                            <label class="block mb-1 font-medium">Work location:</label>
-                            <input id="locationValue" type="text" placeholder="eg: Hà Nội"
-                                class="w-full border rounded px-2.5 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                        </div>
 
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Work location<span
+                                    class="text-red-500">*</span></label>
+                            <!-- <input id="address_company" type="text" required
+                                            class="mt-1 block w-full px-2 py-1.5 border border-gray-300 rounded-md hover:border-[#0169dd] focus:border-[#0169dd] focus:outline-none"
+                                            placeholder="Enter the address"> -->
+                            <select id="locationValue"
+                                class="mt-1 block w-full px-2 py-1.5 border border-gray-300 rounded-md hover:border-[#0169dd] focus:border-[#0169dd] focus:outline-none">
+                                <option value="Hà Nội">Hà Nội</option>
+                                <option value="TP Hồ Chí Minh">TP Hồ Chí Minh</option>
+                                <option value="Đà Nẵng">Đà Nẵng</option>
+                                <option value="Hải Phòng">Hải Phòng</option>
+                                <option value="Cần Thơ">Cần Thơ</option>
+                                <option value="Bình Dương">Bình Dương</option>
+                                <option value="Đồng Nai">Đồng Nai</option>
+                                <option value="Khánh Hòa">Khánh Hòa</option>
+                                <option value="Quảng Ninh">Quảng Ninh</option>
+                                <option value="Bà Rịa - Vũng Tàu">Bà Rịa - Vũng Tàu</option>
+                                <option value="An Giang">An Giang</option>
+                                <option value="Bắc Giang">Bắc Giang</option>
+                                <option value="Bắc Kạn">Bắc Kạn</option>
+                                <option value="Bạc Liêu">Bạc Liêu</option>
+                                <option value="Bắc Ninh">Bắc Ninh</option>
+                                <option value="Bến Tre">Bến Tre</option>
+                                <option value="Bình Định">Bình Định</option>
+                                <option value="Bình Phước">Bình Phước</option>
+                                <option value="Bình Thuận">Bình Thuận</option>
+                                <option value="Cà Mau">Cà Mau</option>
+                                <option value="Cao Bằng">Cao Bằng</option>
+                                <option value="Đắk Lắk">Đắk Lắk</option>
+                                <option value="Đắk Nông">Đắk Nông</option>
+                                <option value="Điện Biên">Điện Biên</option>
+                                <option value="Đồng Tháp">Đồng Tháp</option>
+                                <option value="Gia Lai">Gia Lai</option>
+                                <option value="Hà Giang">Hà Giang</option>
+                                <option value="Hà Nam">Hà Nam</option>
+                                <option value="Hà Tĩnh">Hà Tĩnh</option>
+                                <option value="Hải Dương">Hải Dương</option>
+                                <option value="Hậu Giang">Hậu Giang</option>
+                                <option value="Hòa Bình">Hòa Bình</option>
+                                <option value="Hưng Yên">Hưng Yên</option>
+                                <option value="Kiên Giang">Kiên Giang</option>
+                                <option value="Kon Tum">Kon Tum</option>
+                                <option value="Lai Châu">Lai Châu</option>
+                                <option value="Lâm Đồng">Lâm Đồng</option>
+                                <option value="Lạng Sơn">Lạng Sơn</option>
+                                <option value="Lào Cai">Lào Cai</option>
+                                <option value="Long An">Long An</option>
+                                <option value="Nam Định">Nam Định</option>
+                                <option value="Nghệ An">Nghệ An</option>
+                                <option value="Ninh Bình">Ninh Bình</option>
+                                <option value="Ninh Thuận">Ninh Thuận</option>
+                                <option value="Phú Thọ">Phú Thọ</option>
+                                <option value="Phú Yên">Phú Yên</option>
+                                <option value="Quảng Bình">Quảng Bình</option>
+                                <option value="Quảng Nam">Quảng Nam</option>
+                                <option value="Quảng Ngãi">Quảng Ngãi</option>
+                                <option value="Quảng Trị">Quảng Trị</option>
+                                <option value="Sóc Trăng">Sóc Trăng</option>
+                                <option value="Sơn La">Sơn La</option>
+                                <option value="Tây Ninh">Tây Ninh</option>
+                                <option value="Thái Bình">Thái Bình</option>
+                                <option value="Thái Nguyên">Thái Nguyên</option>
+                                <option value="Thanh Hóa">Thanh Hóa</option>
+                                <option value="Thừa Thiên Huế">Thừa Thiên Huế</option>
+                                <option value="Tiền Giang">Tiền Giang</option>
+                                <option value="Trà Vinh">Trà Vinh</option>
+                                <option value="Tuyên Quang">Tuyên Quang</option>
+                                <option value="Vĩnh Long">Vĩnh Long</option>
+                                <option value="Vĩnh Phúc">Vĩnh Phúc</option>
+                                <option value="Yên Bái">Yên Bái</option>
+                            </select>
+                        </div>
                         <div class="flex flex-row justify-between">
                             <!-- Job Type -->
                             <div>
@@ -248,12 +317,14 @@
                                 <select id="experienceValue"
                                     class=" border rounded px-2.5 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
                                     <option>Select</option>
-                                    <option>Thực tập sinh</option>
-                                    <option>Junior</option>
-                                    <option>Sunior</option>
-                                    <option>Middle</option>
-                                    <option>Giám đốc</option>
-                                    <option value="">Khác</option>
+                                    <option>Chưa có kinh nghiệm</option>
+                                    <option>Dưới 1 năm</option>
+                                    <option>1 năm</option>
+                                    <option>2 năm</option>
+                                    <option>3 năm</option>
+                                    <option>4 năm</option>
+                                    <option>5 năm</option>
+                                    <option>Trên 5 năm</option>
                                 </select>
                             </div>
                             <div class="flex flex-row items-center justify-end">
@@ -267,7 +338,7 @@
                             <textarea id="benefitValue" rows="10" placeholder="Write about applicant's benefits..."
                                 class="w-full px-2 py-3 rounded-xl border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:!border-blue-500 text-gray-800 resize-none transition duration-200"></textarea>
                         </div>
-                        <div class="flex flex-row justify-between">
+                        <!-- <div class="flex flex-row justify-between">
                             <div class="flex flex-row items-center">
                                 <label class="block mb-1 font-medium mr-1.5">Gender:</label>
                                 <select id="genderSelected"
@@ -291,7 +362,858 @@
                                     <option value="">Khác</option>
                                 </select>
                             </div>
-                        </div>
+                        </div> -->
+
+
+                        <link rel="stylesheet"
+                            href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+                        <script
+                            src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+
+                        <h3 class="font-medium">Required skills</h3>
+                        <select id="mySelect" multiple>
+                            <option>3D Artist</option>
+                            <option>3D Max</option>
+                            <option>.NET</option>
+                            <option>ActionScript</option>
+                            <option>Agavi</option>
+                            <option>Agile</option>
+                            <option>Ajax</option>
+                            <option>Android</option>
+                            <option>AngularJS</option>
+                            <option>Antiryad Gx</option>
+                            <option>App Game Kit</option>
+                            <option>ASP.NET</option>
+                            <option>AutoCAD</option>
+                            <option>BattryTech</option>
+                            <option>Bootstrap</option>
+                            <option>Bridge Engineer</option>
+                            <option>C#</option>
+                            <option>C++</option>
+                            <option>Cacti</option>
+                            <option>CakePHP</option>
+                            <option>Ceph</option>
+                            <option>Cocoonjs</option>
+                            <option>Cocos2D</option>
+                            <option>CodeIgniter</option>
+                            <option>Construct 2</option>
+                            <option>CorelDRAW</option>
+                            <option>Corona</option>
+                            <option>CSS</option>
+                            <option>Designer</option>
+                            <option>Django</option>
+                            <option>Drupal</option>
+                            <option>Edgelib</option>
+                            <option>Elasticsearch</option>
+                            <option>Emo</option>
+                            <option>ERP</option>
+                            <option>Esenthel Engine</option>
+                            <option>FlightPHP</option>
+                            <option>FuelPHP</option>
+                            <option>Game</option>
+                            <option>Game Artist</option>
+                            <option>Game Editor</option>
+                            <option>GameMaker</option>
+                            <option>GameSalad</option>
+                            <option>Gideros</option>
+                            <option>Git</option>
+                            <option>Github</option>
+                            <option>GlusterFS</option>
+                            <option>HDFS</option>
+                            <option>HTML</option>
+                            <option>HTML5</option>
+                            <option>Illustrator</option>
+                            <option>iOS</option>
+                            <option>IT Helpdesk</option>
+                            <option>J2EE</option>
+                            <option>Java</option>
+                            <option>Javascript</option>
+                            <option>JMonkey</option>
+                            <option>Joomla</option>
+                            <option>JQuery</option>
+                            <option>JSON</option>
+                            <option>Knockout JS</option>
+                            <option>Laravel</option>
+                            <option>Libdx</option>
+                            <option>Linux</option>
+                            <option>LiveCode</option>
+                            <option>Lua</option>
+                            <option>Magento</option>
+                            <option>Manager</option>
+                            <option>MariaDB</option>
+                            <option>Marmalade</option>
+                            <option>Maya</option>
+                            <option>Memcached</option>
+                            <option>Microsoft Access</option>
+                            <option>MongoDB</option>
+                            <option>MonoGame</option>
+                            <option>MoSync</option>
+                            <option>MRTG</option>
+                            <option>MS SQL</option>
+                            <option>Multimedia Fusion 2</option>
+                            <option>MVC</option>
+                            <option>MVC5</option>
+                            <option>MySQL</option>
+                            <option>Nagios</option>
+                            <option>Nette</option>
+                            <option>Nginx</option>
+                            <option>NodeJS</option>
+                            <option>NoSQL</option>
+                            <option>Objective-C</option>
+                            <option>Odoo</option>
+                            <option>OOP</option>
+                            <option>Oracle</option>
+                            <option>Orx</option>
+                            <option>Papaya Social Game Engine</option>
+                            <option>Perl</option>
+                            <option>PhalconPHP</option>
+                            <option>Photoshop</option>
+                            <option>PHP</option>
+                            <option>PHPixie</option>
+                            <option>PlayCanvas</option>
+                            <option>PlayIR</option>
+                            <option>PopPHP</option>
+                            <option>PostgreSQL</option>
+                            <option>Product Manager</option>
+                            <option>Project Manager</option>
+                            <option>Python</option>
+                            <option>Redis</option>
+                            <option>REST API</option>
+                            <option>Riak</option>
+                            <option>Ruby on Rails</option>
+                            <option>SEM</option>
+                            <option>SEO</option>
+                            <option>Server-Side Scripting</option>
+                            <option>Sharepoint</option>
+                            <option>ShiVa</option>
+                            <option>ShiVa3D</option>
+                            <option>Signal R</option>
+                            <option>Simple MVC Framework</option>
+                            <option>Sketch</option>
+                            <option>Socket.io</option>
+                            <option>Sparrow</option>
+                            <option>SQL</option>
+                            <option>SQL Server</option>
+                            <option>Squid</option>
+                            <option>Starling</option>
+                            <option>Styncyl</option>
+                            <option>SVN</option>
+                            <option>Swift</option>
+                            <option>Symfony</option>
+                            <option>System Admin</option>
+                            <option>Tester</option>
+                            <option>UML</option>
+                            <option>Unity</option>
+                            <option>Unreal Development Kit</option>
+                            <option>UX/UI Design</option>
+                            <option>visual-basic</option>
+                            <option>WCF</option>
+                            <option>Websocket</option>
+                            <option>Windows Phone</option>
+                            <option>Leadership</option>
+                            <option>Teamwork</option>
+                            <option>Database</option>
+                            <option>IELTS</option>
+                            <option>Word</option>
+                            <option>Excel</option>
+                            <option>PowerPoint</option>
+                            <option>GMAT</option>
+                            <option>test cases</option>
+                            <option>test scripts</option>
+                            <option>test plan</option>
+                            <option>Google Analytics</option>
+                            <option>Google Webmaster tool</option>
+                            <option>iView</option>
+                            <option>iClick</option>
+                            <option>Facebook Ninja</option>
+                            <option>Rank tracker</option>
+                            <option>HMA</option>
+                            <option>Opencart</option>
+                            <option>Làm việc độc lập</option>
+                            <option>Microsoft Office</option>
+                            <option>Kỹ năng lãnh đạo</option>
+                            <option>Kỹ năng giao tiếp</option>
+                            <option>Làm việc nhóm</option>
+                            <option>Quản lý thời gian</option>
+                            <option>Copywriting</option>
+                            <option>Kỹ năng đàm phán</option>
+                            <option>Tổ chức sự kiện</option>
+                            <option>Market Research</option>
+                            <option>Telesales</option>
+                            <option>Kĩ năng phân tích tổng hợp</option>
+                            <option>Kỹ năng lắng nghe</option>
+                            <option>Docker</option>
+                            <option>Redux</option>
+                            <option>Planning</option>
+                            <option>Angular 2</option>
+                            <option>LESS</option>
+                            <option>SASS</option>
+                            <option>After Effect</option>
+                            <option>Google Adwords</option>
+                            <option>Marketing</option>
+                            <option>R&D</option>
+                            <option>Project Management</option>
+                            <option>cs-cart</option>
+                            <option>bitrix</option>
+                            <option>Biên tập</option>
+                            <option>React Native</option>
+                            <option>webpack</option>
+                            <option>babel</option>
+                            <option>HSK</option>
+                            <option>CPA</option>
+                            <option>Tiếng Trung</option>
+                            <option>SCRUM</option>
+                            <option>evm</option>
+                            <option>Dựng phim</option>
+                            <option>Tiếng Nhật</option>
+                            <option>QC/QA</option>
+                            <option>Windows Server</option>
+                            <option>Oracle DataGuard</option>
+                            <option>C&B</option>
+                            <option>LAN</option>
+                            <option>WAN</option>
+                            <option>CRM</option>
+                            <option>AFC</option>
+                            <option>ACCA</option>
+                            <option>AI</option>
+                            <option>VR</option>
+                            <option>Graphic design</option>
+                            <option>Java GUI Framework</option>
+                            <option>Oracle Database</option>
+                            <option>UI</option>
+                            <option>GIS</option>
+                            <option>NPI</option>
+                            <option>UX</option>
+                            <option>kafka</option>
+                            <option>Analytics</option>
+                            <option>etabs</option>
+                            <option>AIX platform</option>
+                            <option>IBM HTTP Server</option>
+                            <option>Business Process Analysis</option>
+                            <option>Tiếng Nhật N3</option>
+                            <option>Adobe Photoshop</option>
+                            <option>AWS</option>
+                            <option>ORM</option>
+                            <option>TOEIC</option>
+                            <option>Kỹ năng Thuyết phục</option>
+                            <option>Tiếng Anh giao tiếp</option>
+                            <option>Automation Test</option>
+                            <option>Struts</option>
+                            <option>Revit</option>
+                            <option>Sketchup</option>
+                            <option>CSS3</option>
+                            <option>OTC</option>
+                            <option>VB.NET</option>
+                            <option>.NET Framework</option>
+                            <option>MSSQL</option>
+                            <option>LinQ</option>
+                            <option>Facebook Ads</option>
+                            <option>Zalo ads</option>
+                            <option>SQLite</option>
+                            <option>Elixir</option>
+                            <option>TESOL</option>
+                            <option>TOEFL</option>
+                            <option>Quản lý nhóm</option>
+                            <option>Tiếng Anh thành thạo</option>
+                            <option>Thuyết trình</option>
+                            <option>Tư duy hệ thống</option>
+                            <option>ASP</option>
+                            <option>Tiếng Nhật N3</option>
+                            <option>Crystal Reports</option>
+                            <option>Hibernate</option>
+                            <option>Kỹ năng quản lý</option>
+                            <option>LabVIEW</option>
+                            <option>RD</option>
+                            <option>Tiếng Nhật N2</option>
+                            <option>Qt Framework</option>
+                            <option>Biên phiên dịch tiếng Trung</option>
+                            <option>Tin học văn phòng</option>
+                            <option>DNS</option>
+                            <option>Biên tập Video</option>
+                            <option>SolidWorks</option>
+                            <option>Oracle PL/SQL</option>
+                            <option>UIKit</option>
+                            <option>Core Data</option>
+                            <option>Blockchain</option>
+                            <option>Sony Vegas</option>
+                            <option>Tiếng Nga giao tiếp</option>
+                            <option>Maven</option>
+                            <option>Kubernetes</option>
+                            <option>Cocos2d-x</option>
+                            <option>XCode</option>
+                            <option>Visual Studio</option>
+                            <option>Cocos Studio</option>
+                            <option>Tiếng Nhật N4</option>
+                            <option>CAD/CAE</option>
+                            <option>Angular 4</option>
+                            <option>Javascript Framework</option>
+                            <option>Web API</option>
+                            <option>TypeScript</option>
+                            <option>Stopmotion</option>
+                            <option>Storyboad</option>
+                            <option>Message Queue</option>
+                            <option>Adobe Illustrator</option>
+                            <option>Scala</option>
+                            <option>Chart.JS</option>
+                            <option>Google APIs</option>
+                            <option>DI</option>
+                            <option>Web Socket</option>
+                            <option>ADO.NET</option>
+                            <option>Hitosoft</option>
+                            <option>MVC4</option>
+                            <option>Realm</option>
+                            <option>OpenGL</option>
+                            <option>Android SDK</option>
+                            <option>Android ADT</option>
+                            <option>CentOS</option>
+                            <option>Shell script</option>
+                            <option>Adobe Audition</option>
+                            <option>DaVinci</option>
+                            <option>Adobe Premier</option>
+                            <option>Moho</option>
+                            <option>SDLC</option>
+                            <option>Angular 6</option>
+                            <option>TOPIK 4</option>
+                            <option>COBOL</option>
+                            <option>Dịch thuật tiếng Trung</option>
+                            <option>Animation</option>
+                            <option>Apache</option>
+                            <option>Scraping</option>
+                            <option>Kendo UI</option>
+                            <option>Archicad</option>
+                            <option>Lotus Notes</option>
+                            <option>Slim PHP</option>
+                            <option>JSF</option>
+                            <option>VLAN</option>
+                            <option>Routing IP</option>
+                            <option>Financial office</option>
+                            <option>Advertising</option>
+                            <option>Vẽ 3D</option>
+                            <option>Junit</option>
+                            <option>Magento 2</option>
+                            <option>Angular JS</option>
+                            <option>Tiếng Nhật N1</option>
+                            <option>VueJS</option>
+                            <option>MS Outlook</option>
+                            <option>XHTML</option>
+                            <option>ISA</option>
+                            <option>DFS</option>
+                            <option>MCSA</option>
+                            <option>MCSE</option>
+                            <option>CCBA</option>
+                            <option>CBAP</option>
+                            <option>Cad</option>
+                            <option>Kỹ năng phỏng vấn</option>
+                            <option>counselor</option>
+                            <option>debug</option>
+                            <option>IOT</option>
+                            <option>FileMaker</option>
+                            <option>ReactJS</option>
+                            <option>ExpressJS</option>
+                            <option>MeanJS</option>
+                            <option>Restify</option>
+                            <option>Kỹ năng sư phạm</option>
+                            <option>PMP</option>
+                            <option>PMF</option>
+                            <option>CSM</option>
+                            <option>PSM</option>
+                            <option>Xử lý tình huống</option>
+                            <option>TBA</option>
+                            <option>MFĐ</option>
+                            <option>UPS</option>
+                            <option>Juniper</option>
+                            <option>Tiếng Nhật N2 - N1</option>
+                            <option>N3</option>
+                            <option>N1</option>
+                            <option>Biên phiên dịch tiếng Hàn</option>
+                            <option>Biên phiên dịch tiếng Anh</option>
+                            <option>Kỹ năng phân tích kinh doanh</option>
+                            <option>Angular</option>
+                            <option>Kỹ năng bơi lội</option>
+                            <option>Meteor</option>
+                            <option>Smartfox</option>
+                            <option>Kỹ năng bán hàng</option>
+                            <option>kỹ năng đào tạo</option>
+                            <option>HTTP/HTTPS</option>
+                            <option>FTP</option>
+                            <option>VNACCS</option>
+                            <option>Framework Django</option>
+                            <option>Lái xe</option>
+                            <option>MVP</option>
+                            <option>MVV</option>
+                            <option>Avid Media Composer</option>
+                            <option>Lightworks</option>
+                            <option>Final Cut</option>
+                            <option>Content write</option>
+                            <option>MES</option>
+                            <option>Flutter</option>
+                            <option>IELTS 6.</option>
+                            <option>Cimatron</option>
+                            <option>GUI</option>
+                            <option>Đàm phán thương lượng</option>
+                            <option>HSK4</option>
+                            <option>DB2</option>
+                            <option>Avr</option>
+                            <option>Angular 1</option>
+                            <option>Kỹ năng tuyển dụng</option>
+                            <option>Kỹ năng giảng dạy</option>
+                            <option>JLPT N3</option>
+                            <option>HSK5</option>
+                            <option>ETAB</option>
+                            <option>Fireframe</option>
+                            <option>ASTM</option>
+                            <option>phân tích số liệu</option>
+                            <option>Tiếng Hàn</option>
+                            <option>UCD</option>
+                            <option>UID</option>
+                            <option>Tiếng Pháp</option>
+                            <option>Kỹ năng đàm phán</option>
+                            <option>Business Analyst</option>
+                            <option>kỹ năng điều tra</option>
+                            <option>Unix</option>
+                            <option>Kỹ năng báo cáo</option>
+                            <option>Sales</option>
+                            <option>PR</option>
+                            <option>Tìm kiếm khách hàng</option>
+                            <option>Tư vấn</option>
+                            <option>Kỹ năng quản lý công việc</option>
+                            <option>Sales online</option>
+                            <option>PQA</option>
+                            <option>QA</option>
+                            <option>PLC</option>
+                            <option>Oracle SQL</option>
+                            <option>CCNA</option>
+                            <option>Flash</option>
+                            <option>LPI</option>
+                            <option>Tư duy logic</option>
+                            <option>Adobe After Effects</option>
+                            <option>Adobe Dreamweaver</option>
+                            <option>Adobe InDesign</option>
+                            <option>Biên phiên dịch Tiếng Nhật</option>
+                            <option>Jenkins</option>
+                            <option>MS Offices</option>
+                            <option>Misa</option>
+                            <option>Tiếng Anh đọc hiểu</option>
+                            <option>Adobe Premiere Pro</option>
+                            <option>Golang</option>
+                            <option>Unity 3D</option>
+                            <option>Cadewa</option>
+                            <option>Kotlin</option>
+                            <option>Jira</option>
+                            <option>Tiếng Anh cơ bản</option>
+                            <option>Tiếng Anh trung cấp</option>
+                            <option>ATSM</option>
+                            <option>ASME</option>
+                            <option>Lightroom</option>
+                            <option>Alige</option>
+                            <option>VMWare</option>
+                            <option>VB6</option>
+                            <option>Zoho Desk</option>
+                            <option>Big Data</option>
+                            <option>NLP</option>
+                            <option>RSpec</option>
+                            <option>Devise</option>
+                            <option>TDD</option>
+                            <option>CI</option>
+                            <option>Mocking</option>
+                            <option>Exploit</option>
+                            <option>Eclipse</option>
+                            <option>OOD</option>
+                            <option>LAMP</option>
+                            <option>LEMP</option>
+                            <option>VPSSIM</option>
+                            <option>Ubuntu</option>
+                            <option>Objective C</option>
+                            <option>IRP</option>
+                            <option>SOA</option>
+                            <option>Gerber</option>
+                            <option>Lectra</option>
+                            <option>Negotiation Skill</option>
+                            <option>Tiếng Thái</option>
+                            <option>Spring</option>
+                            <option>CAD 2D</option>
+                            <option>Fast</option>
+                            <option>Amis</option>
+                            <option>Angular 5</option>
+                            <option>Apache Spark</option>
+                            <option>HMTL5</option>
+                            <option>Figma</option>
+                            <option>JET</option>
+                            <option>Intermedidate English</option>
+                            <option>ABAP</option>
+                            <option>Tensorflow</option>
+                            <option>Pytorch</option>
+                            <option>Zbrush</option>
+                            <option>Sculpt</option>
+                            <option>Spring Framework</option>
+                            <option>Spring Boot</option>
+                            <option>BPMN</option>
+                            <option>Phát triển thị trường</option>
+                            <option>TCP/IP</option>
+                            <option>English</option>
+                            <option>HSK 6</option>
+                            <option>IELTS 7.0</option>
+                            <option>JLPT N2</option>
+                            <option>Ruby</option>
+                            <option>Tiếng Đức</option>
+                            <option>Tiếng Ý</option>
+                            <option>Tiếng Ả Rập</option>
+                            <option>Tiếng Bồ Đào Nha</option>
+                            <option>Tiếng Tây Ban Nha</option>
+                            <option>Tiếng Anh</option>
+                            <option>Adobe Premiere</option>
+                            <option>Full Stack</option>
+                            <option>XML</option>
+                            <option>AXure</option>
+                            <option>TOEIC 600</option>
+                            <option>JLPT N4</option>
+                            <option>JLPT N1</option>
+                            <option>IELTS 7.5</option>
+                            <option>Tiếng Indonesia</option>
+                            <option>TOEIC 550</option>
+                            <option>TOEIC 850</option>
+                            <option>IELTS 8.5</option>
+                            <option>HKS5</option>
+                            <option>HSK6</option>
+                            <option>IELTS 6.5</option>
+                            <option>TOEIC 650</option>
+                            <option>Tiếng Anh B2</option>
+                            <option>IELTS 8.0</option>
+                            <option>Performance Marketing</option>
+                            <option>Marketing Online</option>
+                            <option>Programming</option>
+                            <option>Xây dựng đội nhóm</option>
+                            <option>Excel cơ bản</option>
+                            <option>API</option>
+                            <option>CI/CD</option>
+                            <option>Adobe</option>
+                            <option>Quay dựng</option>
+                            <option>Game Balance</option>
+                            <option>Game Design</option>
+                            <option>Event Planning</option>
+                            <option>Public Speaking</option>
+                            <option>Business Development</option>
+                            <option>Communication</option>
+                            <option>zalo</option>
+                            <option>facebook</option>
+                            <option>Content Writer</option>
+                            <option>Sáng tạo nội dung</option>
+                            <option>Phân tích công việc</option>
+                            <option>Windows</option>
+                            <option>Chịu áp lực cao</option>
+                            <option>Direct Sale</option>
+                            <option>Design Thinking</option>
+                            <option>RESTful API</option>
+                            <option>Back-End Web Development</option>
+                            <option>RabbitMQ</option>
+                            <option>Setup hệ thống</option>
+                            <option>Nghiên cứu</option>
+                            <option>Tổ chức công việc</option>
+                            <option>Nhanh nhẹn</option>
+                            <option>Cẩn thận</option>
+                            <option>Nhiệt tình</option>
+                            <option>Tự tin</option>
+                            <option>Xây dựng mối quan hệ</option>
+                            <option>Thiết kế đồ họa</option>
+                            <option>Cởi mở</option>
+                            <option>Creativity</option>
+                            <option>People Management</option>
+                            <option>Quản lý con người</option>
+                            <option>Time Management</option>
+                            <option>Persuasion</option>
+                            <option>Khả năng thuyết phục</option>
+                            <option>Emotional Intelligence (EQ)</option>
+                            <option>Translation</option>
+                            <option>Video Production</option>
+                            <option>Corporate Communications</option>
+                            <option>Industrial Design</option>
+                            <option>Collaboration</option>
+                            <option>Adaptability</option>
+                            <option>Analytical Reasoning</option>
+                            <option>Sales Leadership</option>
+                            <option>Journalism</option>
+                            <option>Competitive Strategies</option>
+                            <option>Active listening</option>
+                            <option>Writing</option>
+                            <option>Nonverbal Communication</option>
+                            <option>Consulting</option>
+                            <option>Research</option>
+                            <option>Problem-solving</option>
+                            <option>Critical Thinking</option>
+                            <option>Data Analysis</option>
+                            <option>SEO/SEM</option>
+                            <option>Social Media</option>
+                            <option>Media Planning</option>
+                            <option>Channel Marketing</option>
+                            <option>Affiliate Marketing</option>
+                            <option>Online Marketing</option>
+                            <option>Strategic Planning</option>
+                            <option>Delegating Tasks</option>
+                            <option>Coaching</option>
+                            <option>Giảng dạy</option>
+                            <option>Negotiation</option>
+                            <option>Đàm phán</option>
+                            <option>Relationship Management</option>
+                            <option>Cloud Computing</option>
+                            <option>Data Presentation</option>
+                            <option>Tech Support</option>
+                            <option>UI/UX</option>
+                            <option>Software Engineering</option>
+                            <option>Mobile Development</option>
+                            <option>Scientific Computing</option>
+                            <option>Google</option>
+                            <option>.NET CLR</option>
+                            <option>.NET Compact Framework</option>
+                            <option>.com</option>
+                            <option>.htaccess</option>
+                            <option>10 Key</option>
+                            <option>1031 Exchanges</option>
+                            <option>1H NMR</option>
+                            <option>21 CFR</option>
+                            <option>21 CFR Part 11</option>
+                            <option>21st Century Skills</option>
+                            <option>2D graphics</option>
+                            <option>360 Degree Assessment</option>
+                            <option>360 Feedback</option>
+                            <option>3Com NBX</option>
+                            <option>3D Architectural Rendering</option>
+                            <option>3D GIS</option>
+                            <option>3D Graphics</option>
+                            <option>3D Modeling</option>
+                            <option>3D Rendering</option>
+                            <option>3D Scanning</option>
+                            <option>3D Seismic Interpretation</option>
+                            <option>3D Studio Max</option>
+                            <option>3D Studio Viz</option>
+                            <option>3D Visualization</option>
+                            <option>401k Rollovers</option>
+                            <option>4th Dimension</option>
+                            <option>5 Why</option>
+                            <option>5.1 Mixing</option>
+                            <option>960 Grid System</option>
+                            <option>@Task</option>
+                            <option>A-GPS</option>
+                            <option>A3 Thinking</option>
+                            <option>AAAHC</option>
+                            <option>AAC</option>
+                            <option>AACR2</option>
+                            <option>AAMS</option>
+                            <option>AAP</option>
+                            <option>AAR</option>
+                            <option>AASHTO</option>
+                            <option>AAT</option>
+                            <option>AAUS Scientific Diver</option>
+                            <option>ABAP Web Dynpro</option>
+                            <option>ABAP-OO</option>
+                            <option>ABB 800xA</option>
+                            <option>ABBYY</option>
+                            <option>ABBYY FineReader</option>
+                            <option>ABC Analysis</option>
+                            <option>ABC Flowcharter</option>
+                            <option>ABCP</option>
+                            <option>ABEL</option>
+                            <option>ABI</option>
+                            <option>ABLS</option>
+                            <option>ABO Certified</option>
+                            <option>ABR</option>
+                            <option>ABS</option>
+                            <option>ABV</option>
+                            <option>AC Nielsen</option>
+                            <option>ACAD</option>
+                            <option>ACBS</option>
+                            <option>ACD</option>
+                            <option>ACD Management</option>
+                            <option>ACDSee</option>
+                            <option>ACE</option>
+                            <option>ACE Certified</option>
+                            <option>ACE Certified Personal Trainer</option>
+                            <option>ACF2</option>
+                            <option>ACFE</option>
+                            <option>ACH</option>
+                            <option>ACI Codes</option>
+                            <option>ACIS</option>
+                            <option>ACLS</option>
+                            <option>ACLS Instruction</option>
+                            <option>ACMS</option>
+                            <option>ACOA</option>
+                            <option>ACORD</option>
+                            <option>ACP</option>
+                            <option>ACPI</option>
+                            <option>ACR</option>
+                            <option>ACSA</option>
+                            <option>ACSR</option>
+                            <option>ACSS</option>
+                            <option>ACT CRM</option>
+                            <option>ADA Compliance</option>
+                            <option>ADABAS</option>
+                            <option>ADB</option>
+                            <option>ADB Adapter</option>
+                            <option>ADCs</option>
+                            <option>ADDIE</option>
+                            <option>ADDM</option>
+                            <option>ADE</option>
+                            <option>ADEA</option>
+                            <option>ADF</option>
+                            <option>ADFS</option>
+                            <option>ADFS 2.0</option>
+                            <option>ADHD Coaching</option>
+                            <option>API 510</option>
+                            <option>API 653</option>
+                            <option>API Development</option>
+                            <option>API Testing</option>
+                            <option>ASAP</option>
+                            <option>Accountants</option>
+                            <option>Accounting</option>
+                            <option>Accounts Payable</option>
+                            <option>Accounts Receivable</option>
+                            <option>Adobe Design Programs</option>
+                            <option>Agile Environment</option>
+                            <option>Agile Testing</option>
+                            <option>Analytical Skills</option>
+                            <option>Architectural Illustration</option>
+                            <option>Aruba Wireless</option>
+                            <option>Basic HTML</option>
+                            <option>CAPA</option>
+                            <option>CNC</option>
+                            <option>CNC Machine</option>
+                            <option>CNC Manufacturing</option>
+                            <option>CNC Programing</option>
+                            <option>CRM Program Management</option>
+                            <option>Cache Coherency</option>
+                            <option>Cache Object Script</option>
+                            <option>Camtasia</option>
+                            <option>Computer Vision</option>
+                            <option>Core Java</option>
+                            <option>Creative Writing</option>
+                            <option>Cross-cultural Communication Skills</option>
+                            <option>Crypto</option>
+                            <option>Custom Facebook Pages</option>
+                            <option>Customer Service</option>
+                            <option>Dart</option>
+                            <option>Data Backup Solutions</option>
+                            <option>Data Domain</option>
+                            <option>Database Marketing</option>
+                            <option>Digital Art</option>
+                            <option>Digital Media</option>
+                            <option>Dreamweaver</option>
+                            <option>ERP Software</option>
+                            <option>Excel Pivot</option>
+                            <option>FIFO</option>
+                            <option>Final Cut Pro</option>
+                            <option>Finance</option>
+                            <option>Food Quality</option>
+                            <option>Foundation Certificate in IT Service Management</option>
+                            <option>Foundation Design</option>
+                            <option>Front-end</option>
+                            <option>GMP</option>
+                            <option>German Teaching</option>
+                            <option>German Translation</option>
+                            <option>Group Purchasing</option>
+                            <option>Heroku</option>
+                            <option>IT Recruitment</option>
+                            <option>Illustration</option>
+                            <option>Import/Export Operations</option>
+                            <option>InDesign</option>
+                            <option>Indirect Purchasing</option>
+                            <option>Internet Explorer</option>
+                            <option>Interviews</option>
+                            <option>JMeter</option>
+                            <option>JPA</option>
+                            <option>Java Web Services</option>
+                            <option>JavaScript Libraries</option>
+                            <option>Load Testing</option>
+                            <option>Mac OS X Server</option>
+                            <option>Manual Testing</option>
+                            <option>Microsoft CRM</option>
+                            <option>Microsoft Certified Technology</option>
+                            <option>Microsoft Dynamics AX</option>
+                            <option>Microsoft Excel</option>
+                            <option>Microsoft Technologies</option>
+                            <option>Microsoft Word</option>
+                            <option>Mobile Games</option>
+                            <option>Mobile Internet</option>
+                            <option>Motion Graphic Design</option>
+                            <option>Motion Graphics</option>
+                            <option>MySQL Cluster</option>
+                            <option>PHP Applications</option>
+                            <option>PHP Frameworks</option>
+                            <option>PKCS</option>
+                            <option>PTS</option>
+                            <option>Pdf</option>
+                            <option>Premiere</option>
+                            <option>Procurement</option>
+                            <option>Project Coordination</option>
+                            <option>Project Purchasing</option>
+                            <option>Purchasing Negotiation</option>
+                            <option>Purchasing Processes</option>
+                            <option>QC Tools</option>
+                            <option>Quality Control</option>
+                            <option>RNO</option>
+                            <option>Routers</option>
+                            <option>SAP</option>
+                            <option>SAP BI</option>
+                            <option>STLC</option>
+                            <option>Sales Management</option>
+                            <option>Selenium</option>
+                            <option>Selenium Testing</option>
+                            <option>Social Media Marketing</option>
+                            <option>Sony Vegas Video</option>
+                            <option>Spine</option>
+                            <option>Spring MVC</option>
+                            <option>Sumif</option>
+                            <option>Tax Accounting</option>
+                            <option>User Research</option>
+                            <option>VPN</option>
+                            <option>Video Editing</option>
+                            <option>Vray</option>
+                            <option>WPF</option>
+                            <option>Wacom Tablet</option>
+                            <option>Wholesale Purchasing</option>
+                            <option>WinForms</option>
+                            <option>YouTube</option>
+                            <option>ANOVA</option>
+                            <option>ASP.NET MVC</option>
+                            <option>Academic Development</option>
+                            <option>Academic Editing</option>
+                            <option>Academic English</option>
+                            <option>Account Management</option>
+                            <option>Adaptive Learning</option>
+                            <option>Administration</option>
+                            <option>Advertising Sales</option>
+                            <option>After Effects</option>
+                            <option>xCAT</option>
+                            <option>xCP</option>
+                            <option>xPC Target</option>
+                            <option>xPON</option>
+                            <option>xPression</option>
+                            <option>xUnit</option>
+                            <option>zLinux</option>
+                            <option>zSeries</option>
+                            <option>Giao tiếp</option>
+                            <option>Tư duy sáng tạo</option>
+                            <option>Phân tích dữ liệu</option>
+                            <option>Wordpress</option>
+                            <option>Adobe Acrobat</option>
+                        </select>
+
+                        <script>
+                            const element = document.getElementById('mySelect');
+                            const choices = new Choices(element, {
+                                removeItemButton: true,  // cho phép xóa item đã chọn
+                                searchEnabled: true,     // bật tìm kiếm
+                            });
+                        </script>
+                        <style>
+                            .choices__list--multiple .choices__item {
+                                background-color: #2563eb;
+                                font-size: 14px;
+                                /* Màu nền xanh lá */
+                                color: #fff;
+                                /* Màu chữ trắng */
+                                border-radius: 10px;
+                                padding: 4px 8px;
+                            }
+                        </style>
 
 
 

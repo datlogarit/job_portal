@@ -60,6 +60,7 @@ public class JobService implements IJobService {
                 .categoryId(existCategory)
                 .status("Opening")// Khóa từ phía ngươi dùng
                 .isLock(0)//khóa từ phía admin
+                .requiredSkill(jobDTO.getRequiredSkill())
                 .build();
         iJobRepository.save(jobs);
     }
@@ -154,11 +155,15 @@ public class JobService implements IJobService {
         if (jobDTO.getStatus() != null) {
             existJob.setStatus(jobDTO.getStatus());
         }
-//        if (jobDTO.getIsEdit() != null) {
+//        if (jobDTO.getIsEdit(
 //            existJob.setIsEdit(jobDTO.getIsEdit());
 //        }
         if (jobDTO.getIsLock() != null) {
             existJob.setIsLock(jobDTO.getIsLock());
+        }
+
+        if (jobDTO.getRequiredSkill() != null) {
+            existJob.setRequiredSkill(jobDTO.getRequiredSkill());
         }
 
 //        existJob.setPosition(jobDTO.getPosition());

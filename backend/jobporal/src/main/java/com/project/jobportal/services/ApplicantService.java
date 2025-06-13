@@ -75,6 +75,7 @@ public class ApplicantService implements IApplicantService {
                 .desiredLocation("")
                 .desiredPosition("")
                 .workExperience("")
+//                .skills("","")
                 .build();
         iApplicantRepository.save(newApplicant);
     }
@@ -122,8 +123,15 @@ public class ApplicantService implements IApplicantService {
             existApplicant.setDesiredPosition(applicantDTO.getDesiredPosition());
         }
 
+        if (applicantDTO.getCurrentPosition() != null && !applicantDTO.getCurrentPosition().isEmpty()) {
+            existApplicant.setCurrentPosition(applicantDTO.getCurrentPosition());
+        }
+
         if (applicantDTO.getWorkExperience() != null && !applicantDTO.getWorkExperience().isEmpty()) {
             existApplicant.setWorkExperience(applicantDTO.getWorkExperience());
+        }
+        if (applicantDTO.getSkills() != null && !applicantDTO.getSkills().isEmpty()) {
+            existApplicant.setSkills(applicantDTO.getSkills());
         }
 
         iApplicantRepository.save(existApplicant);
@@ -160,13 +168,10 @@ public class ApplicantService implements IApplicantService {
         ObjectMapper mapper = new ObjectMapper();
         //tạo ra 1 node json
         JsonNode root = mapper.readTree(response.getBody()); // jsonString là chuỗi JSON
-        JsonNode applicants = root.get("applicants");//lấy ra node jobs
+        JsonNode applicants = root.get("applicants");
         for (JsonNode applicant : applicants) {
             RecommendApplicantResponse responseObj = new RecommendApplicantResponse();
-            long applicant_id = applicant.get("user_id").asInt();//lấy ra node id trong json
-//            từ ds các userId trên, mình tiep tục tìm các user do trong bang invite voi jobId tuong ung
-            //neu co ban ghi, gan them truong invite la true, neu k co, gan them truong invite la false
-            // va tra kq cho frontend
+            long applicant_id = applicant.get("user_id").asInt();
             Applicants applicants1 = getApplicantById(applicant_id);
             responseObj.setApplicant(applicants1);
             //kiem tra xem voi applicant nay va job duoc truyen vao thi co ban ghi invite hay khong

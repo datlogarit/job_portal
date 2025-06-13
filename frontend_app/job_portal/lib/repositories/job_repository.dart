@@ -85,10 +85,10 @@ class JobRepository {
       {int page = 0, int limit = 15, String searchKey = ''}) async {
     String url;
     if (searchKey == '') {
-      url = "http://10.0.2.2:8088/api/v1/job?page=0&limit=10";
+      url = "http://10.0.2.2:8088/api/v1/job?page=0&limit=20";
     } else {
       url =
-          'http://10.0.2.2:8088/api/v1/job?page=0&limit=15&search_keyword=$searchKey';
+          'http://10.0.2.2:8088/api/v1/job?page=0&limit=100&search_keyword=$searchKey';
     }
 
     final response = await http.get(

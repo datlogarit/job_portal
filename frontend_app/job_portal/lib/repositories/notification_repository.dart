@@ -28,6 +28,25 @@ class NotificationRepository {
     return null;
   }
 
+  static Future<dynamic> fetchTotalUnread(int userId) async {
+    String url = "http://10.0.2.2:8088/api/v1/notiuser/totalUnread/$userId";
+    var respon = await http.get(Uri.parse(url)); //dạng json
+
+    var utf8Body = utf8.decode(respon.bodyBytes); //giải mã thành utf8
+    int responObj = jsonDecode(utf8Body); // đưa về dạng list, Map,...
+    if (respon.statusCode == 200 || respon.statusCode == 201) {
+      print("in repo: notification fetching");
+      // print("leng is: ${responObj.length}");
+      print(responObj);
+
+      return responObj;
+    } else {
+      print("${respon.statusCode} - ${respon.body}");
+    }
+
+    return null;
+  }
+
   static Future<dynamic> updateIsRead(int userId, int notiId) async {
     String url = "http://10.0.2.2:8088/api/v1/notiuser";
     var respon = await http.put(
