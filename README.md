@@ -13,7 +13,26 @@
 
 <!-- Thay thế bằng hình ảnh hoặc video -->
 > Some images of the job seeker app:
-><img width="371" height="321" alt="image" src="https://github.com/user-attachments/assets/e0bf7147-7cb7-42f4-9a1a-7ae966d5b960" />
+## 📸 Demo
+
+### 🔐 Register Screen
+![Register](./assets/login.png)
+
+### 🧠 Onboarding: Provide Information
+![Onboarding](./assets/demo-provide-info.png)
+
+### 🏠 Home + Fast Search + Recommendation
+![Home](./assets/demo-home.png)
+
+### 📋 Job List - Recommended for You
+![Recommended List](./assets/demo-recommend-list.png)
+
+### 📄 Job Detail
+![Job Detail](./assets/demo-job-detail-1.png)
+
+### 💼 Similar Job & Benefits
+![Similar Job](./assets/demo-job-detail-2.png)
+
 
 
 ---
