@@ -24,45 +24,54 @@
    <img src="./assets/similerJob.png" alt="Home" width="20%" />
 </p>
 
+> Some images of the recruitment website:
+<p align="center">
+  <img src="./assets/login_recruiter.png" alt="Register" width="25%" />
+  <img src="./assets/verify_recruiter.png" alt="Info" width="25%" />
+  <img src="./assets/home_recruiter.png" alt="Home" width="25%" />
+   <img src="./assets/creatJob_recruiter.png" alt="Home" width="25%" />
+   <img src="./assets/managerJob_recruiter.png" alt="Home" width="25%" />
+   <img src="./assets/managerApplicant_recruiter.png" alt="Home" width="25%" />
+   <img src="./assets/suggest_applicant.png" alt="Home" width="25%" />
+   
+</p>
 
+> Some images of the management website:
+<p align="center">
+  <img src="./assets/home_admin.png" alt="Register" width="25%" />
+  <img src="./assets/verify_admin.png" alt="Info" width="25%" />
+  <img src="./assets/report_admin.png" alt="Home" width="25%" />
+   <img src="./assets/managerUser_admin.png" alt="Home" width="25%" />
+   <img src="./assets/managerJob_admin.png" alt="Home" width="25%" />
+
+   
+</p>
+---
+
+## ✨ Main function
+
+- User authentication and authorization with spring security and jwt, password hashing before storing in database.
+- Automatically schedule events with Scheduled annotation.
+- Suggest suitable jobs to candidates based on the data they provide and their behavior
+- Scrape large amounts of data to enrich the system.
+- Verify employer and company information before they can post.
+- Suggest to employers candidates with the most suitable skills and work experience.
+- Admin management system makes system coordination easy
 
 ---
 
-## ✨ Tính Năng
+## 🛠️ Technology used
 
-- ✅ Giao diện đơn giản, dễ sử dụng
-- 🔒 Xác thực người dùng an toàn
-- 📊 Thống kê trực quan
-- 📝 Ghi chú và quản lý công việc theo tag
-- ⏰ Nhắc nhở deadline tự động
-
----
-
-## 🛠️ Công Nghệ Sử Dụng
-
-| Frontend      | Backend       | Khác                  |
+| Frontend      | Backend       | Other                  |
 |---------------|---------------|------------------------|
-| React / Flutter | Node.js / Spring Boot | MongoDB / MySQL / Firebase |
-| TailwindCSS / Bootstrap | Express / Django | JWT, Docker, etc. |
+| HTML, CSS, JS / Flutter | Spring Secirity / Spring Boot |  MySQL  |
+| TailwindCSS / Bootstrap | FastAPI | JWT etc. |
 
 ---
 
-## ⚙️ Cài Đặt
+## ⚙️ Installation
 
-### Yêu cầu:
-- Node.js / Java / Flutter
-- Git
-- (Tùy chọn) Docker
+### Required:
+- Python version > 3.12.6 / JDK version > 17 / Flutter version > 3.27
 
-### Các bước cài đặt:
 
-```bash
-# Clone repo
-git clone https://github.com/username/project-name.git
-cd project-name
-
-# Cài đặt thư viện
-npm install
-
-# Chạy ứng dụng
-npm run start
