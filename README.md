@@ -13,7 +13,17 @@
 
 <!-- Thay thế bằng hình ảnh hoặc video -->
 > Some images of the job seeker app:
-><img width="371" height="321" alt="image" src="https://github.com/user-attachments/assets/e0bf7147-7cb7-42f4-9a1a-7ae966d5b960" />
+<p align="center">
+  <img src="./assets/login.png" alt="Register" width="20%" />
+  <img src="./assets/formProviderInfo.png" alt="Info" width="20%" />
+  <img src="./assets/home.png" alt="Home" width="20%" />
+   <img src="./assets/notification.png" alt="Home" width="20%" />
+   <img src="./assets/myjob.png" alt="Home" width="20%" />
+   <img src="./assets/searchjo.png" alt="Home" width="20%" />
+   <img src="./assets/jobDetail.png" alt="Home" width="20%" />
+   <img src="./assets/similerJob.png" alt="Home" width="20%" />
+</p>
+
 
 
 ---
