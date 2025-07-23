@@ -9,8 +9,8 @@ import 'package:job_portal/widgets/text_icons.dart';
 class JobCard extends StatelessWidget {
 //những dữ liệu mà liên quan đến khi khởi tạo đối tượng mới để đây
   final Job job; //object
-  final companyNumChar;
-  final titleNumChar;
+  final int companyNumChar;
+  final int titleNumChar;
   final bool timeJob;
   final bool salary;
   const JobCard(

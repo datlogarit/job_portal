@@ -2730,10 +2730,9 @@ class _SuggestionSettingState extends State<SuggestionSetting> {
       MultiSelectController();
   final MultiSelectController<String> controllerExperience =
       MultiSelectController();
-  // final TextEditingController _desiredJobController = TextEditingController();
   final MultiSelectController<String> controllerSkills =
       MultiSelectController();
-  // List<String> skillhehe = ["HTML", "CSS"];
+ 
   @override
   void initState() {
     final applicantProvider = context.read<ApplicantProvider>();
@@ -2771,15 +2770,8 @@ class _SuggestionSettingState extends State<SuggestionSetting> {
 
   @override
   Widget build(BuildContext context) {
-    final inputBorder = OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12),
-      borderSide: const BorderSide(
-        width: 1.3,
-        color: Color.fromARGB(255, 73, 73, 73),
-      ),
-    );
 
-    final applicantProvider = context.read<ApplicantProvider>();
+    final applicantProvider = context.watch<ApplicantProvider>();
 
     List<String>? selectedSkills;
     int? selectedProfessional;
@@ -3092,6 +3084,7 @@ class _SuggestionSettingState extends State<SuggestionSetting> {
                   );
                   result
                       ? QuickAlert.show(
+                          // ignore: use_build_context_synchronously
                           context: context,
                           type: QuickAlertType.success,
                           text: 'Change infomation successfully!',

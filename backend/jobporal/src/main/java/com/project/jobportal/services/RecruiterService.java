@@ -4,8 +4,9 @@ import com.project.jobportal.DTOs.User_RecruiterDTO;
 import com.project.jobportal.models.RecruiterVerifications;
 import com.project.jobportal.repositories.ICompanyRepository;
 import com.project.jobportal.repositories.IRecruiterVerificationRepository;
-import com.project.jobportal.security.PasswordUtil;
+//import com.project.jobportal.security.PasswordUtil;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.project.jobportal.models.Companies;
@@ -27,6 +28,7 @@ public class RecruiterService implements IRecruiterService {
     private final IUserRepository iUserRepository;
     private final ICompanyRepository iCompanyRepository;
     private final IRecruiterVerificationRepository iRecruiterVerificationRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public Recruiters login(String email, String password) {
@@ -34,7 +36,7 @@ public class RecruiterService implements IRecruiterService {
         if (recruiters == null) {
             throw new RuntimeException("Email or password not match");
         }
-        if (!PasswordUtil.matchPassword(password, recruiters.getUserId().getPassword())) {
+        if (!passwordEncoder.matches(password, recruiters.getUserId().getPassword())) {
             throw new RuntimeException("Email or password not match");
         }
         if (recruiters.getUserId().getIsActive() == 0) {
@@ -54,7 +56,7 @@ public class RecruiterService implements IRecruiterService {
 
     @Override
     public void createRecruiter(User_RecruiterDTO userRecruiter) {
-        String hashedPassword = PasswordUtil.hashPassword(userRecruiter.getPassword());
+        String hashedPassword = passwordEncoder.encode(userRecruiter.getPassword());
         if (iRecruiterRepository.findByEmail(userRecruiter.getEmail()) != null) {
             throw new RuntimeException("Email đã tồn tại");
         }

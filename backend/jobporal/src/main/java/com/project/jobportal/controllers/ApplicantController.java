@@ -2,11 +2,14 @@ package com.project.jobportal.controllers;
 
 import com.project.jobportal.DTOs.UserDTO;
 import com.project.jobportal.DTOs.User_ApplicantDTO;
+import com.project.jobportal.components.JwtUtil;
 import com.project.jobportal.models.Applicants;
+import com.project.jobportal.response.LoginResponse;
 import com.project.jobportal.services.ApplicantService;
 import com.project.jobportal.utilities.HandleFile;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,10 +33,11 @@ public class ApplicantController {
     private final ApplicantService applicantService;
     private final HandleFile handleFile;
 
-    @PostMapping("login")
-    public ResponseEntity<?> login(@RequestBody UserDTO userDTO) {
-        return ResponseEntity.ok(applicantService.login(userDTO.getEmail(), userDTO.getPassword()));
-    }
+//    @PostMapping("/login")
+//    public ResponseEntity<?> login(@RequestBody UserDTO userDTO) {
+//        LoginResponse jwtResponse = applicantService.login(userDTO.getEmail(), userDTO.getPassword());
+//        return ResponseEntity.ok(jwtResponse);
+//    }
 
     @PostMapping("")
     public ResponseEntity<?> createInfoApplicant(@Valid @RequestBody User_ApplicantDTO userApplicantDTO, BindingResult result) {
@@ -59,6 +63,7 @@ public class ApplicantController {
 //                    .toList();
 //            return ResponseEntity.badRequest().body(listErr);
 //        }
+
         return ResponseEntity.ok(applicantService.updateApplicant(id, userApplicantDTO));
     }
 

@@ -1,15 +1,22 @@
 package com.project.jobportal.services;
 
 import com.project.jobportal.DTOs.UserDTO;
+import com.project.jobportal.components.JwtUtil;
 import com.project.jobportal.models.Jobs;
 import com.project.jobportal.models.Users;
 import com.project.jobportal.repositories.IUserRepository;
+import com.project.jobportal.response.LoginResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -18,19 +25,38 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class UserService implements IUserService {
     private final IUserRepository iUserRepository;
     private final JobService jobService;
+    private final AuthenticationManager authenticationManager;
+    private final JwtUtil jwtUtil;
+    private final UserDetailsService userDetailsService;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    public LoginResponse login(String email, String password, String role) {
+        // Xác thực thông tin đăng nhập
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(email, password)
+        );
+        // Nếu không exception thì thông tin hợp lệ → tạo JWT
+        UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+        if (!role.equals(userDetails.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(", ")))) {
+            throw new RuntimeException("Inappropriate role");
+        }
+        String token = jwtUtil.generateToken(userDetails);//tạo được token
+        return new LoginResponse(userDetails, token);
+    }
 
     @Override
     public void updateStatusUser(long userId, int status) {
-        Users user = iUserRepository.findById(userId).orElseThrow(() -> new RuntimeException("user not found"));
+        Users user = iUserRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         user.setIsActive(status);
         iUserRepository.save(user);
     }
@@ -58,14 +84,14 @@ public class UserService implements IUserService {
         return iUserRepository.findAll(pageRequest);
     }
 
-    @Override
-    public Users login(String email, String password, String role) {
-        Users users = iUserRepository.findByEmailAndPasswordAndRole(email, password, role);
-        if (users == null) {
-            throw new RuntimeException("Email or password not match");
-        }
-        return users;
-    }
+//    @Override
+//    public Users login(String email, String password, String role) {
+//        Users users = iUserRepository.findByEmailAndPasswordAndRole(email, password, role);
+//        if (users == null) {
+//            throw new RuntimeException("Email or password not match");
+//        }
+//        return users;
+//    }
 
     @Override
     public List<Users> filterJobs(String title, String position, Integer experience, Integer minSalary, Integer maxSalary) {

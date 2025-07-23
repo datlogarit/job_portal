@@ -3,6 +3,7 @@ package com.project.jobportal.services;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.jobportal.DTOs.User_ApplicantDTO;
+import com.project.jobportal.components.JwtUtil;
 import com.project.jobportal.models.Applicants;
 import com.project.jobportal.models.Categories;
 import com.project.jobportal.models.Jobs;
@@ -11,12 +12,21 @@ import com.project.jobportal.repositories.IApplicantRepository;
 import com.project.jobportal.repositories.ICategoryRepository;
 import com.project.jobportal.repositories.IInviteRepository;
 import com.project.jobportal.repositories.IUserRepository;
+import com.project.jobportal.response.LoginResponse;
 import com.project.jobportal.response.RecommendApplicantResponse;
-import com.project.jobportal.security.PasswordUtil;
+//import com.project.jobportal.security.PasswordUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -30,28 +40,27 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+
 public class ApplicantService implements IApplicantService {
+
     private final IApplicantRepository iApplicantRepository;
     private final IUserRepository iUserRepository;
     private final IInviteRepository iInviteRepository;
     private final IJobService iJobService;
     private final ICategoryRepository iCategoryRepository;
+    private final AuthenticationManager authenticationManager;
+    private final JwtUtil jwtUtil;
+    private final UserDetailsService userDetailsService;
+    private final PasswordEncoder passwordEncoder;
 
-    @Override
-    public Applicants login(String email, String password) {
-        Applicants applicants = iApplicantRepository.findByEmail(email);
-        if (applicants == null || !PasswordUtil.matchPassword(password, applicants.getUserId().getPassword())) {
-            throw new RuntimeException("Email or password not match");
-        }
-        if (applicants.getUserId().getIsActive() == 0) {
-            throw new RuntimeException("This account has been locked");
-        }
-        return applicants;
+    public void testInjection() {
+        System.out.println("hello applicationservice");
     }
+
 
     @Override
     public void crateApplicant(User_ApplicantDTO userApplicantDTO) {
-        String hashedPassword = PasswordUtil.hashPassword(userApplicantDTO.getPassword());
+        String hashedPassword = passwordEncoder.encode(userApplicantDTO.getPassword());
         if (iApplicantRepository.findByEmail(userApplicantDTO.getEmail()) != null) {
             throw new RuntimeException("Email already exists");
         }
@@ -85,7 +94,7 @@ public class ApplicantService implements IApplicantService {
         Users existUser = iUserRepository.findById(id).orElseThrow(() -> new RuntimeException("applicant not found"));
 
         if (applicantDTO.getPassword() != null && !applicantDTO.getPassword().isEmpty()) {
-            existUser.setPassword(applicantDTO.getPassword());
+            existUser.setPassword(passwordEncoder.encode(applicantDTO.getPassword()));
         }
         if (applicantDTO.getName() != null && !applicantDTO.getName().isEmpty()) {
             existUser.setName(applicantDTO.getName());

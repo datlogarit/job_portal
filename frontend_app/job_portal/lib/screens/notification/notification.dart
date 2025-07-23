@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:job_portal/helper.dart';
 import 'package:job_portal/home.dart';
 import 'package:job_portal/models/noti_user_model.dart';
 import 'package:job_portal/providers/notification_provider.dart';
 import 'package:job_portal/providers/applicant_provider.dart';
-import 'package:job_portal/screens/authenticate/login/login.dart';
 import 'package:job_portal/screens/home/widgets/detailpage.dart';
-import 'package:job_portal/screens/home/widgets/job_detail2.dart';
 import 'package:job_portal/screens/notification/widget/tag_category_notification.dart';
 import 'package:provider/provider.dart';
 
@@ -22,7 +19,7 @@ class _CustomNotificationState extends State<CustomNotification> {
   String choosedCategory = 'All';
   @override
   void initState() {
-    final userProvider = context.read<ApplicantProvider>();
+    final ApplicantProvider userProvider = context.read<ApplicantProvider>();
     super.initState();
     getNotificationByUser(userProvider.applicant.userId!.id!);
   }

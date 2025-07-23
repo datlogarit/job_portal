@@ -7,8 +7,8 @@ import 'package:provider/provider.dart';
 import 'package:quickalert/quickalert.dart';
 
 class ChangePass extends StatefulWidget {
-  ChangePass({super.key});
-  ApplicantRepository applicantRepository = ApplicantRepository();
+  const ChangePass({super.key});
+  // ApplicantRepository applicantRepository = ApplicantRepository();
   @override
   State<ChangePass> createState() => _ChangePassState();
 }
@@ -190,6 +190,7 @@ class _ChangePassState extends State<ChangePass> {
                       if (value != _newPwController.text) {
                         return "Confirm password not match";
                       }
+                      
                     },
                     decoration: InputDecoration(
                       hintText: "Re-enter new password",

@@ -25,6 +25,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class JobController {
     private final JobService jobService;
+//    private final AnotherClass anotherClass;
 
     @PostMapping("")
     public ResponseEntity<?> createJob(@RequestBody @Valid JobDTO jobDTO, BindingResult result) {
@@ -54,6 +55,7 @@ public class JobController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getJobById(@PathVariable long id) {
+//        anotherClass.getApplicantService();
         return ResponseEntity.ok(jobService.getJobById(id));
     }
 
@@ -130,7 +132,7 @@ public class JobController {
         int totalPage = jobsPage.getTotalPages();// lấy ra số trang để bắn cho frontend
         return ResponseEntity.ok(jobsPage.getContent());
     }
-    
+
     @GetMapping("filter")
     public ResponseEntity<?> getJobsByFilter(
             @RequestParam("page") int page,

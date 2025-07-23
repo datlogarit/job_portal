@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 
 class ApplicantRepository {
   // final Map<String, dynamic> content;
-  ApplicantRepository();
+  // ApplicantRepository();
   static dynamic login(String email, String password) async {
     Uri url = Uri.parse("http://10.0.2.2:8088/api/v1/applicant/login");
     var data = await http.post(

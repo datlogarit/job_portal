@@ -3,9 +3,12 @@ package com.project.jobportal.models;
 import com.project.jobportal.services.JobService;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
-import java.util.Date;
+import java.util.*;
 
 
 @Entity
@@ -16,7 +19,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 //@RequiredArgsConstructor
-public class Users extends BaseEntity {
+public class Users extends BaseEntity implements UserDetails {//user > userdetail
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -45,4 +48,42 @@ public class Users extends BaseEntity {
     @Column(name = "is_active")
     private int isActive;
 
+    //required
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        // SimpleGrantedAuthority authorityList = new SimpleGrantedAuthority("ROLE_" + this.role.toUpperCase());
+        // TODO: return roles or permission of user
+        return List.of(new SimpleGrantedAuthority("ROLE_" + this.getRole().toUpperCase()));
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;// TODO: return username;
+    }
+
+    @Override
+    public String getPassword() {
+        return this.password;// TODO: return username;
+    }
+
+    //optional
+    @Override
+    public boolean isAccountNonExpired() {
+        return UserDetails.super.isAccountNonExpired();
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return UserDetails.super.isAccountNonLocked();
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {// Thông tin xác thực
+        return UserDetails.super.isCredentialsNonExpired();
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return UserDetails.super.isEnabled();
+    }
 }

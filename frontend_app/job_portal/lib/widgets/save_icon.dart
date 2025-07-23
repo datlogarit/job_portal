@@ -31,7 +31,7 @@ class _SaveIconState extends State<SaveIcon> {
         widget.job.id!,
       );
 
-      final isSaved = interactionProvider.interaction.isSaved == 1;
+      bool isSaved = interactionProvider.interaction.isSaved == 1;
       setState(() {
         isSave = isSaved;
       });

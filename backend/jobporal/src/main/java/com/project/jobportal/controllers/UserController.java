@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,9 +30,10 @@ public class UserController {
     private final UserService userService;
     private final HandleFile handleFile;
 
-    @PostMapping("login/{role}")
-    public ResponseEntity<?> login(@RequestBody UserDTO userDTO, @PathVariable("role") String role) {
-        return ResponseEntity.ok(userService.login(userDTO.getEmail(), userDTO.getPassword(), role));
+    @PostMapping("login")
+    public ResponseEntity<?> login(@RequestBody UserDTO userDTO) {
+//        ArrayList<String>
+        return ResponseEntity.ok(userService.login(userDTO.getEmail(), userDTO.getPassword(), userDTO.getRole()));
     }
 
     @PutMapping("/{userId}")

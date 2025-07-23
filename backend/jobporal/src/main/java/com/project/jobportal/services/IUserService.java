@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.List;
 
 public interface IUserService {
-    void updateStatusUser(long userId, int status);
+    void updateStatusUser(long userId, int status) throws Throwable;
 
     void changePassword(long userId, String oldPassword, String newPassword);
 
@@ -18,7 +18,7 @@ public interface IUserService {
 
     Page<Users> getAllUser(PageRequest pageRequest);
 
-    Users login(String email, String password, String role);
+//    Users login(String email, String password, String role);
 
     List<Users> filterJobs(String title, String position, Integer experience, Integer minSalary, Integer maxSalary);
 

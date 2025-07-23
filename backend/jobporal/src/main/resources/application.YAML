@@ -1,5 +1,12 @@
 #spring.application.name=jobporal
 spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 1027658983546-nbsuijqju4qb0adlcl2ecba8hdddkmqm.apps.googleusercontent.com
+            client-secret: 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
   datasource:
     url: jdbc:mysql://localhost:3306/job_portal
     username: root
@@ -24,5 +31,13 @@ spring:
       max-request-size: 10MB
 server:
   port: 8088
-
+jwt:
+  "secretKey": "k57K8d/F98chluQcQRPMmCfsVlTGmMYwpDO/K6JYlytiVfOLsBC6lZIgwd7YdDRs"
+  "expiration": 2592000
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+        authentication: DEBUG
 
